@@ -1,0 +1,161 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------ *
+ * day3 — "Warm Swiss SaaS" design tokens
+ * Cream + Espresso + Caramel. Calm, warm, competent, trustworthy.
+ * ------------------------------------------------------------------ */
+
+:root {
+  /* Brand palette (raw) */
+  --cream: #f7f1e8;
+  --espresso: #241c17;
+  --oat: #e8dccb;
+  --caramel: #b98145;
+  --clay: #a35f45;
+  --olive: #6f7654;
+
+  /* Semantic — light (default) */
+  --background: #f7f1e8; /* cream */
+  --foreground: #241c17; /* espresso */
+
+  --card: #fcf8f1; /* warm near-white, lifts above cream */
+  --card-foreground: #241c17;
+
+  --popover: #fcf8f1;
+  --popover-foreground: #241c17;
+
+  /* Primary action = espresso (high-contrast, confident, still warm) */
+  --primary: #241c17;
+  --primary-foreground: #f7f1e8;
+
+  /* Secondary surface = oat */
+  --secondary: #e8dccb;
+  --secondary-foreground: #241c17;
+
+  --muted: #efe6d6;
+  --muted-foreground: #5e5346;
+
+  /* Accent = caramel, used sparingly */
+  --accent: #b98145;
+  --accent-foreground: #ffffff;
+
+  --destructive: #a35f45; /* clay */
+  --destructive-foreground: #fcf8f1;
+
+  /* Soft warm borders (low-contrast oat/espresso mix) */
+  --border: #e3d7c3;
+  --input: #ddd0ba;
+  --ring: #b98145; /* caramel focus ring */
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #1a1410;
+  --foreground: #f2e9da;
+
+  --card: #221a14;
+  --card-foreground: #f2e9da;
+
+  --popover: #221a14;
+  --popover-foreground: #f2e9da;
+
+  /* On dark, caramel is bright enough to be the primary action */
+  --primary: #c98f53;
+  --primary-foreground: #1a1410;
+
+  --secondary: #2c2219;
+  --secondary-foreground: #f2e9da;
+
+  --muted: #2c2219;
+  --muted-foreground: #b3a691;
+
+  --accent: #c98f53;
+  --accent-foreground: #1a1410;
+
+  --destructive: #c0795c;
+  --destructive-foreground: #1a1410;
+
+  --border: #352a20;
+  --input: #3d2f23;
+  --ring: #c98f53;
+}
+
+@theme inline {
+  /* Brand colors → utilities (bg-cream, text-espresso, bg-caramel, …) */
+  --color-cream: var(--cream);
+  --color-espresso: var(--espresso);
+  --color-oat: var(--oat);
+  --color-caramel: var(--caramel);
+  --color-clay: var(--clay);
+  --color-olive: var(--olive);
+
+  /* Semantic colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Type — Geist for UI/body, Instrument Serif for marketing headlines */
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+
+  /* Radii */
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Visible, warm focus ring for keyboard users */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--caramel) 28%, transparent);
+    color: var(--espresso);
+  }
+}
+
+/* Marketing display type */
+.font-display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
