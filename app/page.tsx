@@ -15,9 +15,10 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { PricingCards } from "@/components/marketing/pricing-cards";
+import { FoundingOffer } from "@/components/marketing/founding-offer";
 import { UsageMeter } from "@/components/marketing/usage-meter";
 import { AppPreview } from "@/components/marketing/app-preview";
-import { features, siteConfig } from "@/lib/site";
+import { features, foundingOffer, siteConfig } from "@/lib/site";
 
 export default function HomePage() {
   return (
@@ -40,31 +41,31 @@ export default function HomePage() {
               </h1>
 
               <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                Keep as large a list as you want. {siteConfig.promise} It starts
-                at $5 a month for 10,000 emails.
+                Your list can grow as large as you want. The price only moves
+                when you hit send.
               </p>
 
-              <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-9 flex justify-center">
                 <Button
                   size="lg"
                   className="w-full sm:w-auto"
                   render={<a href={siteConfig.signupUrl} />}
                 >
-                  Start sending
+                  Become a founding member
                   <ArrowRight className="size-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full sm:w-auto"
-                  render={<Link href="/#pricing" />}
-                >
-                  See pricing
                 </Button>
               </div>
 
               <p className="mt-5 text-sm text-muted-foreground">
-                No card needed to look around.
+                {foundingOffer.price} for your whole first year — 10,000 emails a
+                month.{" "}
+                <a
+                  href={siteConfig.signupUrl}
+                  className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                >
+                  Or just sign up free
+                </a>
+                .
               </p>
             </div>
 
@@ -75,16 +76,25 @@ export default function HomePage() {
           </Container>
         </section>
 
-        {/* ------------------------------------------------------- Pricing */}
+        {/* ----------------------------------------------- Founding offer */}
         <section
-          id="pricing"
+          id="founding"
           className="scroll-mt-20 border-t border-border bg-oat/30"
         >
           <Container className="py-20 sm:py-24">
+            <div className="mx-auto max-w-4xl">
+              <FoundingOffer />
+            </div>
+          </Container>
+        </section>
+
+        {/* ------------------------------------------------------- Pricing */}
+        <section id="pricing" className="scroll-mt-20 border-t border-border">
+          <Container className="py-20 sm:py-24">
             <SectionHeading
               align="center"
-              title="Priced by what you send"
-              description="Three plans, set by how many emails go out each month. Every one comes with unlimited subscribers. Switch between them whenever you want."
+              title="What it'll cost at launch"
+              description="Three plans, set by how many emails go out each month. Every one comes with unlimited subscribers. Sign up now and founding members start the 10,000-email plan at $36 for the first year."
             />
             <div className="mt-12">
               <PricingCards />
@@ -185,11 +195,11 @@ export default function HomePage() {
           <Container className="py-20 sm:py-28">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
-                Bring your list and send something.
+                Get in before we launch.
               </h2>
               <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
-                $5 a month for 10,000 emails. Change your plan or stop whenever
-                it stops being worth it.
+                Sign up now to be first through the door. Founding members lock
+                in a full year — 120,000 emails — for {foundingOffer.price}.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button
@@ -197,7 +207,7 @@ export default function HomePage() {
                   className="w-full sm:w-auto"
                   render={<a href={siteConfig.signupUrl} />}
                 >
-                  Start sending
+                  Become a founding member
                   <ArrowRight className="size-4" />
                 </Button>
                 <Button

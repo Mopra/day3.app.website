@@ -13,18 +13,38 @@ import {
 export const siteConfig = {
   name: "day3",
   promise: "You're billed on emails sent, not on the size of your list.",
-  signupUrl: "https://go.day3.app/signup",
+  signupUrl: "https://go.day3.app",
   loginUrl: "https://go.day3.app/login",
   contactEmail: "hello@day3.app",
   location: "Copenhagen, Denmark",
-  // While day3 is still being finished. Flip `isPreview` to false at launch to
-  // hide the preview banner and badge everywhere at once.
+  // day3 isn't live yet — we're collecting founding members ahead of launch.
+  // Flip `isPreview` to false on launch day to hide the pre-launch banner and
+  // badge everywhere at once.
   isPreview: true,
   previewNote:
-    "day3 is in early preview — a few things are still rough, but you can sign up and start sending today.",
+    "day3 launches in days, not months. Sign up now to claim a founding-member rate before we go live.",
+};
+
+/**
+ * The headline pre-launch deal: a full year of the 10,000-emails/mo plan,
+ * pre-paid, at a founding rate. Shown prominently on the homepage and pricing
+ * page. Both CTAs route through the normal signup flow (`signupUrl`).
+ */
+export const foundingOffer = {
+  price: "$36",
+  cadence: "for your first year",
+  monthlyEquivalent: "Works out to $3/mo, billed once for the year",
+  emails: "10,000",
+  emailsNote: "emails every month",
+  total: "120,000 emails across the year",
+  regularPrice: "$60", // 12 × the standard $5/mo
+  savings: "40%",
+  renewalNote:
+    "After year one it renews at the standard $5/mo — and only if you want to keep going.",
 };
 
 export const navLinks = [
+  { label: "Founding offer", href: "/#founding" },
   { label: "Pricing", href: "/#pricing" },
   { label: "How it works", href: "/#model" },
   { label: "Features", href: "/#features" },
@@ -37,6 +57,8 @@ export type PricingTier = {
   emailsNote: string;
   blurb: string;
   featured?: boolean;
+  // Optional callout shown on the card — e.g. the founding pre-launch rate.
+  foundingNote?: string;
 };
 
 export const pricingTiers: PricingTier[] = [
@@ -46,6 +68,7 @@ export const pricingTiers: PricingTier[] = [
     emails: "10,000",
     emailsNote: "emails / month",
     blurb: "A first list and a handful of campaigns.",
+    foundingNote: "Founding rate: $36 for your first year",
   },
   {
     price: "$20",

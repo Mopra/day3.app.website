@@ -19,7 +19,7 @@ const footerNav = [
     links: [
       { label: "Contact", href: `mailto:${siteConfig.contactEmail}` },
       { label: "Log in", href: siteConfig.loginUrl },
-      { label: "Start sending", href: siteConfig.signupUrl },
+      { label: "Become a founding member", href: siteConfig.signupUrl },
     ],
   },
   {

@@ -23,7 +23,7 @@ function AppPreview() {
           <span className="size-3 rounded-full bg-olive/50" />
         </div>
         <div className="ml-1 hidden sm:block">
-          <Logo className="text-base" />
+          <Logo className="h-5" />
         </div>
         <div className="ml-auto rounded-md bg-card px-2.5 py-1 text-xs font-medium text-muted-foreground">
           New campaign

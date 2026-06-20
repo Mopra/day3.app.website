@@ -39,6 +39,12 @@ function PricingCards() {
             {tier.blurb}
           </p>
 
+          {tier.foundingNote && (
+            <p className="mt-4 inline-flex items-center self-start rounded-full bg-[color-mix(in_srgb,var(--caramel)_14%,transparent)] px-3 py-1 text-xs font-medium text-foreground">
+              {tier.foundingNote}
+            </p>
+          )}
+
           <ul className="mt-6 space-y-3 text-sm">
             <li className="flex items-center gap-2.5 text-foreground">
               <InfinityIcon className="size-4 shrink-0 text-caramel" />
@@ -65,7 +71,7 @@ function PricingCards() {
               className="w-full"
               render={<a href={siteConfig.signupUrl} />}
             >
-              Start with {tier.price}/mo
+              Sign up
             </Button>
           </div>
         </Card>

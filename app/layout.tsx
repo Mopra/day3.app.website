@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s · day3",
   },
   description:
-    "Email marketing for startups and indie devs. Unlimited subscribers and pricing set by emails sent, not list size. Starts at $5/mo for 10,000 emails.",
+    "day3 is launching soon. Email marketing for startups and indie devs — unlimited subscribers, priced by emails sent. Become a founding member and lock in your first year for $36 (10,000 emails/mo).",
   keywords: [
     "email marketing",
     "newsletter",
@@ -33,28 +33,31 @@ export const metadata: Metadata = {
     "send-based pricing",
     "startups",
     "indie developers",
+    "founding member",
+    "early access",
   ],
   openGraph: {
-    title: "day3 — Email marketing billed by what you send",
+    title: "day3 — Launching soon · founding members welcome",
     description:
-      "Unlimited subscribers, billed by emails sent rather than list size. Starts at $5/mo for 10,000 emails.",
+      "Unlimited subscribers, billed by emails sent rather than list size. Sign up now and lock in your first year for $36.",
     url: siteUrl,
     siteName: "day3",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "day3 — Email marketing billed by what you send",
+    title: "day3 — Launching soon · founding members welcome",
     description:
-      "Unlimited subscribers, billed by emails sent rather than list size.",
+      "Unlimited subscribers, billed by emails sent. Become a founding member and lock in your first year for $36.",
   },
   robots: { index: true, follow: true },
   icons: {
     icon: [
-      {
-        url: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📩</text></svg>",
-      },
+      { url: "/brand/favicon.svg", type: "image/svg+xml" },
+      { url: "/brand/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/brand/favicon-16.png", sizes: "16x16", type: "image/png" },
     ],
+    apple: [{ url: "/brand/apple-touch-icon.png" }],
   },
 };
 
