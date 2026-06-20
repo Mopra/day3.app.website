@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
+import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { PricingCards } from "@/components/marketing/pricing-cards";
@@ -13,7 +14,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Simple pricing. No subscriber tax. $5/mo for 10,000 emails, $20/mo for 50,000, $50/mo for 200,000. All plans include unlimited subscribers.",
+    "Billed by what you send: $5/mo for 10,000 emails, $20/mo for 50,000, $50/mo for 200,000. Every plan includes unlimited subscribers.",
 };
 
 const faqs = [
@@ -38,19 +39,17 @@ const faqs = [
 export default function PricingPage() {
   return (
     <>
+      <PreviewBanner />
       <SiteHeader />
       <main id="main">
         <section className="border-b border-border bg-oat/30">
           <Container className="py-20 text-center sm:py-24">
-            <p className="text-sm font-medium uppercase tracking-wider text-caramel">
-              Pricing
-            </p>
-            <h1 className="mx-auto mt-2 max-w-2xl font-display text-4xl leading-tight text-foreground sm:text-5xl">
-              Simple pricing. No subscriber tax.
+            <h1 className="mx-auto max-w-2xl font-display text-4xl leading-tight text-foreground sm:text-5xl">
+              Priced by what you send
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
-              Priced by what you send, not by the size of your list. Every plan
-              includes unlimited subscribers.
+              The bill follows the emails you send, not the size of your list.
+              Every plan includes unlimited subscribers.
             </p>
           </Container>
         </section>
@@ -72,7 +71,7 @@ export default function PricingPage() {
           <Container className="py-16 sm:py-20">
             <div className="mx-auto max-w-3xl">
               <h2 className="font-display text-3xl text-foreground sm:text-4xl">
-                Questions, answered plainly.
+                Questions
               </h2>
               <dl className="mt-10 divide-y divide-border border-t border-border">
                 {faqs.map((faq) => (
@@ -92,7 +91,7 @@ export default function PricingPage() {
         <section className="border-t border-border bg-oat/30">
           <Container className="py-16 text-center sm:py-20">
             <h2 className="font-display text-3xl text-foreground sm:text-4xl">
-              Don&apos;t overpay. Don&apos;t think too hard.
+              Pick a plan and start sending
             </h2>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button

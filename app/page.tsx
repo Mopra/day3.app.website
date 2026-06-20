@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Container } from "@/components/marketing/container";
+import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
@@ -21,6 +22,7 @@ import { features, siteConfig } from "@/lib/site";
 export default function HomePage() {
   return (
     <>
+      <PreviewBanner />
       <SiteHeader />
 
       <main id="main">
@@ -32,25 +34,14 @@ export default function HomePage() {
           />
           <Container className="py-20 sm:py-28">
             <div className="mx-auto max-w-3xl text-center">
-              <Link
-                href="/#pricing"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3.5 py-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <span className="font-medium text-foreground">
-                  Start at $5/mo
-                </span>
-                for 10,000 emails
-                <ArrowRight className="size-3.5" />
-              </Link>
-
-              <h1 className="mt-6 font-display text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-                Email marketing
-                <br className="hidden sm:block" /> without the bloat.
+              <h1 className="font-display text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+                Email marketing that charges
+                <br className="hidden sm:block" /> for sends, not subscribers.
               </h1>
 
               <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                Unlimited subscribers, simple campaigns, and predictable pricing
-                based on what you actually send. {siteConfig.promise}
+                Keep as large a list as you want. {siteConfig.promise} It starts
+                at $5 a month for 10,000 emails.
               </p>
 
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -73,8 +64,7 @@ export default function HomePage() {
               </div>
 
               <p className="mt-5 text-sm text-muted-foreground">
-                Unlimited subscribers. Pay for sends. No credit card to look
-                around.
+                No card needed to look around.
               </p>
             </div>
 
@@ -93,9 +83,8 @@ export default function HomePage() {
           <Container className="py-20 sm:py-24">
             <SectionHeading
               align="center"
-              eyebrow="Pricing"
-              title="Simple pricing. No subscriber tax."
-              description="Three plans, priced by how many emails you send. Every plan includes unlimited subscribers. Pick one, change it whenever — no sales call."
+              title="Priced by what you send"
+              description="Three plans, set by how many emails go out each month. Every one comes with unlimited subscribers. Switch between them whenever you want."
             />
             <div className="mt-12">
               <PricingCards />
@@ -116,37 +105,36 @@ export default function HomePage() {
             <div className="grid items-center gap-12 lg:grid-cols-2">
               <div>
                 <SectionHeading
-                  eyebrow="The model"
-                  title="Unlimited subscribers. Capped by sends."
-                  description="Most tools bill you more as your list grows — punishing you for the thing you're trying to do. day3 doesn't. Grow your audience as large as you like; you're only metered on emails sent."
+                  title="Unlimited subscribers, capped by sends"
+                  description="Most tools charge you more as your list grows. day3 charges for emails sent. The list can grow as large as you like — the meter only moves when you hit send."
                 />
                 <ul className="mt-8 space-y-4">
                   <li className="flex gap-3">
                     <InfinityIcon className="mt-0.5 size-5 shrink-0 text-caramel" />
                     <span className="text-foreground">
-                      <span className="font-medium">Add subscribers freely.</span>{" "}
+                      <span className="font-medium">Import any list.</span>{" "}
                       <span className="text-muted-foreground">
-                        Import a list of 200 or 200,000 — the price doesn&apos;t
-                        move.
+                        200 contacts or 200,000 — the price is the same.
                       </span>
                     </span>
                   </li>
                   <li className="flex gap-3">
                     <Gauge className="mt-0.5 size-5 shrink-0 text-caramel" />
                     <span className="text-foreground">
-                      <span className="font-medium">Metered on sends.</span>{" "}
+                      <span className="font-medium">One monthly cap.</span>{" "}
                       <span className="text-muted-foreground">
-                        A simple monthly cap on emails sent. Watch it fill, top
-                        up if you need to.
+                        Watch it fill as you send, and top up if you run out
+                        before the month does.
                       </span>
                     </span>
                   </li>
                   <li className="flex gap-3">
                     <MailCheck className="mt-0.5 size-5 shrink-0 text-caramel" />
                     <span className="text-foreground">
-                      <span className="font-medium">No surprises.</span>{" "}
+                      <span className="font-medium">Know it upfront.</span>{" "}
                       <span className="text-muted-foreground">
-                        You always know the number before you hit send.
+                        The cost is the plan price. There isn&apos;t a second
+                        number waiting at the end of the month.
                       </span>
                     </span>
                   </li>
@@ -167,9 +155,8 @@ export default function HomePage() {
         >
           <Container className="py-20 sm:py-24">
             <SectionHeading
-              eyebrow="Features"
-              title="The essentials, done well."
-              description="Everything you need to send a good email, and nothing you'd need a manual for."
+              title="What you get"
+              description="The parts you need to send a good email. Not the parts that come with a manual."
             />
             <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
               {features.map((feature) => {
@@ -198,11 +185,11 @@ export default function HomePage() {
           <Container className="py-20 sm:py-28">
             <div className="mx-auto max-w-2xl text-center">
               <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
-                Take the list. Send the email. Move on.
+                Bring your list and send something.
               </h2>
               <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
-                Simple campaigns. Predictable pricing. No enterprise theater.
-                Start at $5/mo for 10,000 emails.
+                $5 a month for 10,000 emails. Change your plan or stop whenever
+                it stops being worth it.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button

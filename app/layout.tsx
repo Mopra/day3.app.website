@@ -21,11 +21,11 @@ const siteUrl = "https://day3.app";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "day3 — Email marketing without the bloat",
+    default: "day3 — Email marketing billed by what you send",
     template: "%s · day3",
   },
   description:
-    "Email marketing for startups and indie devs. Unlimited subscribers, simple campaigns, predictable pricing based on sends. Start at $5/mo for 10,000 emails.",
+    "Email marketing for startups and indie devs. Unlimited subscribers and pricing set by emails sent, not list size. Starts at $5/mo for 10,000 emails.",
   keywords: [
     "email marketing",
     "newsletter",
@@ -35,18 +35,18 @@ export const metadata: Metadata = {
     "indie developers",
   ],
   openGraph: {
-    title: "day3 — Email marketing without the bloat",
+    title: "day3 — Email marketing billed by what you send",
     description:
-      "Unlimited subscribers. Pay for sends. Simple campaigns, predictable pricing. Start at $5/mo for 10,000 emails.",
+      "Unlimited subscribers, billed by emails sent rather than list size. Starts at $5/mo for 10,000 emails.",
     url: siteUrl,
     siteName: "day3",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "day3 — Email marketing without the bloat",
+    title: "day3 — Email marketing billed by what you send",
     description:
-      "Unlimited subscribers. Pay for sends. Simple campaigns, predictable pricing.",
+      "Unlimited subscribers, billed by emails sent rather than list size.",
   },
   robots: { index: true, follow: true },
   icons: {

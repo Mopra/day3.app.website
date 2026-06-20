@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Check, Infinity as InfinityIcon } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { pricingTiers, siteConfig } from "@/lib/site";
@@ -20,15 +19,6 @@ function PricingCards() {
               : "",
           )}
         >
-          {tier.featured ? (
-            <Badge
-              variant="accent"
-              className="absolute -top-3 left-7 uppercase"
-            >
-              Most popular
-            </Badge>
-          ) : null}
-
           <div className="flex items-baseline gap-1">
             <span className="font-display text-5xl leading-none text-foreground">
               {tier.price}

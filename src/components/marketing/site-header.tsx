@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
 import { Logo } from "@/components/marketing/logo";
@@ -17,13 +18,20 @@ function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/70">
       <Container>
         <div className="flex h-16 items-center justify-between gap-4">
-          <Link
-            href="/"
-            className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            aria-label="day3 home"
-          >
-            <Logo />
-          </Link>
+          <div className="flex items-center gap-2.5">
+            <Link
+              href="/"
+              className="rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              aria-label="day3 home"
+            >
+              <Logo />
+            </Link>
+            {siteConfig.isPreview && (
+              <Badge variant="accent" className="px-2 py-0.5">
+                Preview
+              </Badge>
+            )}
+          </div>
 
           {/* Desktop nav */}
           <nav

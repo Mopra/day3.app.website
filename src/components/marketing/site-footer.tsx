@@ -39,8 +39,8 @@ function SiteFooter() {
           <div className="max-w-xs">
             <Logo />
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Email marketing without the bloat. Unlimited subscribers, pay for
-              sends.
+              Email marketing billed on what you send, not how many people you
+              keep on the list.
             </p>
           </div>
 
