@@ -13,8 +13,16 @@ function AppPreview() {
     <div
       role="img"
       aria-label="The day3 composer: a campaign titled “What shipped in June” addressed to the Product updates audience of 3,180 subscribers, ready to send."
-      className="overflow-hidden rounded-xl border border-border bg-card shadow-[0_30px_60px_-32px_color-mix(in_srgb,var(--espresso)_35%,transparent)]"
+      className="relative overflow-hidden rounded-xl border border-border bg-card shadow-[0_30px_60px_-32px_color-mix(in_srgb,var(--espresso)_35%,transparent)] animate-float"
     >
+      {/* Specular sweep — a soft glass highlight passing over the window */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
+      >
+        <div className="absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
+      </div>
+
       {/* Window chrome */}
       <div className="flex items-center gap-3 border-b border-border bg-secondary/50 px-4 py-3">
         <div className="flex gap-1.5" aria-hidden="true">
@@ -90,14 +98,24 @@ function AppPreview() {
               for. Here are the highlights…
             </p>
             <div className="h-2" />
-            <span className="inline-block h-2.5 w-3/5 rounded-full bg-oat" />
+            <span className="inline-flex items-center gap-1 align-middle">
+              <span className="inline-block h-2.5 w-3/5 rounded-full bg-oat" />
+              <span
+                aria-hidden="true"
+                className="inline-block h-4 w-px bg-caramel animate-caret"
+              />
+            </span>
           </div>
 
           <div className="mt-6 flex items-center justify-between">
-            <span className="text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+              <span
+                aria-hidden="true"
+                className="size-1.5 rounded-full bg-olive animate-live-dot"
+              />
               Draft saved · just now
             </span>
-            <span className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground">
+            <span className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground animate-send-pulse">
               <Send className="size-4" />
               Send campaign
             </span>

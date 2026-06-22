@@ -18,6 +18,8 @@ import { PricingCards } from "@/components/marketing/pricing-cards";
 import { FoundingOffer } from "@/components/marketing/founding-offer";
 import { UsageMeter } from "@/components/marketing/usage-meter";
 import { AppPreview } from "@/components/marketing/app-preview";
+import { Reveal } from "@/components/marketing/reveal";
+import { HeroAurora } from "@/components/marketing/hero-aurora";
 import { features, foundingOffer, siteConfig } from "@/lib/site";
 
 export default function HomePage() {
@@ -33,46 +35,55 @@ export default function HomePage() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,color-mix(in_srgb,var(--caramel)_12%,transparent),transparent_70%)]"
           />
+          <HeroAurora />
           <Container className="py-20 sm:py-28">
             <div className="mx-auto max-w-3xl text-center">
-              <h1 className="font-display text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
-                Email marketing that charges
-                <br className="hidden sm:block" /> for sends, not subscribers.
-              </h1>
+              <Reveal>
+                <h1 className="font-display text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+                  Email marketing that charges
+                  <br className="hidden sm:block" /> for sends, not subscribers.
+                </h1>
+              </Reveal>
 
-              <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                Your list can grow as large as you want. The price only moves
-                when you hit send.
-              </p>
+              <Reveal delay={90}>
+                <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+                  Your list can grow as large as you want. The price only moves
+                  when you hit send.
+                </p>
+              </Reveal>
 
-              <div className="mt-9 flex justify-center">
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto"
-                  render={<a href={siteConfig.signupUrl} />}
-                >
-                  Become a founding member
-                  <ArrowRight className="size-4" />
-                </Button>
-              </div>
+              <Reveal delay={180}>
+                <div className="mt-9 flex justify-center">
+                  <Button
+                    size="lg"
+                    className="group w-full sm:w-auto"
+                    render={<a href={siteConfig.signupUrl} />}
+                  >
+                    Become a founding member
+                    <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </Button>
+                </div>
+              </Reveal>
 
-              <p className="mt-5 text-sm text-muted-foreground">
-                {foundingOffer.price} for your whole first year — 10,000 emails a
-                month.{" "}
-                <a
-                  href={siteConfig.signupUrl}
-                  className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
-                >
-                  Or just sign up free
-                </a>
-                .
-              </p>
+              <Reveal delay={260}>
+                <p className="mt-5 text-sm text-muted-foreground">
+                  {foundingOffer.price} for your whole first year — 10,000 emails
+                  a month.{" "}
+                  <a
+                    href={siteConfig.signupUrl}
+                    className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                  >
+                    Or just sign up free
+                  </a>
+                  .
+                </p>
+              </Reveal>
             </div>
 
             {/* Product preview */}
-            <div className="mx-auto mt-16 max-w-4xl">
+            <Reveal delay={200} className="mx-auto mt-16 max-w-4xl">
               <AppPreview />
-            </div>
+            </Reveal>
           </Container>
         </section>
 
@@ -82,23 +93,25 @@ export default function HomePage() {
           className="scroll-mt-20 border-t border-border bg-oat/30"
         >
           <Container className="py-20 sm:py-24">
-            <div className="mx-auto max-w-4xl">
+            <Reveal className="mx-auto max-w-4xl">
               <FoundingOffer />
-            </div>
+            </Reveal>
           </Container>
         </section>
 
         {/* ------------------------------------------------------- Pricing */}
         <section id="pricing" className="scroll-mt-20 border-t border-border">
           <Container className="py-20 sm:py-24">
-            <SectionHeading
-              align="center"
-              title="What it'll cost at launch"
-              description="Three plans, set by how many emails go out each month. Every one comes with unlimited subscribers. Sign up now and founding members start the 10,000-email plan at $36 for the first year."
-            />
-            <div className="mt-12">
+            <Reveal>
+              <SectionHeading
+                align="center"
+                title="What it'll cost at launch"
+                description="Three plans, set by how many emails go out each month. Every one comes with unlimited subscribers. Sign up now and founding members start the 10,000-email plan at $36 for the first year."
+              />
+            </Reveal>
+            <Reveal delay={120} className="mt-12">
               <PricingCards />
-            </div>
+            </Reveal>
             <p className="mt-8 text-center text-sm text-muted-foreground">
               All plans include{" "}
               <span className="font-medium text-foreground">
@@ -113,7 +126,7 @@ export default function HomePage() {
         <section id="model" className="scroll-mt-20 border-t border-border">
           <Container className="py-20 sm:py-24">
             <div className="grid items-center gap-12 lg:grid-cols-2">
-              <div>
+              <Reveal>
                 <SectionHeading
                   title="Unlimited subscribers, capped by sends"
                   description="Most tools charge you more as your list grows. day3 charges for emails sent. The list can grow as large as you like — the meter only moves when you hit send."
@@ -149,11 +162,11 @@ export default function HomePage() {
                     </span>
                   </li>
                 </ul>
-              </div>
+              </Reveal>
 
-              <div className="lg:pl-6">
+              <Reveal delay={120} className="lg:pl-6">
                 <UsageMeter />
-              </div>
+              </Reveal>
             </div>
           </Container>
         </section>
@@ -164,19 +177,21 @@ export default function HomePage() {
           className="scroll-mt-20 border-t border-border bg-oat/30"
         >
           <Container className="py-20 sm:py-24">
-            <SectionHeading
-              title="What you get"
-              description="The parts you need to send a good email. Not the parts that come with a manual."
-            />
-            <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+            <Reveal>
+              <SectionHeading
+                title="What you get"
+                description="The parts you need to send a good email. Not the parts that come with a manual."
+              />
+            </Reveal>
+            <Reveal delay={120} className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
               {features.map((feature) => {
                 const Icon = feature.icon;
                 return (
                   <div
                     key={feature.title}
-                    className="flex flex-col bg-card p-6"
+                    className="group flex flex-col bg-card p-6 transition-colors duration-200 hover:bg-secondary/40"
                   >
-                    <Icon className="size-5 text-caramel" />
+                    <Icon className="size-5 text-caramel transition-transform duration-200 group-hover:scale-110" />
                     <h3 className="mt-4 font-medium text-foreground">
                       {feature.title}
                     </h3>
@@ -186,14 +201,14 @@ export default function HomePage() {
                   </div>
                 );
               })}
-            </div>
+            </Reveal>
           </Container>
         </section>
 
         {/* ----------------------------------------------------- Final CTA */}
         <section className="border-t border-border">
           <Container className="py-20 sm:py-28">
-            <div className="mx-auto max-w-2xl text-center">
+            <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
                 Get in before we launch.
               </h2>
@@ -204,11 +219,11 @@ export default function HomePage() {
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button
                   size="lg"
-                  className="w-full sm:w-auto"
+                  className="group w-full sm:w-auto"
                   render={<a href={siteConfig.signupUrl} />}
                 >
                   Become a founding member
-                  <ArrowRight className="size-4" />
+                  <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </Button>
                 <Button
                   variant="outline"
@@ -219,7 +234,7 @@ export default function HomePage() {
                   See pricing
                 </Button>
               </div>
-            </div>
+            </Reveal>
           </Container>
         </section>
 
