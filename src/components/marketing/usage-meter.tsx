@@ -73,7 +73,11 @@ function UsageMeter() {
   return (
     <div ref={ref}>
       <Card className="p-6 sm:p-7">
-        <Meter value={value} max={CAP}>
+        <Meter
+          value={value}
+          max={CAP}
+          getAriaValueText={() => `${pct}%`}
+        >
           <div className="flex items-end justify-between gap-4">
             <div>
               <p className="text-sm font-medium text-muted-foreground">

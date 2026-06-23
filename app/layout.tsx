@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Instrument_Serif } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
 const geist = Geist({
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s · day3",
   },
   description:
-    "day3 is launching soon. Email marketing for startups and indie devs — unlimited subscribers, priced by emails sent. Become a founding member and lock in your first year for $36 (10,000 emails/mo).",
+    "day3 is launching soon. Email marketing for startups and indie devs — unlimited subscribers, priced by emails sent. From $5/mo for 10,000 emails a month.",
   keywords: [
     "email marketing",
     "newsletter",
@@ -33,24 +34,24 @@ export const metadata: Metadata = {
     "send-based pricing",
     "startups",
     "indie developers",
-    "founding member",
     "early access",
   ],
   openGraph: {
-    title: "day3 — Launching soon · founding members welcome",
+    title: "day3 — Launching soon",
     description:
-      "Unlimited subscribers, billed by emails sent rather than list size. Sign up now and lock in your first year for $36.",
+      "Unlimited subscribers, billed by emails sent rather than list size. From $5/mo for 10,000 emails a month.",
     url: siteUrl,
     siteName: "day3",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "day3 — Launching soon · founding members welcome",
+    title: "day3 — Launching soon",
     description:
-      "Unlimited subscribers, billed by emails sent. Become a founding member and lock in your first year for $36.",
+      "Unlimited subscribers, billed by emails sent. From $5/mo for 10,000 emails a month.",
   },
   robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
   icons: {
     icon: [
       { url: "/brand/favicon.svg", type: "image/svg+xml" },
@@ -75,6 +76,7 @@ export default function RootLayout({
         </a>
         {children}
       </body>
+      <GoogleAnalytics gaId="G-JJJ6E2LDX8" />
     </html>
   );
 }

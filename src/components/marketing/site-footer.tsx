@@ -9,9 +9,11 @@ const footerNav = [
   {
     heading: "Product",
     links: [
+      { label: "How it works", href: "/how-it-works" },
+      { label: "Features", href: "/features" },
+      { label: "Who it's for", href: "/for" },
+      { label: "Compare", href: "/compare" },
       { label: "Pricing", href: "/pricing" },
-      { label: "How it works", href: "/#model" },
-      { label: "Features", href: "/#features" },
     ],
   },
   {
@@ -19,7 +21,7 @@ const footerNav = [
     links: [
       { label: "Contact", href: `mailto:${siteConfig.contactEmail}` },
       { label: "Log in", href: siteConfig.loginUrl },
-      { label: "Become a founding member", href: siteConfig.signupUrl },
+      { label: "Sign up", href: siteConfig.signupUrl },
     ],
   },
   {

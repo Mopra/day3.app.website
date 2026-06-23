@@ -15,16 +15,23 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { PricingCards } from "@/components/marketing/pricing-cards";
-import { FoundingOffer } from "@/components/marketing/founding-offer";
 import { UsageMeter } from "@/components/marketing/usage-meter";
 import { AppPreview } from "@/components/marketing/app-preview";
 import { Reveal } from "@/components/marketing/reveal";
 import { HeroAurora } from "@/components/marketing/hero-aurora";
-import { features, foundingOffer, siteConfig } from "@/lib/site";
+import {
+  JsonLd,
+  organizationSchema,
+  softwareApplicationSchema,
+} from "@/components/seo/json-ld";
+import { features, siteConfig } from "@/lib/site";
 
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={organizationSchema()} />
+      <JsonLd data={softwareApplicationSchema()} />
+
       <PreviewBanner />
       <SiteHeader />
 
@@ -59,7 +66,7 @@ export default function HomePage() {
                     className="group w-full sm:w-auto"
                     render={<a href={siteConfig.signupUrl} />}
                   >
-                    Become a founding member
+                    Get started
                     <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                   </Button>
                 </div>
@@ -67,15 +74,14 @@ export default function HomePage() {
 
               <Reveal delay={260}>
                 <p className="mt-5 text-sm text-muted-foreground">
-                  {foundingOffer.price} for your whole first year — 10,000 emails
-                  a month.{" "}
+                  $5/mo for 10,000 emails a month.{" "}
                   <a
                     href={siteConfig.signupUrl}
                     className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
                   >
-                    Or just sign up free
-                  </a>
-                  .
+                    Or sign up free to look around
+                  </a>{" "}
+                  and set things up — pick a plan when you&apos;re ready to send.
                 </p>
               </Reveal>
             </div>
@@ -87,26 +93,14 @@ export default function HomePage() {
           </Container>
         </section>
 
-        {/* ----------------------------------------------- Founding offer */}
-        <section
-          id="founding"
-          className="scroll-mt-20 border-t border-border bg-oat/30"
-        >
-          <Container className="py-20 sm:py-24">
-            <Reveal className="mx-auto max-w-4xl">
-              <FoundingOffer />
-            </Reveal>
-          </Container>
-        </section>
-
         {/* ------------------------------------------------------- Pricing */}
-        <section id="pricing" className="scroll-mt-20 border-t border-border">
+        <section id="pricing" className="scroll-mt-20 border-t border-border bg-oat/30">
           <Container className="py-20 sm:py-24">
             <Reveal>
               <SectionHeading
                 align="center"
                 title="What it'll cost at launch"
-                description="Three plans, set by how many emails go out each month. Every one comes with unlimited subscribers. Sign up now and founding members start the 10,000-email plan at $36 for the first year."
+                description="Three plans, set by how many emails go out each month. Every one comes with unlimited subscribers. Start on the 10,000-email plan at $5/mo."
               />
             </Reveal>
             <Reveal delay={120} className="mt-12">
@@ -146,8 +140,9 @@ export default function HomePage() {
                     <span className="text-foreground">
                       <span className="font-medium">One monthly cap.</span>{" "}
                       <span className="text-muted-foreground">
-                        Watch it fill as you send, and top up if you run out
-                        before the month does.
+                        Watch it fill as you send. Reach it and sending pauses
+                        until next month — no surprise overage. Need more room?
+                        Move up a plan.
                       </span>
                     </span>
                   </li>
@@ -213,8 +208,8 @@ export default function HomePage() {
                 Get in before we launch.
               </h2>
               <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
-                Sign up now to be first through the door. Founding members lock
-                in a full year — 120,000 emails — for {foundingOffer.price}.
+                Sign up now to be first through the door. $5/mo for 10,000 emails
+                a month — and unlimited subscribers on every plan.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button
@@ -222,7 +217,7 @@ export default function HomePage() {
                   className="group w-full sm:w-auto"
                   render={<a href={siteConfig.signupUrl} />}
                 >
-                  Become a founding member
+                  Get started
                   <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </Button>
                 <Button

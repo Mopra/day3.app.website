@@ -9,23 +9,32 @@ import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { PricingCards } from "@/components/marketing/pricing-cards";
-import { FoundingOffer } from "@/components/marketing/founding-offer";
-import { foundingOffer, siteConfig } from "@/lib/site";
+import {
+  JsonLd,
+  breadcrumbSchema,
+  faqSchema,
+  softwareApplicationSchema,
+} from "@/components/seo/json-ld";
+import { buildMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: "Pricing",
   description:
-    "day3 is launching soon. Founding members lock in a full year of 10,000 emails/mo for $36. At launch: $5/mo for 10,000 emails, $20/mo for 50,000, $50/mo for 200,000 — every plan includes unlimited subscribers.",
-};
+    "day3 is launching soon. $5/mo for 10,000 emails, $20/mo for 50,000, $50/mo for 200,000 — every plan includes unlimited subscribers. Priced by emails sent, never by list size.",
+  path: "/pricing",
+  keywords: [
+    "email marketing pricing",
+    "cheap email marketing",
+    "email tool pricing by sends",
+    "unlimited subscribers pricing",
+  ],
+});
 
 const faqs = [
   {
-    q: "What's the founding offer?",
-    a: "Before launch, you can pre-pay $36 for your whole first year of the 10,000-emails/mo plan — that's $3/mo instead of $5, or 40% off. You're locked in for the year and the founding rate stays with you as long as you keep your plan.",
-  },
-  {
     q: "When does day3 launch?",
-    a: "Very soon — days, not months. Sign up now and you'll be first in. If you take the founding offer, your year starts the moment we go live.",
+    a: "Very soon — days, not months. Sign up now and you'll be first in, with everything set up and ready to send the moment we go live.",
   },
   {
     q: "What counts as a send?",
@@ -37,17 +46,28 @@ const faqs = [
   },
   {
     q: "What happens if I go over?",
-    a: "You'll see the meter filling up before you ever hit it. If you need more headroom, move up a plan in a couple of clicks.",
+    a: "You can't, really — sending stops cleanly when you reach your monthly cap, so there's never a surprise charge. You'll watch the meter fill long before then, and if you need more headroom you can move up a plan in a couple of clicks.",
+  },
+  {
+    q: "Can I try it before I pay?",
+    a: "Yes. Signing up is free — you can look around, connect your sending domain, build an audience, and set up your first campaign. You just can't send until you pick a plan. Think of it as setting everything up so you're ready to go live the moment you subscribe.",
   },
   {
     q: "Is there a free tier?",
-    a: "No. day3 is intentionally cheap, not free — and right now $36 for a founding member's whole first year is about as cheap as it gets.",
+    a: "There's no free sending tier — day3 is intentionally cheap, not free. You can sign up for free to set everything up, but sending requires a plan. At $5/mo for 10,000 emails, it's about as cheap as sending gets.",
   },
 ];
 
 export default function PricingPage() {
   return (
     <>
+      <JsonLd data={softwareApplicationSchema()} />
+      <JsonLd data={faqSchema(faqs.map((f) => ({ q: f.q, a: f.a })))} />
+      <JsonLd data={breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Pricing", path: "/pricing" },
+      ])} />
+
       <PreviewBanner />
       <SiteHeader />
       <main id="main">
@@ -61,17 +81,8 @@ export default function PricingPage() {
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
               The bill follows the emails you send, not the size of your list.
-              Every plan includes unlimited subscribers — and right now,
-              founding members lock in a full year for {foundingOffer.price}.
+              Every plan includes unlimited subscribers — starting at $5/mo.
             </p>
-          </Container>
-        </section>
-
-        <section className="border-b border-border">
-          <Container className="py-16 sm:py-20">
-            <div className="mx-auto max-w-4xl">
-              <FoundingOffer />
-            </div>
           </Container>
         </section>
 
@@ -81,8 +92,8 @@ export default function PricingPage() {
               What it&apos;ll cost at launch
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-muted-foreground">
-              The plans you can move to once you&apos;re in. Sign up now to claim
-              the founding rate on the 10,000-email plan first.
+              Three plans, set by how many emails you send each month. Pick the
+              one that fits — you can change it whenever you like.
             </p>
             <div className="mt-12">
               <PricingCards />
@@ -92,7 +103,7 @@ export default function PricingPage() {
               <span className="font-medium text-foreground">
                 unlimited subscribers
               </span>
-              , campaigns, audiences, analytics, and one-click unsubscribe.
+              , campaigns, audiences, delivery stats, and one-click unsubscribe.
             </p>
           </Container>
         </section>
@@ -121,7 +132,7 @@ export default function PricingPage() {
         <section className="border-t border-border bg-oat/30">
           <Container className="py-16 text-center sm:py-20">
             <h2 className="font-display text-3xl text-foreground sm:text-4xl">
-              Claim your founding rate
+              Get set up before launch
             </h2>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button
@@ -129,14 +140,14 @@ export default function PricingPage() {
                 className="w-full sm:w-auto"
                 render={<a href={siteConfig.signupUrl} />}
               >
-                Become a founding member
+                Get started
                 <ArrowRight className="size-4" />
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 className="w-full sm:w-auto"
-                render={<Link href="/#model" />}
+                render={<Link href="/how-it-works" />}
               >
                 How the model works
               </Button>

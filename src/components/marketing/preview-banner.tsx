@@ -5,8 +5,8 @@ import { Container } from "@/components/marketing/container";
 import { siteConfig } from "@/lib/site";
 
 /**
- * Slim notice that day3 is launching very soon and taking founding members.
- * The copy is meant to create urgency, not deter people. Rendered only when
+ * Slim notice that day3 is launching very soon and taking signups. The copy is
+ * meant to create urgency, not deter people. Rendered only when
  * `siteConfig.isPreview` is true.
  */
 function PreviewBanner() {
