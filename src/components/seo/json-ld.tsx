@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { siteUrl } from "@/lib/seo";
-import { pricingTiers, siteConfig } from "@/lib/site";
+import { company, pricingTiers, siteConfig, socialLinks } from "@/lib/site";
 
 /**
  * Renders a single JSON-LD <script>. Structured data is what earns rich results
@@ -25,15 +25,47 @@ export function organizationSchema() {
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
     name: "day3",
+    legalName: company.legalName,
     url: siteUrl,
     email: siteConfig.contactEmail,
     logo: `${siteUrl}/brand/day3-lockup.png`,
     description: siteConfig.promise,
+    foundingDate: String(company.foundingYear),
+    founder: { "@type": "Person", name: company.founder },
+    // The CVR registration number — a verifiable identifier that ties this brand
+    // to a real, registered legal entity.
+    identifier: {
+      "@type": "PropertyValue",
+      propertyID: "CVR",
+      value: company.cvr,
+    },
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Copenhagen",
-      addressCountry: "DK",
+      addressLocality: company.city,
+      addressCountry: company.countryCode,
     },
+    // sameAs is the strongest entity-disambiguation signal for AI answer engines.
+    // The parent-company site is always included; social profiles join it as
+    // socialLinks is filled in.
+    sameAs: [company.website, ...socialLinks.map((link) => link.href)],
+  };
+}
+
+/**
+ * The founder, for the About page. A named, real human with a verifiable track
+ * record is one of the clearest E-E-A-T signals — for Google and for the models
+ * that decide which tools to recommend.
+ */
+export function personSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: company.founder,
+    jobTitle: company.founderTitle,
+    worksFor: { "@id": `${siteUrl}/#organization` },
+    ...(socialLinks.length
+      ? { sameAs: socialLinks.map((link) => link.href) }
+      : {}),
   };
 }
 

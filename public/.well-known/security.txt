@@ -1,0 +1,8 @@
+# Security contact for day3 — https://day3.app
+# Disclosure policy: https://day3.app/security
+
+Contact: mailto:hello@day3.app
+Expires: 2027-06-23T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://day3.app/.well-known/security.txt
+Policy: https://day3.app/security

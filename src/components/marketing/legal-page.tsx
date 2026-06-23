@@ -3,6 +3,7 @@ import * as React from "react";
 import { Container } from "@/components/marketing/container";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
+import { JsonLd, breadcrumbSchema } from "@/components/seo/json-ld";
 
 type LegalSection = {
   heading: string;
@@ -14,11 +15,22 @@ type LegalPageProps = {
   updated: string;
   intro: React.ReactNode;
   sections: LegalSection[];
+  /** Root-relative path, e.g. "/gdpr". When set, emits a breadcrumb for search
+   *  and AI answer engines. */
+  path?: string;
 };
 
-function LegalPage({ title, updated, intro, sections }: LegalPageProps) {
+function LegalPage({ title, updated, intro, sections, path }: LegalPageProps) {
   return (
     <>
+      {path ? (
+        <JsonLd
+          data={breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: title, path },
+          ])}
+        />
+      ) : null}
       <SiteHeader />
       <main id="main">
         <Container className="max-w-3xl py-16 sm:py-20">

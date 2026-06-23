@@ -31,6 +31,72 @@ export const navLinks = [
   { label: "Pricing", href: "/pricing" },
 ];
 
+/**
+ * Company + founder facts. The single source of truth for both the JSON-LD
+ * entity signals (what search and AI answer engines read) and the human copy on
+ * the About / trust pages. Change a fact once, here.
+ */
+export const company = {
+  legalName: "Pradsgaard Labs EMV",
+  // A real, registered entity is a strong trust + EEAT signal. CVR is the Danish
+  // company registration number — independently verifiable.
+  cvr: "DK46156153",
+  website: "https://pradsgaardlabs.com",
+  founder: "Morten Pradsgaard",
+  founderTitle: "Founder & engineer",
+  // Also the maker of exit1.dev — a real, verifiable track record is an EEAT win.
+  alsoBuilds: { name: "exit1.dev", href: "https://exit1.dev" },
+  foundingYear: 2026, // TODO: confirm for schema.org foundingDate
+  city: "Copenhagen",
+  country: "Denmark",
+  countryCode: "DK",
+};
+
+/**
+ * Public profiles for day3 / its founder. Wired into JSON-LD `sameAs`, the
+ * single strongest entity-disambiguation signal we can hand an AI answer engine
+ * ("this day3 is this verified identity across the web"). Add a profile here and
+ * it flows into the structured data and the footer automatically.
+ */
+export const socialLinks: { label: string; href: string }[] = [
+  { label: "GitHub", href: "https://github.com/Mopra/day3.app" },
+  // TODO: add LinkedIn / X profiles to further strengthen the sameAs entity signal.
+];
+
+export type Subprocessor = {
+  name: string;
+  purpose: string;
+  location: string;
+  url: string;
+};
+
+/**
+ * Third parties that may process personal data on day3's behalf. Drives
+ * /legal/subprocessors and the summary on /security. Everything here is
+ * EU-region — that's the whole point of day3's data story.
+ */
+export const subprocessors: Subprocessor[] = [
+  {
+    name: "Vercel",
+    purpose: "Application hosting, edge network and content delivery",
+    location: "European Union",
+    url: "https://vercel.com",
+  },
+  {
+    name: "Supabase",
+    purpose: "Database, authentication and file storage",
+    location: "European Union",
+    url: "https://supabase.com",
+  },
+  {
+    name: "Amazon SES",
+    purpose: "Outbound email delivery",
+    location: "European Union (Stockholm)",
+    url: "https://aws.amazon.com/ses/",
+  },
+  // TODO: payment processor (e.g. Stripe) once billing is live.
+];
+
 export type PricingTier = {
   price: string;
   cadence: string;

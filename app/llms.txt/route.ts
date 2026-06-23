@@ -1,4 +1,5 @@
 import { siteUrl } from "@/lib/seo";
+import { company } from "@/lib/site";
 import { featurePages } from "@/lib/features-content";
 import { comparePages } from "@/lib/compare-content";
 import { audiencePages } from "@/lib/audience-content";
@@ -60,6 +61,7 @@ function buildLlmsTxt(): string {
   lines.push(`- [Features](${siteUrl}/features): everything day3 does`);
   lines.push(`- [Who it's for](${siteUrl}/for): startups, indie developers, SaaS teams`);
   lines.push(`- [Compare](${siteUrl}/compare): how day3 compares to other email tools`);
+  lines.push(`- [Deliverability](${siteUrl}/deliverability): how day3 gets your email to the inbox`);
   lines.push("");
 
   lines.push("## Features");
@@ -83,10 +85,29 @@ function buildLlmsTxt(): string {
   }
   lines.push("");
 
+  lines.push("## Company");
+  lines.push("");
+  lines.push(`- [About](${siteUrl}/about): why day3 exists and who builds it`);
+  lines.push(`- [Changelog](${siteUrl}/changelog): what's new in day3`);
+  lines.push("");
+
+  lines.push("## Trust & legal");
+  lines.push("");
+  lines.push(`- [Security](${siteUrl}/security): security practices, EU-only hosting, and an honest compliance posture`);
+  lines.push(`- [GDPR](${siteUrl}/gdpr): how day3 handles personal data under the GDPR`);
+  lines.push(`- [Data Processing Agreement](${siteUrl}/legal/dpa): processor terms for the subscriber data you import`);
+  lines.push(`- [Sub-processors](${siteUrl}/legal/subprocessors): every third party that can touch your data — all EU-region`);
+  lines.push(`- [Acceptable Use Policy](${siteUrl}/legal/acceptable-use): permission-based, anti-spam sending rules`);
+  lines.push(`- [Terms of Service](${siteUrl}/terms)`);
+  lines.push(`- [Privacy Policy](${siteUrl}/privacy)`);
+  lines.push("");
+
   lines.push("## Contact");
   lines.push("");
   lines.push("- Email: hello@day3.app");
   lines.push("- Based in Copenhagen, Denmark");
+  lines.push(`- Operated by ${company.legalName} (CVR ${company.cvr})`);
+  lines.push("- Hosting and data residency: European Union only");
   lines.push("");
 
   return lines.join("\n");
