@@ -44,7 +44,7 @@ function AppPreview() {
           {[
             { label: "Campaigns", active: true },
             { label: "Audiences", active: false },
-            { label: "Analytics", active: false },
+            { label: "Metrics", active: false },
             { label: "Settings", active: false },
           ].map((item) => (
             <span

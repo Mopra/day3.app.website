@@ -3,6 +3,7 @@ import {
   Users,
   MousePointerClick,
   ShieldCheck,
+  LineChart,
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
@@ -249,12 +250,63 @@ export const featurePages: FeaturePage[] = [
     ],
   },
   {
+    slug: "metrics",
+    navLabel: "Metrics",
+    icon: LineChart,
+    metaTitle: "Metrics — opens, clicks, deliverability, and reputation",
+    metaDescription:
+      "See what your emails do after they send: open and click tracking, a delivery funnel, and bounce/complaint reputation gauges. One Metrics page across every campaign, with a per-campaign breakdown.",
+    keywords: [
+      "email open tracking",
+      "email click tracking",
+      "email deliverability metrics",
+      "newsletter analytics",
+      "email sender reputation",
+    ],
+    eyebrow: "Metrics",
+    title: "See what happens after you hit send.",
+    summary:
+      "A single Metrics page pulls together deliverability, reputation, and engagement across every campaign — opens, clicks, bounces, complaints, and unsubscribes — with a sortable per-campaign breakdown.",
+    points: [
+      {
+        title: "Opens and clicks",
+        description:
+          "Per-recipient open and click tracking, counted once each. Click links are signed so a redirect can only ever land on a URL you sent — never an open redirect.",
+      },
+      {
+        title: "A delivery funnel",
+        description:
+          "Sent → delivered → opened → clicked, with the delivery rate, so you can see exactly where a send lands.",
+      },
+      {
+        title: "Reputation gauges",
+        description:
+          "Bounce-rate and complaint-rate gauges scaled to the thresholds your email provider reviews against, with a clear health status — so you stay deliverable.",
+      },
+      {
+        title: "Honest about the numbers",
+        description:
+          "Privacy proxies like Apple Mail pre-load images, which can overstate opens. day3 flags that in the UI rather than pretending the number is exact.",
+      },
+    ],
+    faqs: [
+      {
+        q: "Does day3 track opens and clicks?",
+        a: "Yes. Every sent email carries a signed tracking pixel for opens and signed redirect links for clicks, each counted once per recipient. A click also back-fills an open, since a click proves the email was opened.",
+      },
+      {
+        q: "Can I see deliverability and sender reputation?",
+        a: "Yes. The Metrics page shows a sent → delivered → opened → clicked funnel plus bounce-rate and complaint-rate gauges scaled to your provider's review thresholds, so you can keep your sender reputation healthy.",
+      },
+    ],
+  },
+  {
     slug: "ai-assist",
     navLabel: "AI assist",
     icon: Sparkles,
-    metaTitle: "AI assist — draft and refine product emails (optional)",
+    metaTitle: "AI assist — draft and refine product emails",
     metaDescription:
-      "Optional AI help to draft a full campaign from a short brief, generate subject lines and preview text, and rewrite selected copy. Powered by Claude. Off until you turn it on.",
+      "An AI writing assistant that drafts a full campaign from a short brief, generates subject lines and preview text, and rewrites selected copy. Powered by Claude, included on the 10k plan and up.",
     keywords: [
       "AI email writer",
       "AI newsletter generator",
@@ -264,12 +316,12 @@ export const featurePages: FeaturePage[] = [
     eyebrow: "AI assist",
     title: "A writing assistant, when you want one.",
     summary:
-      "Optional AI help that drafts a campaign from a short brief, suggests subject lines, writes preview text, and rewrites the bits you highlight. Powered by Claude — and entirely off until you enable it.",
+      "AI help that drafts a campaign from a short brief, suggests subject lines, writes preview text, and rewrites the bits you highlight. Powered by Claude, and included on the 10k plan and up.",
     points: [
       {
         title: "Draft a whole campaign",
         description:
-          "Give it a short brief and a tone — friendly, professional, excited, casual, or concise — and get back a subject, preview text, and body to edit.",
+          "Give it a short brief and get back a subject line, preview text, and a full body — then edit it and make it your own.",
       },
       {
         title: "Subject line ideas",
@@ -277,24 +329,24 @@ export const featurePages: FeaturePage[] = [
           "Generate five alternative subject lines and pick the one that fits.",
       },
       {
-        title: "Select-to-rewrite",
+        title: "Edit with AI",
         description:
-          "Highlight any text in the editor and rewrite it: improve, shorten, make it friendlier or more professional, or fix grammar.",
+          "Highlight any text in the editor and describe the change in plain language — 'make this punchier and add a clear call to action' — and day3 rewrites just that selection.",
       },
       {
-        title: "Optional and safe",
+        title: "Included from the 10k plan up",
         description:
-          "AI is gated — if it's not configured, the UI is simply hidden. Every AI output runs through the same email-safe sanitizer and keeps your merge tags intact.",
+          "The assistant comes with the 10k plan ($5/mo) and every plan above it. Every AI output runs through the same email-safe sanitizer and keeps your merge tags intact.",
       },
     ],
     faqs: [
       {
-        q: "Is AI required to use day3?",
-        a: "No. AI assist is entirely optional. If it isn't enabled, the AI UI is hidden and day3 works exactly the same without it.",
+        q: "Which plans include the AI assistant?",
+        a: "The AI writing assistant is included on the 10k plan ($5/mo) and up. On the 1k and 5k plans day3 works exactly the same without it — AI helps you write, but it's never required to send.",
       },
       {
         q: "Which AI model does day3 use?",
-        a: "AI assist is powered by Claude (via OpenRouter) by default. It can draft campaigns, suggest subject lines, write preview text, and rewrite selected copy.",
+        a: "AI assist is powered by Claude (via OpenRouter) by default. It can draft a campaign from a brief, suggest subject lines, write preview text, and rewrite selected copy — all kept email-safe.",
       },
     ],
   },

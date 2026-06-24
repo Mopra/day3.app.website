@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: "%s · day3",
   },
   description:
-    "day3 is launching soon. Email marketing for startups and indie devs — unlimited subscribers, priced by emails sent. From $5/mo for 10,000 emails a month.",
+    "day3 is launching soon. The most approachable email tool for startups and indie devs — unlimited subscribers, priced by emails sent. Plans start at $1/mo.",
   keywords: [
     "email marketing",
     "newsletter",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "day3 — Launching soon",
     description:
-      "Unlimited subscribers, billed by emails sent rather than list size. From $5/mo for 10,000 emails a month.",
+      "Unlimited subscribers, billed by emails sent rather than list size. Plans start at $1/mo.",
     url: siteUrl,
     siteName: "day3",
     type: "website",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "day3 — Launching soon",
     description:
-      "Unlimited subscribers, billed by emails sent. From $5/mo for 10,000 emails a month.",
+      "Unlimited subscribers, billed by emails sent. Plans start at $1/mo.",
   },
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },

@@ -84,8 +84,8 @@ export function softwareApplicationSchema() {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "USD",
-      lowPrice: "5",
-      highPrice: "50",
+      lowPrice: "1",
+      highPrice: "49",
       offerCount: pricingTiers.length,
       offers: pricingTiers.map((tier) => ({
         "@type": "Offer",

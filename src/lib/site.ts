@@ -98,36 +98,93 @@ export const subprocessors: Subprocessor[] = [
 ];
 
 export type PricingTier = {
+  /** Short label, e.g. "10k". Matches the in-app plan name. */
+  name: string;
+  /** Display price, e.g. "$5". */
   price: string;
-  cadence: string;
+  /** Numeric monthly price in USD — drives the bandwidth slider math. */
+  priceUsd: number;
+  /** Display email allowance, e.g. "10,000". */
   emails: string;
+  /** Numeric monthly email allowance. */
+  emailsValue: number;
   emailsNote: string;
   blurb: string;
-  featured?: boolean;
+  /** Whether the AI writing assistant is included (gated to the 10k tier and up). */
+  ai: boolean;
+  /** The "Most popular" pick — highlighted in the slider carousel. */
+  popular?: boolean;
 };
 
+/**
+ * The paid plan ladder, mirroring `src/lib/plans-catalog.ts` in the app. day3
+ * sells sending bandwidth: every plan has unlimited subscribers and the same
+ * features — the only axes that change are the monthly email allowance and,
+ * from the 10k tier up, the AI writing assistant. The always-on free set-up
+ * tier is deliberately not listed here: it can't send, so it isn't a plan you
+ * pick — it's just what an account is before it subscribes.
+ */
 export const pricingTiers: PricingTier[] = [
   {
+    name: "1k",
+    price: "$1",
+    priceUsd: 1,
+    emails: "1,000",
+    emailsValue: 1000,
+    emailsNote: "emails / month",
+    blurb: "The lowest way in — a first list and your earliest updates.",
+    ai: false,
+  },
+  {
+    name: "5k",
+    price: "$3",
+    priceUsd: 3,
+    emails: "5,000",
+    emailsValue: 5000,
+    emailsNote: "emails / month",
+    blurb: "A small list you email a few times a month.",
+    ai: false,
+  },
+  {
+    name: "10k",
     price: "$5",
-    cadence: "/mo",
+    priceUsd: 5,
     emails: "10,000",
+    emailsValue: 10000,
     emailsNote: "emails / month",
-    blurb: "A first list and a handful of campaigns.",
+    blurb: "A growing list, regular updates, and the AI writing assistant.",
+    ai: true,
+    popular: true,
   },
   {
-    price: "$20",
-    cadence: "/mo",
+    name: "25k",
+    price: "$12",
+    priceUsd: 12,
+    emails: "25,000",
+    emailsValue: 25000,
+    emailsNote: "emails / month",
+    blurb: "Frequent sends to a list that's finding its traction.",
+    ai: true,
+  },
+  {
+    name: "50k",
+    price: "$24",
+    priceUsd: 24,
     emails: "50,000",
+    emailsValue: 50000,
     emailsNote: "emails / month",
-    blurb: "A growing list you mail on a regular schedule.",
-    featured: true,
+    blurb: "An established list you mail on a steady schedule.",
+    ai: true,
   },
   {
-    price: "$50",
-    cadence: "/mo",
-    emails: "200,000",
+    name: "100k",
+    price: "$49",
+    priceUsd: 49,
+    emails: "100,000",
+    emailsValue: 100000,
     emailsNote: "emails / month",
     blurb: "A large list that hears from you often.",
+    ai: true,
   },
 ];
 
@@ -163,9 +220,9 @@ export const features: Feature[] = [
     icon: Users,
   },
   {
-    title: "Delivery stats",
+    title: "Delivery & engagement stats",
     description:
-      "Sent, delivered, bounced, complained, unsubscribed. Enough to tell whether an email landed.",
+      "Sent, delivered, opened, clicked, bounced, unsubscribed — enough to tell whether an email landed and got read.",
     icon: BarChart3,
   },
   {

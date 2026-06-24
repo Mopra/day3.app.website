@@ -17,7 +17,7 @@ import { featurePages } from "@/lib/features-content";
 export const metadata: Metadata = buildMetadata({
   title: "Features — everything you need to send a good product email",
   description:
-    "Campaigns, audiences, signup forms, deliverability, and optional AI assist. The parts you need to email your users — not the parts that come with a manual.",
+    "Campaigns, audiences, signup forms, deliverability, metrics, and an optional AI assistant. The parts you need to email your users — not the parts that come with a manual.",
   path: "/features",
   keywords: [
     "email marketing features",
@@ -90,8 +90,8 @@ export default function FeaturesPage() {
               See it before you commit.
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Sign up free to set everything up. $5/mo for 10,000 emails a month
-              when you&apos;re ready to send.
+              Sign up free to set everything up. Plans start at $1/mo when
+              you&apos;re ready to send.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button

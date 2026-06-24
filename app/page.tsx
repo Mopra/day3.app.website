@@ -14,7 +14,7 @@ import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
-import { PricingCards } from "@/components/marketing/pricing-cards";
+import { PricingSlider } from "@/components/marketing/pricing-slider";
 import { UsageMeter } from "@/components/marketing/usage-meter";
 import { AppPreview } from "@/components/marketing/app-preview";
 import { Reveal } from "@/components/marketing/reveal";
@@ -54,8 +54,9 @@ export default function HomePage() {
 
               <Reveal delay={90}>
                 <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                  Your list can grow as large as you want. The price only moves
-                  when you hit send.
+                  The most approachable way to email your users — start for $1 a
+                  month, scale as you grow, and never pay for the size of your
+                  list.
                 </p>
               </Reveal>
 
@@ -74,7 +75,7 @@ export default function HomePage() {
 
               <Reveal delay={260}>
                 <p className="mt-5 text-sm text-muted-foreground">
-                  $5/mo for 10,000 emails a month.{" "}
+                  Plans start at $1/mo.{" "}
                   <a
                     href={siteConfig.signupUrl}
                     className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
@@ -100,11 +101,11 @@ export default function HomePage() {
               <SectionHeading
                 align="center"
                 title="What it'll cost at launch"
-                description="Three plans, set by how many emails go out each month. Every one comes with unlimited subscribers. Start on the 10,000-email plan at $5/mo."
+                description="Slide to the volume you send each month. Plans start at $1/mo and scale to 100,000 emails — every one with unlimited subscribers."
               />
             </Reveal>
             <Reveal delay={120} className="mt-12">
-              <PricingCards />
+              <PricingSlider />
             </Reveal>
             <p className="mt-8 text-center text-sm text-muted-foreground">
               All plans include{" "}
@@ -208,8 +209,8 @@ export default function HomePage() {
                 Get in before we launch.
               </h2>
               <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
-                Sign up now to be first through the door. $5/mo for 10,000 emails
-                a month — and unlimited subscribers on every plan.
+                Sign up now to be first through the door. Plans start at $1/mo —
+                with unlimited subscribers on every one.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button

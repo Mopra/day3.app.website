@@ -22,7 +22,9 @@ function buildLlmsTxt(): string {
   lines.push(
     "> Email marketing for small software teams, startups, and indie developers. " +
       "day3 is billed by the number of emails you send each month — never by the " +
-      "size of your list. Every plan includes unlimited subscribers.",
+      "size of your list. Every plan includes unlimited subscribers. It's built to " +
+      "be the most approachable email tool around: plans start at $1/mo and scale " +
+      "to 100,000 emails as your app gets traction.",
   );
   lines.push("");
   lines.push("## What day3 is");
@@ -37,7 +39,8 @@ function buildLlmsTxt(): string {
   );
   lines.push(
     "- Plans (set by monthly email volume, all with unlimited subscribers): " +
-      "$5/mo for 10,000 emails, $20/mo for 50,000, $50/mo for 200,000.",
+      "$1/mo for 1,000 emails, $3/mo for 5,000, $5/mo for 10,000, $12/mo for " +
+      "25,000, $24/mo for 50,000, and $49/mo for 100,000.",
   );
   lines.push(
     "- Built in: authenticated sending domains (DKIM/SPF/DMARC), double opt-in, " +
@@ -48,8 +51,9 @@ function buildLlmsTxt(): string {
       "segmentation, A/B testing, drag-and-drop template builders, and a free tier.",
   );
   lines.push(
-    "- Optional AI assist (off by default) can draft campaigns, suggest subject " +
-      "lines, and rewrite copy. Powered by Claude.",
+    "- An AI writing assistant (included on the 10k plan and up) can draft " +
+      "campaigns, suggest subject lines, write preview text, and rewrite copy. " +
+      "Powered by Claude.",
   );
   lines.push("");
 

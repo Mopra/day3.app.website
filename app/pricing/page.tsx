@@ -8,7 +8,7 @@ import { Container } from "@/components/marketing/container";
 import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
-import { PricingCards } from "@/components/marketing/pricing-cards";
+import { PricingSlider } from "@/components/marketing/pricing-slider";
 import {
   JsonLd,
   breadcrumbSchema,
@@ -21,7 +21,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = buildMetadata({
   title: "Pricing",
   description:
-    "day3 is launching soon. $5/mo for 10,000 emails, $20/mo for 50,000, $50/mo for 200,000 — every plan includes unlimited subscribers. Priced by emails sent, never by list size.",
+    "The most approachable email platform: plans start at $1/mo for 1,000 emails and scale to $49/mo for 100,000 — every plan includes unlimited subscribers. Priced by emails sent, never by list size.",
   path: "/pricing",
   keywords: [
     "email marketing pricing",
@@ -54,7 +54,11 @@ const faqs = [
   },
   {
     q: "Is there a free tier?",
-    a: "There's no free sending tier — day3 is intentionally cheap, not free. You can sign up for free to set everything up, but sending requires a plan. At $5/mo for 10,000 emails, it's about as cheap as sending gets.",
+    a: "There's no free sending tier — day3 is intentionally approachable, not free. You can sign up at no cost to set everything up and feel it out, but actually sending starts at just $1/mo. That low entry is the point: an email tool anyone can start with, that scales as your app gets traction.",
+  },
+  {
+    q: "Is the AI writing assistant included?",
+    a: "The AI writing assistant — draft a campaign from a brief, suggest subject lines, write preview text, and rewrite highlighted copy — is included on the 10k plan ($5/mo) and up. Smaller plans work exactly the same without it; AI is never required to send.",
   },
 ];
 
@@ -81,7 +85,8 @@ export default function PricingPage() {
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
               The bill follows the emails you send, not the size of your list.
-              Every plan includes unlimited subscribers — starting at $5/mo.
+              Plans start at $1/mo and scale as you grow — every one with
+              unlimited subscribers.
             </p>
           </Container>
         </section>
@@ -92,18 +97,20 @@ export default function PricingPage() {
               What it&apos;ll cost at launch
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-muted-foreground">
-              Three plans, set by how many emails you send each month. Pick the
-              one that fits — you can change it whenever you like.
+              Slide to the volume you send each month. Plans start at $1/mo —
+              you can change tiers whenever you like.
             </p>
             <div className="mt-12">
-              <PricingCards />
+              <PricingSlider />
             </div>
             <p className="mt-8 text-center text-sm text-muted-foreground">
-              All plans include{" "}
+              Every plan includes{" "}
               <span className="font-medium text-foreground">
                 unlimited subscribers
               </span>
-              , campaigns, audiences, delivery stats, and one-click unsubscribe.
+              , campaigns, audiences, signup forms, metrics, and one-click
+              unsubscribe. The AI writing assistant is included from the 10k
+              plan up.
             </p>
           </Container>
         </section>

@@ -21,7 +21,7 @@ export const changelogEntries: ChangelogEntry[] = [
     isoDate: "2026-06-23",
     title: "AI campaign composer, scheduling, and senders",
     items: [
-      "Write campaigns faster with an optional AI composer that drafts emails, suggests subject lines, and rewrites copy. It's powered by Claude and off by default.",
+      "Write campaigns faster with an optional AI composer that drafts emails, suggests subject lines, and rewrites copy. It's powered by Claude and included on the 10k plan and up.",
       "Set a monthly AI usage budget per account, so assisted writing never produces a surprise cost.",
       "Schedule a campaign to go out later instead of sending the moment you finish.",
       "Add multiple sending identities and pick which one a campaign comes from.",

@@ -65,9 +65,9 @@ export const audiencePages: AudiencePage[] = [
           "Authenticated sending, double opt-in, and auto-suppression keep you out of spam folders from day one.",
       },
       {
-        title: "Cheap while you're small",
+        title: "Approachable from day one",
         description:
-          "10,000 emails a month for $5 — and the list can grow as fast as you like without changing the bill.",
+          "Plans start at $1/mo, and the list can grow as fast as you like without ever changing the bill.",
       },
     ],
     faqs: [
@@ -115,9 +115,9 @@ export const audiencePages: AudiencePage[] = [
           "The audience you've built is free to keep. You only pay when you actually send.",
       },
       {
-        title: "Optional AI drafting",
+        title: "AI drafting when you're stuck",
         description:
-          "Stuck on wording? Draft a campaign or rewrite a line with Claude — optional, and off until you turn it on.",
+          "Stuck on wording? Draft a campaign or rewrite a line with Claude — included on the 10k plan and up.",
       },
       {
         title: "No upsell path",
@@ -128,7 +128,7 @@ export const audiencePages: AudiencePage[] = [
     faqs: [
       {
         q: "Is day3 good for indie hackers?",
-        a: "Yes — it's deliberately minimal, priced by sends so your list stays free to grow, and includes embeddable signup forms and optional AI drafting. It's built for solo founders sending product updates, not marketing teams.",
+        a: "Yes — it's deliberately minimal, priced by sends so your list stays free to grow, and includes embeddable signup forms, with AI drafting available from the 10k plan up. It's built for solo founders sending product updates, not marketing teams.",
       },
       {
         q: "Can I add a signup form to my own site?",

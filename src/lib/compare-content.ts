@@ -44,9 +44,9 @@ export type ComparePage = {
 const DAY3 = {
   pricing: "By emails sent each month",
   subscribers: "Unlimited on every plan",
-  freeTier: "No free tier — paid from $5/mo, free to set up",
+  freeTier: "No free tier — paid from $1/mo, free to set up",
   scope: "Product updates & newsletters, on purpose narrow",
-  startingPrice: "$5/mo for 10,000 emails",
+  startingPrice: "$1/mo for 1,000 emails",
 };
 
 export const comparePages: ComparePage[] = [
@@ -146,9 +146,9 @@ export const comparePages: ComparePage[] = [
           "Changelogs and 'what's new' emails, not sales sequences. The whole tool is shaped around that one job.",
       },
       {
-        title: "Optional AI, on your terms",
+        title: "AI writing help when you want it",
         description:
-          "Draft a campaign or rewrite a paragraph with Claude when you want it — and it's completely off until you enable it.",
+          "Draft a campaign or rewrite a paragraph with Claude — included on the 10k plan and up.",
       },
     ],
     stayIf:
@@ -255,9 +255,9 @@ export const comparePages: ComparePage[] = [
           "day3 is shaped specifically for changelogs and 'what's new' emails from software teams.",
       },
       {
-        title: "Optional AI assist",
+        title: "AI assist when it helps",
         description:
-          "Draft and refine emails with Claude when it helps — entirely optional and off by default.",
+          "Draft and refine emails with Claude — included on the 10k plan and up.",
       },
     ],
     stayIf:
