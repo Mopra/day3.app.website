@@ -80,8 +80,8 @@ export default async function ComparePage({ params }: PageProps) {
         {/* Comparison table */}
         <section className="border-b border-border">
           <Container className="py-16 sm:py-20">
-            <div className="overflow-hidden rounded-xl border border-border">
-              <table className="w-full text-left text-sm">
+            <div className="overflow-x-auto rounded-xl border border-border">
+              <table className="w-full min-w-[34rem] text-left text-sm">
                 <thead>
                   <tr className="border-b border-border bg-secondary/30">
                     <th className="p-4 font-medium text-muted-foreground">

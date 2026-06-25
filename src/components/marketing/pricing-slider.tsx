@@ -151,19 +151,19 @@ export function PricingSlider() {
     <Card className="mx-auto max-w-2xl space-y-7 p-6 sm:p-8">
       {/* Big live readout of the focused tier — slide to change it. */}
       <div className="space-y-4">
-        <div className="flex items-end justify-between gap-4">
-          <div>
+        <div className="flex items-end justify-between gap-3">
+          <div className="min-w-0">
             <p className="text-sm text-muted-foreground">
               How many emails do you send per month?
             </p>
-            <p className="mt-0.5 font-display text-3xl text-foreground tabular-nums sm:text-4xl">
+            <p className="mt-0.5 font-display text-2xl text-foreground tabular-nums sm:text-4xl">
               {tier.emails}
               <span className="ml-1.5 text-sm font-normal text-muted-foreground">
                 emails / mo
               </span>
             </p>
           </div>
-          <div className="text-right">
+          <div className="shrink-0 text-right">
             <p className="text-sm text-muted-foreground">{tier.name} plan</p>
             <p className="text-xl font-semibold tracking-tight text-foreground">
               {tier.price}

@@ -78,12 +78,12 @@ function UsageMeter() {
           max={CAP}
           getAriaValueText={() => `${pct}%`}
         >
-          <div className="flex items-end justify-between gap-4">
-            <div>
+          <div className="flex items-end justify-between gap-3">
+            <div className="min-w-0">
               <p className="text-sm font-medium text-muted-foreground">
                 Emails sent this month
               </p>
-              <p className="mt-1 font-display text-3xl text-foreground tabular-nums">
+              <p className="mt-1 font-display text-2xl text-foreground tabular-nums sm:text-3xl">
                 {value.toLocaleString("en-US")}
                 <span className="text-muted-foreground">
                   {" "}
@@ -91,7 +91,7 @@ function UsageMeter() {
                 </span>
               </p>
             </div>
-            <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground tabular-nums">
+            <span className="shrink-0 whitespace-nowrap rounded-full bg-secondary px-2.5 py-1 text-xs font-medium text-secondary-foreground tabular-nums">
               {pct}% used
             </span>
           </div>

@@ -46,7 +46,7 @@ export default function HomePage() {
           <Container className="py-20 sm:py-28">
             <div className="mx-auto max-w-3xl text-center">
               <Reveal>
-                <h1 className="font-display text-5xl leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+                <h1 className="font-display text-4xl leading-[1.08] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
                   Email marketing that charges
                   <br className="hidden sm:block" /> for sends, not subscribers.
                 </h1>

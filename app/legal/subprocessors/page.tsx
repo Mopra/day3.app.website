@@ -31,8 +31,8 @@ export default function SubprocessorsPage() {
         {
           heading: "Current sub-processors",
           body: (
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse text-left text-sm">
+            <div className="-mx-1 overflow-x-auto px-1">
+              <table className="w-full min-w-[28rem] border-collapse text-left text-sm">
                 <thead>
                   <tr className="border-b border-border">
                     <th className="py-3 pr-4 font-semibold text-foreground">
