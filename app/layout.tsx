@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Instrument_Serif } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import Script from "next/script";
 import "./globals.css";
+
+import { siteConfig } from "@/lib/site";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -75,7 +78,16 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        {/* Opens the subscribe popup once when a visitor moves to leave, site-wide. */}
+        <div
+          hidden
+          data-day3-form={siteConfig.subscribeFormId}
+          data-day3-mode="popup"
+          data-day3-trigger="exit-intent"
+        />
       </body>
+      {/* Powers the day3 subscribe popup wherever a SubscribeButton appears. */}
+      <Script src={siteConfig.embedScriptUrl} strategy="afterInteractive" />
       <GoogleAnalytics gaId="G-JJJ6E2LDX8" />
     </html>
   );

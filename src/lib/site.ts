@@ -15,6 +15,11 @@ export const siteConfig = {
   promise: "You're billed on emails sent, not on the size of your list.",
   signupUrl: "https://go.day3.app",
   loginUrl: "https://go.day3.app/login",
+  // day3's own subscribe form — we dogfood the product to capture pre-launch
+  // signups. The popup is wired up by embed.js (loaded once in the root layout)
+  // wherever a `<SubscribeButton>` carries the matching data attributes.
+  subscribeFormId: "frm_y2w9edh1fqcpanb48vz4",
+  embedScriptUrl: "https://go.day3.app/embed.js",
   contactEmail: "hello@day3.app",
   location: "Copenhagen, Denmark",
   // day3 isn't live yet — we're still pre-launch. Flip `isPreview` to false on

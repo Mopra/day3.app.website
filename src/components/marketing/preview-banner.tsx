@@ -2,6 +2,7 @@ import * as React from "react";
 import { Rocket } from "lucide-react";
 
 import { Container } from "@/components/marketing/container";
+import { SubscribeButton } from "@/components/marketing/subscribe-button";
 import { siteConfig } from "@/lib/site";
 
 /**
@@ -18,6 +19,12 @@ function PreviewBanner() {
         <p className="flex items-center justify-center gap-2 py-2 text-center text-xs font-medium sm:text-sm">
           <Rocket className="size-3.5 shrink-0 text-caramel" aria-hidden="true" />
           <span>{siteConfig.previewNote}</span>
+          <SubscribeButton
+            variant="link"
+            className="h-auto p-0 text-xs font-medium text-foreground underline underline-offset-4 hover:text-caramel sm:text-sm"
+          >
+            Get launch updates
+          </SubscribeButton>
         </p>
       </Container>
     </div>

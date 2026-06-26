@@ -17,6 +17,7 @@ import { SectionHeading } from "@/components/marketing/section-heading";
 import { PricingSlider } from "@/components/marketing/pricing-slider";
 import { UsageMeter } from "@/components/marketing/usage-meter";
 import { AppPreview } from "@/components/marketing/app-preview";
+import { SubscribeButton } from "@/components/marketing/subscribe-button";
 import { Reveal } from "@/components/marketing/reveal";
 import { HeroAurora } from "@/components/marketing/hero-aurora";
 import {
@@ -230,6 +231,15 @@ export default function HomePage() {
                   See pricing
                 </Button>
               </div>
+              <p className="mt-5 text-sm text-muted-foreground">
+                Not ready to set up an account?{" "}
+                <SubscribeButton
+                  variant="link"
+                  className="h-auto p-0 text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                >
+                  Get an email when we launch
+                </SubscribeButton>
+              </p>
             </Reveal>
           </Container>
         </section>
