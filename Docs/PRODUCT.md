@@ -8,7 +8,7 @@
 > **Keep it current.** This document MUST be updated whenever a feature, flow,
 > price, limit, or integration changes. See [Maintaining this document](#maintaining-this-document).
 >
-> Last verified against the codebase: **2026-06-24**.
+> Last verified against the codebase: **2026-07-05**.
 
 ---
 
@@ -38,10 +38,11 @@ become a marketing suite.
 - **Deliverability and compliance are built in, not add-ons:** verified sending
   domains, double opt-in, one-click unsubscribe, automatic bounce/complaint
   suppression, and account auto-pause on bad reputation.
-- **Deliberately excluded:** marketing automation flows, audience segmentation,
-  A/B testing, and drag-and-drop template builders. Open and click tracking plus a
-  deliverability/reputation/engagement dashboard are included (see §6.10); the rest
-  are out of scope by design.
+- **Deliberately excluded:** marketing automation flows, A/B testing, and
+  drag-and-drop template builders. Open and click tracking plus a
+  deliverability/reputation/engagement dashboard are included (see §6.10), and
+  audiences support **segments** (saved filters) and **topics** (subscription
+  categories) — see §6.3; the rest are out of scope by design.
 
 ## 3. Who it's for
 
@@ -87,6 +88,11 @@ Key pricing facts:
   usage-based overages); the UI surfaces upgrade prompts as the cap approaches.
 - **Usage resets** at the start of each billing period (driven by the Clerk
   `subscriptionItem.active` webhook; a monthly cron sweep is the fallback).
+- **Above 100k/mo is by arrangement, not self-serve.** The billing page's plan
+  picker ends with a "Need more?" card whose "Contact us" opens an in-app form
+  (relayed to the support inbox via `POST /api/support`, topic `volume`, with a
+  mailto fallback); there is no checkout for a custom tier (operators set one up
+  manually, e.g. via the plan metadata override).
 - **No per-contact / per-subscriber pricing.** Subscriber count does not affect price.
 - **Subscription lifecycle → behavior:**
   - `active` → can send up to the plan's allowance.
@@ -117,10 +123,12 @@ Key pricing facts:
 | **Sender** | A saved **From** identity — a from-name + from-address pair (e.g. `Jane from Acme <jane@news.acme.com>`) on a verified sending domain. Campaigns pick a sender instead of typing the From each time; an account can keep several per domain, with one marked default. |
 | **Campaign** | A single email send to one audience. Lifecycle: `draft` → (optionally `scheduled`) → `pending_review` → `approved` → `generating_recipients` → `sending` → `sent` (or `paused`, `blocked`, `failed`). |
 | **Campaign recipient** | A per-email send record — the source of truth for idempotent, no-duplicate delivery. Tracks delivery status (`pending`, `sending`, `sent`, `delivered`, `bounced`, `complained`, `unsubscribed`, `failed`, `skipped`). |
+| **Segment** | A saved, named filter over an audience's subscribers ("plan is pro"), evaluated live — never materialized. Campaigns can send to a segment instead of the whole audience. |
+| **Topic** | A subscription category on an audience ("Product updates", "Promotions"). Opt-out model (everyone in by default) or opt-in. Campaigns sent under a topic skip contacts who opted out; the unsubscribe page offers a per-topic opt-out. |
 | **Form** | A hosted/embeddable signup form that captures new subscribers into an audience. |
 | **Suppression entry** | A blocklist record (per-account or global) that prevents sending to an address that unsubscribed, bounced, complained, or was manually suppressed. |
 | **Import** | A CSV upload job that adds subscribers to an audience. |
-| **Risk review** | An automated spam/abuse assessment of a campaign before it sends. |
+| **Risk review** | An automated spam/abuse assessment of a campaign before it sends: deterministic content checks, plus an optional AI pass that can only raise (never lower) the verdict. Produces a risk level and user-facing fix-it guidance. |
 
 ---
 
@@ -130,9 +138,15 @@ Key pricing facts:
 - Create a campaign with name, subject, preview text, a **sender** (From), and an HTML
   body. The **name is an editable page title** at the top of the composer (falls back to
   the subject if left blank).
-- **Email-style composer:** the settings (From, Reply-To, To/segment, Subject, Preview)
+- **Email-style composer:** the settings (From, Reply-To, To, Subject, Preview)
   read as the header rows at the top of a real email, with the body flowing directly
   beneath — one continuous message surface.
+- **To targets an audience, optionally narrowed:** when the audience has saved
+  segments, the To row adds a second picker — "Everyone" or a segment (with its live
+  contact count). When the audience has topics, a **Topic** row appears: sending under
+  a topic skips contacts who opted out and lights up the per-topic choice on the
+  unsubscribe page. Both reset when the audience changes; recipient counts, the
+  pre-send personalization check, and the "no recipients" gate all respect them.
 - **From is a sender picker:** the From row is a dropdown of the account's saved senders
   (the default / sole sender auto-selects), not free text. A new sender can be added
   inline without leaving the composer.
@@ -143,14 +157,72 @@ Key pricing facts:
   first keystroke, so nothing is ever lost; everything a send needs is enforced at
   submit/schedule time instead. A brand-new draft is created on the first autosave and
   the URL switches to the campaign in place.
-- **Rich-text WYSIWYG editor** (TipTap) constrained to an email-safe HTML allowlist —
-  what you see is exactly what recipients get. Formatting floats in on selection and a
-  "+" insert menu appears on empty lines (no fixed toolbar). Insert options: headings,
-  lists, and quotes.
-- **Merge tags:** `{{first_name}}`, `{{last_name}}`, `{{email}}`. Tags can carry a
-  **fallback** for when the field is empty (`{{first_name|there}}` → "there"), so
+- **Section & column layout builder:** the body is a stack of **sections** that can be
+  **added, removed, and drag-reordered**. Text, image, and button sections lay out as
+  **1, 2, or 3 equal-width columns**, so you can mix a full-width intro with a two- or
+  three-up row below it. Changing a section's column count never loses work (shrinking
+  folds the extra columns into the last one). Sections serialize to email-safe layout
+  tables, so multi-column layouts render in the inbox while staying within the allowlist.
+  **Multi-column layouts are responsive:** on phones (and any client narrower than the
+  ~600px body) two- and three-up columns, button rows, and side-by-side cards **collapse
+  to a single stacked column**, with column images filling the new width — so the email
+  reads cleanly on mobile without a separate layout. Desktop clients keep the side-by-side
+  layout. A **brand-new campaign opens on a starter layout** (a text block plus a ready-made
+  call-to-action button) rather than a blank canvas.
+- **Section types** — chosen per section from a type menu, switchable at any time
+  without losing work:
+  - **Text** — rich content per column (see the WYSIWYG editor below), with a
+    **left / center / right alignment** for the section's prose.
+  - **Image** — one uploaded image per column that fills the column, with **alt text**,
+    an optional **click-through link**, and a **drag-to-set height** (the image covers
+    the box and is cropped to it for delivery so it isn't stretched). Uploads are
+    PNG/JPEG/GIF/WebP up to 5 MB to managed public storage; on upload, oversized
+    images are automatically downscaled (longest edge ≤ 1600px) and re-encoded
+    (photos to JPEG, transparent images stay PNG) so the delivered email stays light
+    for deliverability and load time.
+  - **Button** — one call-to-action button per column (a "button row" for 2/3 columns),
+    each with a label (edited directly on the button), link, **fill color** (from a
+    palette), light/dark label color, row alignment, and a **width** choice
+    (fit-to-label or full-width bar). Renders as a filled, bulletproof table button;
+    an unfinished button (no link) never ships.
+  - **Image + text (card)** — one image paired with rich text, laid out **image-left /
+    image-right / image-on-top**.
+  - **Quote / callout** — rich text in a **shaded, accent-bordered box** (background
+    tint from a palette) with an optional attribution line.
+  - **Divider** — a horizontal **rule**, or a blank **spacer** whose height you drag.
+  - **Social links** — a centered (or left/right) row of links to the org's social
+    profiles, with an optional lead-in ("Follow us:"). Rendered as text links.
+  - **Per-section background** — any section can be given a **background color** (from a
+    palette, or "no fill") that bleeds to the **full width** of the email, with the
+    section's content padded inside the band; distinct from a quote's inset callout tint.
+  - Buttons, callouts, and section backgrounds use a tightly-validated, **color-only**
+    extension of the sanitizer allowlist (`bgcolor` on cells + `<font color>` for label
+    text); no inline CSS, classes, or URLs can pass through, so the shared-reputation
+    guarantees hold.
+  - All section types are available on **every plan** — like all drafting, only
+    *sending* is gated.
+- **Global styling panel:** a dockable panel beside the message lets you style the
+  whole email at once — **page background**, **content/section background**, **body,
+  heading, and link colors**, a **border** (color + width), **image roundness**, and
+  **section roundness**. The editing canvas re-themes live as you tune it (true
+  WYSIWYG) and the inbox preview is byte-faithful to what ships. The theme is stored
+  as structured, validated data (plain colors only; bounded sizes) and applied at
+  **send time** in an email-safe document wrapper — it never touches the body
+  allowlist, so the shared-reputation guarantees and "what you build is what ships"
+  invariant both hold. A new campaign starts from a clean default look; **Reset**
+  returns to it.
+- **Rich-text WYSIWYG editor** (TipTap) — each text column is the same editor, constrained
+  to an email-safe HTML allowlist, so what you see is exactly what recipients get.
+  Formatting floats in on selection and a "+" insert menu appears on empty lines (no
+  fixed toolbar). Insert options: headings, lists, and quotes.
+- **Merge tags:** `{{first_name}}`, `{{last_name}}`, `{{email}}`, plus **any custom
+  field** the audience collects (`{{company}}`, `{{phone}}`, …) — the insert menu lists
+  the audience's own fields alongside the built-ins. Tags can carry a **fallback** for
+  when the field is empty (`{{first_name|there}}` → "there", `{{plan|free}}`), so
   personalized copy never degrades to "Hi ,". Inserting "First name" from the toolbar
-  drops in a fallback automatically.
+  drops in a fallback automatically. A custom field can also carry a **stored fallback**
+  (set on the audience's Fields tab) used when the template has no inline one —
+  resolution order: subscriber value → inline fallback → field fallback → empty.
 - **Pre-send personalization check:** before sending, the campaign page warns when
   recipients in the chosen audience are missing a field the email uses (e.g. "312 of
   1,200 recipients have no first name — they'll see 'there'"), so a generic greeting
@@ -160,21 +232,41 @@ Key pricing facts:
   mailing address and the per-recipient one-click unsubscribe link are appended
   automatically at send time and can't be edited or removed (required by law; exactly
   one working link is guaranteed).
-- **Send a test email** to yourself before sending for real.
+- **Send a test email** before sending for real — to your own address (pre-filled) or
+  any addresses you type in, up to 5 per test. The subject is prefixed with `[Test]`.
 - **Submit & send** kicks off a review → recipient-generation → batched-send pipeline.
 - **Schedule for later:** pick a future date/time and the campaign parks in `scheduled`;
   a cron sweep releases it into the same review→send pipeline when due (granularity ~15
   min). Reschedule or cancel (back to `draft`) any time before it fires. If a send gate
   (verified domain, non-empty audience) has lapsed by release time, it returns to `draft`
   with a reason instead of sending.
-- **Pause / resume** an in-flight send.
-- **Delete a campaign** from the list or its detail page — removes the campaign and its
-  recipient records (sent campaigns included). Blocked only while a send is actively
-  in flight (`generating_recipients` / `sending`); pause it first.
+- **Pause / resume** an in-flight send. System-caused pauses self-heal: a campaign paused
+  by a provider rate limit, the provider's daily quota, or the plan's monthly email limit
+  is auto-resumed by the cron sweep once the constraint clears (user pauses are never
+  auto-resumed). Every mid-send pause also notifies the account admins (in-app + email),
+  and the "campaign sent" notification discloses how many recipients could not be sent.
+- **Duplicate a campaign** from the list's row actions menu — copies the content and
+  settings (subject, body, audience, sender, from/reply-to, footer) into a fresh `draft`
+  with a "Copy of …" name and a clean slate (no recipients, no risk review, never sent).
+  Any campaign can be duplicated; the common case is re-running a campaign that sent well.
+- **Delete a campaign** from the list's row actions menu or its detail page — removes the
+  campaign and its recipient records (sent campaigns included). Blocked only while a send
+  is actively in flight (`generating_recipients` / `sending`); pause it first.
 - **Live delivery stats:** total recipients, sent, delivered, bounced, complained,
   unsubscribed, failed, skipped — plus a recipient-level table and an undeliverable list.
   (Account-wide and per-campaign rates, including opens, live on the Metrics page — §6.10.)
-- **Risk review** runs before send; risky campaigns can be routed to admin review.
+- **Risk review** runs before send: deterministic content checks (prohibited industries,
+  phishing language, purchased-list/cold-outreach signals, link shorteners, misleading
+  subjects, sender-identity mismatch, …) plus an optional AI pass (`AI_REVIEW_MODE=ai`,
+  via OpenRouter on a small model) that judges intent/context and can only **escalate**
+  the deterministic verdict, never lower it — so content-embedded prompt injection has
+  nothing to gain. The AI pass fails open (a model outage falls back to the deterministic
+  result) and is platform-funded — never plan-gated, never charged to the org's AI budget.
+  Risky campaigns are routed to admin review. A **blocked campaign** shows the sender
+  exactly what was flagged, concrete fix-it steps, why it matters for sender reputation,
+  and a one-click **Duplicate & fix** path (blocked campaigns themselves are immutable);
+  medium-risk campaigns still send but surface the guidance as suggestions for the next
+  send. The team also reviews flagged campaigns, so false alarms can be released manually.
 
 ### 6.2 AI assist (optional)
 AI features are **optional and gated** — if no AI key is configured, the AI UI is
@@ -182,7 +274,11 @@ hidden and the app works normally. Powered by **OpenRouter**, defaulting to
 **Claude Sonnet 4.6** (`anthropic/claude-sonnet-4.6`, configurable).
 
 - **Draft a full campaign** from a short brief → generates subject, preview text,
-  and body.
+  and a complete **multi-section body** assembled from the builder's blocks — a
+  heading, intro, dividers, the occasional callout/quote, a feature row of columns,
+  and a single clear call-to-action button — not one flat text block. It drops
+  straight into the section builder, ready to reorder, edit, or extend. (Image,
+  card, and social blocks still need assets you add, so the draft leaves those to you.)
 - **Subject line ideas** — generates 5 alternatives.
 - **Preview text** — auto-writes an inbox preview from the subject + body.
 - **Edit with AI** — highlight text in the editor and describe the change you want in
@@ -208,11 +304,52 @@ themselves, and manual writing continues unaffected.
 ### 6.3 Audiences & subscribers
 - Create, **rename**, and **delete** named audiences. Deleting an audience removes it and
   all its subscribers (sent campaigns are unaffected).
-- **CSV import** (email, first_name, last_name; up to ~5,000 rows per file) with
-  dedup, suppression filtering, progress tracking, and re-upload/retry for failed imports.
-- **Add subscribers manually**; **edit** a subscriber's email and name, or **delete** one
-  outright (distinct from unsubscribe, which keeps the record but stops mailing).
-- Search and filter subscribers by status; unsubscribe individuals.
+- **CSV import** (email, first_name, last_name, **plus any extra columns**, which become
+  custom fields keyed by a slug of the header; up to ~5,000 rows per file) with dedup,
+  suppression filtering, progress tracking, and re-upload/retry for failed imports.
+  Column order is flexible and headers are alias-matched — only an `email` column is
+  required — and a downloadable sample template shows the expected shape.
+- **CSV export** of an audience's subscribers (all statuses) in the same column shape the
+  importer reads, so an export can be edited and re-imported cleanly.
+- **Custom fields:** beyond email/first/last name, a subscriber can carry any number of
+  custom attributes (phone, company, …) collected by signup forms or CSV import. They
+  show as columns in the subscriber list and are usable as `{{merge_tags}}` in campaigns.
+- **Fields tab (field registry):** the audience page has four tabs — **Contacts**,
+  **Fields**, **Segments**, and **Topics** (Resend-style, to make switching from
+  Resend/Mailchimp feel familiar). Fields is the single catalogue of the audience's
+  custom fields (up to 50):
+  each has a human **name**, an immutable merge-tag **key**, an advisory **type**
+  (text/number/date), and an optional **fallback value** used in campaigns when a contact
+  has no value (a template's inline `{{key|fallback}}` still wins over the field's).
+  Fields are **auto-registered** wherever a new key enters the system — signup-form save,
+  CSV import, manual subscriber add/edit — and can be created, edited, and deleted by
+  hand. Deleting removes the field from menus and columns but keeps stored values by
+  default (it can reappear if new data arrives with that column); an explicit option also
+  strips the values from all contacts. The registry powers the contacts table's custom
+  columns and the composer's merge-tag menu, so all three always agree. Existing
+  audiences are seeded automatically from their forms and subscriber data on first view.
+- **Segments tab:** saved, named filters over the audience's contacts ("plan is pro",
+  "company has any value"), built from up to 10 conditions matched **all**/**any**.
+  Conditions cover built-in fields (email, first/last name) and every custom field,
+  with operators: is / is not / contains / doesn't contain / has any value / is empty /
+  greater than / less than (numeric). Segments are **dynamic** — evaluated live, never
+  materialized — so membership always reflects current data. The editor shows a live
+  "N contacts match" count; the contacts table can be filtered by segment; the campaign
+  composer's To row targets "Everyone" or a segment (up to 25 per audience). Deleting a
+  segment is blocked while a scheduled/in-flight campaign targets it; drafts fall back
+  to the whole audience.
+- **Topics tab:** subscription categories contacts can leave (or join) without
+  unsubscribing from everything (up to 20 per audience). A topic is **opt-out**
+  (everyone subscribed by default) or **opt-in** (empty until contacts join) — chosen at
+  creation and immutable after. A campaign can be sent **under a topic**: contacts
+  opted out are skipped at recipient generation, and the public unsubscribe page offers
+  "Only stop <topic> emails" alongside the full unsubscribe (one-click header
+  unsubscribe is always the full one, per RFC 8058). Per-contact preferences are
+  editable in the subscriber edit dialog; the tab shows opt-out/opt-in counts.
+- **Add subscribers manually**; **edit** a subscriber's email, name, custom fields, and
+  topic preferences, or **delete** one outright (distinct from unsubscribe, which keeps
+  the record but stops mailing).
+- Search and filter subscribers by status or segment; unsubscribe individuals.
 - Subscriber-status breakdown per audience.
 
 ### 6.4 Signup forms
@@ -223,12 +360,33 @@ One form primitive, multiple install surfaces, all hosted on **`go.day3.app`**:
 - **Embed (iframe)** — drop-in snippet for website builders (Webflow, WordPress,
   Squarespace, etc.); auto-resizes via `postMessage`.
 - **Popup** — JS widget (`embed.js`) triggered by button click, delay, exit-intent,
-  or scroll depth.
+  or scroll depth. Auto triggers fire **at most once per browser session** — a visitor
+  who dismisses the popup isn't shown it again until their next visit (button clicks
+  always open it). Dismissal is easy by design: close button, Escape, or a click on
+  the blurred backdrop.
 - **Raw HTML** — a plain `<form>` that POSTs directly to Day3 (no JavaScript).
+- **AI prompt** — a one-click copyable prompt bundling the embed/HTML snippets and
+  guardrails (don't rename fields, keep the action URL) that a user pastes into their
+  own AI assistant (ChatGPT, Claude, Cursor…) to get the form onto their site.
 
-Form configuration: headline, description, button label, accent color, success
-message, optional post-signup redirect, optional first-name collection, active/off
-toggle, and a **double opt-in** toggle.
+Form configuration: headline, description, an optional **footer text** block, button
+label, success message, optional post-signup redirect, active/off toggle, and a
+**double opt-in** toggle. **Design** is tunable from the same panel — a clean,
+Apple-inspired set of controls: page & card **background colors**, **heading** and
+**body text** colors, **button (accent) color**, **corner roundness**, and an optional
+**banner image** uploaded to the asset bucket and shown flush across the top of the
+card. Colors are validated (hex/rgb/named only) and applied as inline styles at render
+time, so the design carries across the hosted page, the iframe embed, and the popup
+widget automatically (the raw-HTML snippet stays "restyle it yourself"). The default
+look is a calm, Apple-inspired white card — ink heading, quiet grey body text, hairline
+input borders with an accent-tinted focus ring, and a pill-shaped accent button —
+applied to every form that hasn't customized its design.
+**Fields** are fully customizable — email is always collected, and you can add
+any number of extra fields (first/last name, phone, company, anything) with a label,
+type, and required flag; each becomes a personalization tag (e.g. `{{phone}}`) usable
+in campaigns. A **live preview** updates as you edit, and the
+form **autosaves** (no Save button): edits persist a beat (~1s) after each change, with
+the same "Saving… / Saved" indicator as the campaign composer.
 
 - **Double opt-in is ON by default** for deliverability. A pending signup is **never
   emailed a campaign** until it confirms via a signed confirmation link (token valid
@@ -255,11 +413,19 @@ toggle, and a **double opt-in** toggle.
 
 ### 6.7 Compliance & reputation
 - **One-click unsubscribe** (RFC 8058 / `List-Unsubscribe`) with HMAC-signed tokens,
-  plus a public unsubscribe page.
+  plus a public unsubscribe page. When the campaign was sent under a **topic**, the
+  page offers "Only stop <topic> emails" alongside the full unsubscribe (the one-click
+  header flow is always the full unsubscribe — mail clients present no choice UI).
+- **Mailing address required to send:** a campaign cannot be submitted or scheduled
+  until the account has a company mailing address (it's rendered into every footer
+  for CAN-SPAM); the send gate blocks it with an actionable message otherwise.
 - **Automatic suppression** of bounced/complained/unsubscribed addresses (per-account
   and global scopes).
 - **Bounce/complaint handling** via SES → SNS webhooks updates recipient status and
-  suppresses bad addresses; sustained bad reputation can auto-pause an account.
+  suppresses bad addresses; sustained bad reputation **over a trailing window** can
+  auto-pause an account (and pages on-call via the error sink).
+- **Public Privacy Policy and Terms** pages (`/privacy`, `/terms`), linked from the
+  marketing footer.
 
 ### 6.8 Billing & account settings
 - Billing page: current plan, subscription status, monthly usage, renewal date, and
@@ -269,7 +435,11 @@ toggle, and a **double opt-in** toggle.
   (scaled up, neighbors dimmed), and scrolling the row moves the slider in sync. Only
   the focused card exposes the billing CTA, which drives Clerk Billing directly —
   upgrades/switches open Clerk Checkout, "Downgrade to Free" opens Clerk's
-  subscription drawer to cancel (Clerk handles proration).
+  subscription drawer to cancel (Clerk handles proration). Past the 100k tier the
+  carousel ends with a dashed "Need more?" card ("Custom" / 100,000+ emails/mo)
+  whose "Contact us" opens an in-app message form — like the Help widget, it
+  relays to the support inbox with the user as Reply-To — custom volume is
+  arranged manually, not self-serve.
 - Settings: company mailing address (legally required in email footers) and Clerk's
   organization management (team members, org name, logo).
 
@@ -304,12 +474,49 @@ rewritten. The first click stamps `clicked_at` (and back-fills `opened_at`, sinc
 proves an open) and records one `click` event; repeat clicks are no-ops. Per-link
 click breakdowns are not surfaced yet (the click event stores the URL for future use).
 
-### 6.11 In-app help
+### 6.11 Activity (email event log)
+A dedicated **Activity** page (in the main nav) lists every email event for the
+account newest-first — sent, delivered, opened, clicked, bounced, marked as spam,
+unsubscribed, failed, and provider errors — so users can check status and
+troubleshoot ("did jane@example.com get the newsletter, and if not, why?"):
+- **Filters:** by event type, by campaign, and a search box matching the recipient
+  email (substring). Offset-paginated with "Load more".
+- **Detail drawer:** clicking a row opens a side panel with a plain-language
+  explanation of the event (e.g. permanent vs. temporary bounce, what suppression
+  means), the recipient, time, a link to the campaign, the failure reason /
+  clicked URL / bounce diagnostic where applicable, and the raw provider payload
+  behind a collapsed "Technical details" section.
+- Backed by the append-only `email_events` table (written by the send pipeline,
+  the SES webhook, and the tracking endpoints); the page is read-only. The name
+  "Activity" is deliberately broader than email so future sources (e.g. an API
+  audit log) can slot in alongside without renaming.
+
+### 6.12 In-app help
 A **Help** button sits at the bottom of the sidebar on every page. It opens a small
 popover with a single message box; sending relays the message to the support inbox
-(`contact@day3.app`) with the signed-in user set as Reply-To, so the team can reply
+(`connect@day3.app`) with the signed-in user set as Reply-To, so the team can reply
 straight back by email. The popover also links the same address directly for users who
 prefer their own mail client. Available on every plan; there is no separate docs site yet.
+
+### 6.13 Notifications
+Day3 tells you about things that happen while you're not looking, on two channels:
+- **In-app bell** in the sidebar (with an unread count) lists recent account events
+  newest-first; opening it marks them read. Backed by a `notifications` table.
+- **Email** to the account's admins for the same events (so a closed tab isn't a
+  blind spot), sent from the Day3 support identity.
+
+Events raised: a **scheduled send that couldn't start** (a gate lapsed by its due
+time — the campaign returns to drafts with the reason, and you're told rather than
+left to discover it), a **campaign finishing sending** (with the reached count and a
+link to its results), and **signups turned away at the free-plan subscriber cap**
+(throttled to once a day, with an upgrade link). The service fails open — a
+notification never blocks the flow that triggered it.
+
+### 6.14 Getting around
+- A **command palette** (⌘K / Ctrl-K) jumps to any page or the common create actions
+  from anywhere.
+- A **plan pill** in the sidebar shows the current tier on every screen; on the free
+  plan it links to billing.
 
 ---
 
@@ -340,8 +547,9 @@ Day3 is split into two cooperating tiers that share one Postgres database:
    (eligible account, verified domain, audience has subscribers) and moves to
    `pending_review`. A scheduled campaign waits in `scheduled` until a cron sweep
    re-checks the gates and releases it at its due time.
-2. **Review** — an automated risk check approves it (or routes it to admin review /
-   blocks it).
+2. **Review** — the automated risk check (deterministic + optional escalate-only AI
+   pass) approves it, or blocks it with user-facing guidance and routes it to admin
+   review.
 3. **Generate recipients** — eligible (`subscribed`, non-suppressed) subscribers are
    bulk-inserted as `campaign_recipients` (chunked, dedup-safe).
 4. **Batched send** — the worker atomically reserves monthly quota, claims ~25 pending
