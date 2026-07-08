@@ -39,7 +39,7 @@ const primaryNav: NavItem[] = [
     href: "/features",
     children: featurePages.map((page) => ({
       label: page.navLabel,
-      href: `/features/${page.slug}`,
+      href: page.href ?? `/features/${page.slug}`,
       description: page.summary,
       icon: page.icon,
     })),

@@ -32,7 +32,7 @@ export const audiencePages: AudiencePage[] = [
     icon: Rocket,
     metaTitle: "Email marketing for startups — pay for sends, not your list",
     metaDescription:
-      "A startup's list grows faster than its sending. day3 keeps subscribers unlimited and bills only by emails sent, so your email tool doesn't tax your growth. Built for product updates, not marketing suites.",
+      "Your list grows faster than you send. day3 keeps subscribers unlimited and bills only by emails sent — so growth never taxes your budget. Built for product updates, not marketing suites.",
     keywords: [
       "email marketing for startups",
       "startup newsletter tool",
@@ -42,42 +42,42 @@ export const audiencePages: AudiencePage[] = [
     eyebrow: "For startups",
     title: "Your list grows fast. Your email bill shouldn't.",
     summary:
-      "Startups add subscribers quickly but send sparingly. day3's send-based pricing means a fast-growing list never inflates your bill — you pay for the updates you actually send.",
+      "You add subscribers quickly and send sparingly. day3 bills by send, not list size — so a fast-growing list never inflates the bill.",
     painPoints: [
-      "Every tool wants to charge you more the moment your list crosses the next tier.",
-      "You need to tell users what shipped — not run lifecycle automation or build funnels.",
-      "You don't have time to learn a marketing platform, and you don't want a sales call to send an email.",
+      "Every tool raises the price the moment your list crosses the next tier.",
+      "You need to tell users what shipped — not build funnels or lifecycle automation.",
+      "No time to learn a marketing platform. No sales call just to send an email.",
     ],
     benefits: [
       {
         title: "Unlimited subscribers",
         description:
-          "Grow the list as fast as you can. It never changes what you pay — sends are the only meter.",
+          "Add users as fast as you can acquire them — sends are the only meter, so the bill holds flat.",
       },
       {
         title: "Live in minutes",
         description:
-          "Verify a domain, import your list, write an update, send. A campaign fits on one screen.",
+          "Verify a domain, import the list, write, send — a whole campaign fits on one screen.",
       },
       {
         title: "Deliverability built in",
         description:
-          "Authenticated sending, double opt-in, and auto-suppression keep you out of spam folders from day one.",
+          "Authenticated sending, double opt-in, and auto-suppression keep launch emails out of spam.",
       },
       {
-        title: "Approachable from day one",
+        title: "Starts at $1/mo",
         description:
-          "Plans start at $1/mo, and the list can grow as fast as you like without ever changing the bill.",
+          "Priced for pre-revenue — and the list can grow as fast as you like without moving the bill.",
       },
     ],
     faqs: [
       {
         q: "What's the best email tool for an early-stage startup?",
-        a: "If your main need is emailing users about product changes — not running marketing automation — a focused, send-priced tool like day3 keeps costs flat as your list grows and stays out of your way. Subscribers are unlimited on every plan.",
+        a: "If you mainly email users about product changes — not run automation — day3 keeps costs flat as the list grows. Subscribers are unlimited on every plan.",
       },
       {
         q: "Will day3 get more expensive as we grow?",
-        a: "Only if you send more emails. Adding subscribers never raises your bill, because day3 prices by sends, not list size.",
+        a: "Only if you send more. Adding subscribers never raises the bill — day3 prices by sends, not list size.",
       },
     ],
   },
@@ -87,7 +87,7 @@ export const audiencePages: AudiencePage[] = [
     icon: Code2,
     metaTitle: "Email for indie developers & solo founders",
     metaDescription:
-      "A no-nonsense email tool for indie hackers shipping product updates. Unlimited subscribers, billed by sends, signup forms you can embed anywhere, and optional AI drafting. No marketing suite to learn.",
+      "A no-nonsense email tool for indie hackers shipping product updates. Unlimited subscribers, billed by sends, forms you can embed anywhere, and optional AI drafting. No marketing suite to learn.",
     keywords: [
       "email tool for indie developers",
       "indie hacker newsletter",
@@ -97,42 +97,42 @@ export const audiencePages: AudiencePage[] = [
     eyebrow: "For indie developers",
     title: "Ship the update, send the email, get back to building.",
     summary:
-      "For indie hackers and solo founders who want to email their users about what's new — without paying per subscriber or learning a marketing platform.",
+      "Email your users about what's new — without paying per subscriber or learning a marketing platform. Built for a team of one.",
     painPoints: [
-      "You're a team of one. You don't have hours to spend configuring audiences and automations.",
-      "Your list is the asset you've slowly built — being charged more for keeping it feels backwards.",
-      "You want signup forms you can drop into your site and a changelog email you can send in five minutes.",
+      "You're a team of one — no hours to spend wiring up audiences and automations.",
+      "The list is an asset you built by hand. Paying more just to keep it is backwards.",
+      "You want a form to drop into your site and a changelog email you can send in five minutes.",
     ],
     benefits: [
       {
         title: "Forms you can embed anywhere",
         description:
-          "Hosted page, iframe embed, popup, or raw HTML — paste it into your site, bio, or docs. Double opt-in on by default.",
+          "Hosted page, iframe, popup, or raw HTML — paste it into your site, bio, or docs, with double opt-in on by default.",
       },
       {
         title: "Billed on sends, not your list",
         description:
-          "The audience you've built is free to keep. You only pay when you actually send.",
+          "The audience you built stays free to keep — you pay only when you actually send.",
       },
       {
         title: "AI drafting when you're stuck",
         description:
-          "Stuck on wording? Draft a campaign or rewrite a line with Claude — included on the 10k plan and up.",
+          "Draft a campaign or rewrite a line with Claude — included from the 10k plan up.",
       },
       {
         title: "No upsell path",
         description:
-          "No funnels, no lifecycle automation, no sales call. Just the email and who gets it.",
+          "No funnels, no automation, no sales call — just the email and who gets it.",
       },
     ],
     faqs: [
       {
         q: "Is day3 good for indie hackers?",
-        a: "Yes — it's deliberately minimal, priced by sends so your list stays free to grow, and includes embeddable signup forms, with AI drafting available from the 10k plan up. It's built for solo founders sending product updates, not marketing teams.",
+        a: "Yes. It's deliberately minimal, priced by sends so the list grows free, and ships embeddable forms plus AI drafting from the 10k plan up. Built for solo founders, not marketing teams.",
       },
       {
         q: "Can I add a signup form to my own site?",
-        a: "Yes. day3 gives you a hosted page, an auto-resizing iframe embed, a JS popup, or a plain HTML form that POSTs directly to day3 — install whichever fits your stack.",
+        a: "Yes. Use a hosted page, an auto-resizing iframe, a JS popup, or a plain HTML form that POSTs to day3 — whichever fits your stack.",
       },
     ],
   },
@@ -142,7 +142,7 @@ export const audiencePages: AudiencePage[] = [
     icon: Building2,
     metaTitle: "Product update emails for SaaS teams",
     metaDescription:
-      "Send changelogs and 'what's new' emails to your users with a tool built for exactly that. Unlimited subscribers, send-based pricing, built-in deliverability and compliance. No marketing suite required.",
+      "Send changelogs and 'what's new' emails with a tool built for exactly that. Unlimited subscribers, send-based pricing, built-in deliverability and compliance. No marketing suite required.",
     keywords: [
       "product update email tool",
       "saas changelog email",
@@ -153,42 +153,42 @@ export const audiencePages: AudiencePage[] = [
     eyebrow: "For SaaS teams",
     title: "Tell your users what shipped — reliably, every time.",
     summary:
-      "Changelogs, release notes, and 'what's new' emails are a job of their own. day3 does exactly that one job well, with deliverability and compliance built in and pricing that ignores your list size.",
+      "Changelogs and release notes are a job of their own. day3 does that one job well — deliverability and compliance built in, pricing that ignores list size.",
     painPoints: [
-      "Your full marketing platform is overkill for a changelog — and it bills you by contact count.",
-      "Product updates need to actually land in the inbox, every time, without you babysitting sender reputation.",
-      "You need compliance — unsubscribe, suppression, consent — handled correctly, not bolted on.",
+      "Your marketing platform is overkill for a changelog — and it bills by contact count.",
+      "Updates have to land in the inbox every time, without anyone babysitting sender reputation.",
+      "Compliance — unsubscribe, suppression, consent — has to be handled right, not bolted on.",
     ],
     benefits: [
       {
         title: "Built for the update use case",
         description:
-          "Write the release note, pick the audience, send. No campaign-builder maze between you and a 'what's new' email.",
+          "Write the release note, pick the audience, send — no campaign-builder maze in the way.",
       },
       {
         title: "Deliverability & compliance, standard",
         description:
-          "Authenticated domains, one-click unsubscribe (RFC 8058), automatic suppression of bounces and complaints, and account auto-pause on bad reputation.",
+          "Authenticated domains, one-click unsubscribe (RFC 8058), auto-suppression of bounces and complaints, and auto-pause on bad reputation.",
       },
       {
         title: "Unlimited subscribers",
         description:
-          "Your whole user base on the list, billed only by the emails you send. List size never moves the price.",
+          "Put your whole user base on the list — you're billed by sends, so list size never moves the price.",
       },
       {
-        title: "Reliable, idempotent sending",
+        title: "Sends once, never twice",
         description:
-          "A retried send never duplicates an email. Updates go out once, to the right people, with live delivery stats.",
+          "A retried send never duplicates — every update goes out once, to the right people, with live delivery stats.",
       },
     ],
     faqs: [
       {
         q: "What's the best way to send product update emails?",
-        a: "Use a tool focused on that one job. day3 sends changelogs and 'what's new' emails to an audience with built-in deliverability and compliance, unlimited subscribers, and pricing based on emails sent rather than contact count.",
+        a: "Use a tool built for that one job. day3 sends changelogs and 'what's new' emails with deliverability and compliance built in, unlimited subscribers, and pricing by sends rather than contact count.",
       },
       {
         q: "Does day3 handle unsubscribes and compliance?",
-        a: "Yes. Every email includes one-click unsubscribe, bounced and complained addresses are suppressed automatically, consent IP is stored for form signups, and your mailing address is appended to footers as legally required.",
+        a: "Yes. Every email carries one-click unsubscribe, bounced and complained addresses are suppressed automatically, consent IP is stored for form signups, and your mailing address is appended to footers as required.",
       },
     ],
   },

@@ -2,9 +2,11 @@ import * as React from "react";
 import Link from "next/link";
 import {
   ArrowRight,
-  Infinity as InfinityIcon,
-  Gauge,
-  MailCheck,
+  BarChart3,
+  CheckCircle2,
+  PenLine,
+  ShieldCheck,
+  Users,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -15,17 +17,51 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { PricingSlider } from "@/components/marketing/pricing-slider";
-import { UsageMeter } from "@/components/marketing/usage-meter";
 import { AppPreview } from "@/components/marketing/app-preview";
-import { SubscribeButton } from "@/components/marketing/subscribe-button";
 import { Reveal } from "@/components/marketing/reveal";
 import { HeroAurora } from "@/components/marketing/hero-aurora";
+import { ProductVideoTabs } from "@/components/marketing/product-video-tabs";
 import {
   JsonLd,
   organizationSchema,
   softwareApplicationSchema,
 } from "@/components/seo/json-ld";
-import { features, siteConfig } from "@/lib/site";
+import { siteConfig } from "@/lib/site";
+
+const pains = [
+  "I just shipped something, but now I need to tell users",
+  "Mailchimp feels like too much",
+  "I do not want to pay more because my list grew",
+  "I do not want my emails branded by someone else",
+  "I need this to be safe and compliant without becoming my new job",
+];
+
+const coreFeatures = [
+  {
+    title: "Write clean updates",
+    description:
+      "Updates, changelogs, and launch notes in a focused composer — subject lines, layouts, images, and test sends included.",
+    icon: PenLine,
+  },
+  {
+    title: "Grow your audience",
+    description:
+      "Import subscribers, add custom fields, and publish signup forms as pages, embeds, or popups.",
+    icon: Users,
+  },
+  {
+    title: "Send with confidence",
+    description:
+      "Verified domains, automatic bounce and complaint handling, and risk review — so your reputation stays intact.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Understand what happened",
+    description:
+      "See what was delivered, opened, clicked, and unsubscribed — per campaign and per person.",
+    icon: BarChart3,
+  },
+];
 
 export default function HomePage() {
   return (
@@ -48,42 +84,43 @@ export default function HomePage() {
             <div className="mx-auto max-w-3xl text-center">
               <Reveal>
                 <h1 className="font-display text-4xl leading-[1.08] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-                  Email marketing that charges
-                  <br className="hidden sm:block" /> for sends, not subscribers.
+                  Send product updates.
+                  <br className="hidden sm:block" /> Not marketing campaigns.
                 </h1>
               </Reveal>
 
               <Reveal delay={90}>
                 <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                  The most approachable way to email your users — start for $1 a
-                  month, scale as you grow, and never pay for the size of your
-                  list.
+                  For small teams who ship before they market. Start free, send
+                  from $1/month.
                 </p>
               </Reveal>
 
               <Reveal delay={180}>
-                <div className="mt-9 flex justify-center">
+                <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
                   <Button
                     size="lg"
                     className="group w-full sm:w-auto"
                     render={<a href={siteConfig.signupUrl} />}
                   >
-                    Get started
+                    Start building for free
                     <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="w-full sm:w-auto"
+                    render={<Link href="#pricing" />}
+                  >
+                    See pricing
                   </Button>
                 </div>
               </Reveal>
 
               <Reveal delay={260}>
                 <p className="mt-5 text-sm text-muted-foreground">
-                  Plans start at $1/mo.{" "}
-                  <a
-                    href={siteConfig.signupUrl}
-                    className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
-                  >
-                    Or sign up free to look around
-                  </a>{" "}
-                  and set things up — pick a plan when you&apos;re ready to send.
+                  Set everything up for free. Pay only when you&apos;re ready to
+                  send.
                 </p>
               </Reveal>
             </div>
@@ -95,93 +132,55 @@ export default function HomePage() {
           </Container>
         </section>
 
-        {/* ------------------------------------------------------- Pricing */}
-        <section id="pricing" className="scroll-mt-20 border-t border-border bg-oat/30">
+        {/* -------------------------------------------------- Product video */}
+        <section id="product" className="scroll-mt-20 border-t border-border bg-oat/30">
           <Container className="py-20 sm:py-24">
             <Reveal>
               <SectionHeading
                 align="center"
-                title="What it'll cost at launch"
-                description="Slide to the volume you send each month. Plans start at $1/mo and scale to 100,000 emails — every one with unlimited subscribers."
+                title="Everything you need to tell users what changed."
+                description="Write it, grow the list, send safely, see what happened. Nothing extra to learn."
               />
             </Reveal>
             <Reveal delay={120} className="mt-12">
-              <PricingSlider />
+              <ProductVideoTabs />
             </Reveal>
-            <p className="mt-8 text-center text-sm text-muted-foreground">
-              All plans include{" "}
-              <span className="font-medium text-foreground">
-                unlimited subscribers
-              </span>
-              . You only pay for the emails you send.
-            </p>
           </Container>
         </section>
 
-        {/* --------------------------------------------------- The model */}
-        <section id="model" className="scroll-mt-20 border-t border-border">
+        {/* --------------------------------------------------------- Pains */}
+        <section id="pains" className="scroll-mt-20 border-t border-border">
           <Container className="py-20 sm:py-24">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <Reveal>
-                <SectionHeading
-                  title="Unlimited subscribers, capped by sends"
-                  description="Most tools charge you more as your list grows. day3 charges for emails sent. The list can grow as large as you like — the meter only moves when you hit send."
-                />
-                <ul className="mt-8 space-y-4">
-                  <li className="flex gap-3">
-                    <InfinityIcon className="mt-0.5 size-5 shrink-0 text-caramel" />
-                    <span className="text-foreground">
-                      <span className="font-medium">Import any list.</span>{" "}
-                      <span className="text-muted-foreground">
-                        200 contacts or 200,000 — the price is the same.
-                      </span>
-                    </span>
-                  </li>
-                  <li className="flex gap-3">
-                    <Gauge className="mt-0.5 size-5 shrink-0 text-caramel" />
-                    <span className="text-foreground">
-                      <span className="font-medium">One monthly cap.</span>{" "}
-                      <span className="text-muted-foreground">
-                        Watch it fill as you send. Reach it and sending pauses
-                        until next month — no surprise overage. Need more room?
-                        Move up a plan.
-                      </span>
-                    </span>
-                  </li>
-                  <li className="flex gap-3">
-                    <MailCheck className="mt-0.5 size-5 shrink-0 text-caramel" />
-                    <span className="text-foreground">
-                      <span className="font-medium">Know it upfront.</span>{" "}
-                      <span className="text-muted-foreground">
-                        The cost is the plan price. There isn&apos;t a second
-                        number waiting at the end of the month.
-                      </span>
-                    </span>
-                  </li>
-                </ul>
-              </Reveal>
-
-              <Reveal delay={120} className="lg:pl-6">
-                <UsageMeter />
-              </Reveal>
-            </div>
+            <Reveal>
+              <SectionHeading
+                title="For the moment after you ship."
+                description="The product is live. Now users need to hear what changed."
+              />
+            </Reveal>
+            <Reveal delay={120} className="mt-10 grid gap-3 md:grid-cols-2">
+              {pains.map((pain) => (
+                <div key={pain} className="rounded-xl border border-border bg-card p-5 text-lg text-foreground">
+                  “{pain}”
+                </div>
+              ))}
+            </Reveal>
           </Container>
         </section>
 
         {/* ------------------------------------------------------ Features */}
         <section
           id="features"
-          className="scroll-mt-20 border-t border-border bg-oat/30"
+          className="scroll-mt-20 border-t border-border"
         >
           <Container className="py-20 sm:py-24">
             <Reveal>
               <SectionHeading
-                title="What you get"
-                description="The parts you need to send a good email. Not the parts that come with a manual."
+                title="The parts you need. Not the parts you'll avoid."
+                description="Grouped around what you're doing, not a marketing-platform checklist."
               />
             </Reveal>
             <Reveal delay={120} className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
-              {features.map((feature) => {
+              {coreFeatures.map((feature) => {
                 const Icon = feature.icon;
                 return (
                   <div
@@ -192,13 +191,64 @@ export default function HomePage() {
                     <h3 className="mt-4 font-medium text-foreground">
                       {feature.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                      {feature.description}
-                    </p>
+                    <p
+                      className="mt-2 text-sm leading-relaxed text-muted-foreground"
+                      dangerouslySetInnerHTML={{ __html: feature.description }}
+                    />
                   </div>
                 );
               })}
             </Reveal>
+          </Container>
+        </section>
+
+        {/* ------------------------------------------------------- Pricing */}
+        <section id="pricing" className="scroll-mt-20 border-t border-border bg-oat/30">
+          <Container className="py-20 sm:py-24">
+            <Reveal>
+              <SectionHeading
+                align="center"
+                title="Pricing that doesn't punish growth."
+                description="No contact tax. Just pick how many emails you send each month."
+              />
+            </Reveal>
+            <div className="mt-12 grid gap-6 lg:grid-cols-[280px_1fr] lg:items-start">
+              <Reveal>
+                <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
+                  <p className="text-sm font-medium text-muted-foreground">
+                    Build mode / Free
+                  </p>
+                  <div className="mt-2 font-display text-4xl text-foreground">
+                    $0<span className="text-sm font-normal text-muted-foreground">/mo</span>
+                  </div>
+                  <p className="mt-4 font-medium text-foreground">
+                    Build everything before you send.
+                  </p>
+                  <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
+                    <li className="flex gap-2">
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-caramel" />
+                      Set up domains, senders, audiences, forms, and drafts
+                    </li>
+                    <li className="flex gap-2">
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-caramel" />
+                      No sending until you pick a paid plan
+                    </li>
+                    <li className="flex gap-2">
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-caramel" />
+                      Up to 500 subscribers
+                    </li>
+                  </ul>
+                </div>
+              </Reveal>
+              <Reveal delay={120}>
+                <PricingSlider />
+              </Reveal>
+            </div>
+            <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
+              Free is for building. Paid is for sending — every plan includes
+              unlimited subscribers and a hard monthly cap, so no surprise bills.
+              AI starts on the 10k plan.
+            </p>
           </Container>
         </section>
 
@@ -207,11 +257,11 @@ export default function HomePage() {
           <Container className="py-20 sm:py-28">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
-                Get in before we launch.
+                Start for free. Send from $1/month.
               </h2>
               <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
-                Sign up now to be first through the door. Plans start at $1/mo —
-                with unlimited subscribers on every one.
+                Set up your domain, audience, forms, and senders now. Upgrade
+                when you&apos;re ready to send.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button
@@ -219,7 +269,7 @@ export default function HomePage() {
                   className="group w-full sm:w-auto"
                   render={<a href={siteConfig.signupUrl} />}
                 >
-                  Get started
+                  Start building for free
                   <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </Button>
                 <Button
@@ -231,14 +281,10 @@ export default function HomePage() {
                   See pricing
                 </Button>
               </div>
-              <p className="mt-5 text-sm text-muted-foreground">
-                Not ready to set up an account?{" "}
-                <SubscribeButton
-                  variant="link"
-                  className="h-auto p-0 text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel"
-                >
-                  Get an email when we launch
-                </SubscribeButton>
+              <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                For permission-based product updates only. Cold outreach and
+                purchased lists get paused — it keeps deliverability good for
+                everyone.
               </p>
             </Reveal>
           </Container>

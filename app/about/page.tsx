@@ -48,7 +48,7 @@ const principles = [
   {
     icon: Ban,
     title: "No surprises, no upsell",
-    body: "No overage at the end of the month. No funnel, no lifecycle-automation maze, no sales call before you can send.",
+    body: "No overage at month-end. No funnels, no sales call before you can send.",
   },
   {
     icon: ShieldCheck,
@@ -106,9 +106,8 @@ export default function AboutPage() {
                   build an audience.
                 </p>
                 <p>
-                  day3 flips that. Keep as many subscribers as you like and pay
-                  only when you hit send. One number, known upfront, with no
-                  per-contact tax waiting at the end of the month.
+                  day3 flips that: keep as many subscribers as you like and pay
+                  only when you hit send. One price, known upfront.
                 </p>
               </div>
             </div>
@@ -165,9 +164,8 @@ export default function AboutPage() {
                     {company.alsoBuilds.name}
                   </a>{" "}
                   — under {company.legalName} in {company.city},{" "}
-                  {company.country}. It&apos;s deliberately small: a lean, boring,
-                  reliable stack, shipped by someone who&apos;d rather fix the
-                  product than staff a sales team.
+                  {company.country}. Deliberately small — shipped by someone
+                  who&apos;d rather fix the product than staff a sales team.
                 </p>
                 <p>
                   That means you talk to the person who builds it. Email{" "}
@@ -200,9 +198,8 @@ export default function AboutPage() {
                     in the EU, encrypted in transit and at rest.
                   </p>
                   <p>
-                    We&apos;re honest about what we are: a young product on
-                    audited, enterprise-grade infrastructure. Here&apos;s exactly
-                    how we handle{" "}
+                    A young product on audited, enterprise-grade infrastructure.
+                    Here&apos;s exactly how we handle{" "}
                     <Link
                       href="/security"
                       className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"

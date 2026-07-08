@@ -33,19 +33,19 @@ const steps = [
   {
     title: "Bring your whole list",
     description:
-      "Import 200 contacts or 200,000 — it's the same price. Subscribers are always free and unlimited, so growing your audience never grows your bill.",
+      "Import 200 contacts or 200,000 — same price. Subscribers are free and unlimited, so a growing audience never grows your bill.",
     icon: InfinityIcon,
   },
   {
     title: "Send when you have something to say",
     description:
-      "Each email to each subscriber counts as one send. A campaign to 1,000 people uses 1,000 of your monthly emails. That's the only number that touches your bill.",
+      "Each email to each subscriber is one send. A campaign to 1,000 people uses 1,000 emails — the only number that touches your bill.",
     icon: Gauge,
   },
   {
     title: "Watch one monthly cap",
     description:
-      "Your plan comes with a monthly email allotment. The meter fills as you send, you can see it coming, and sending pauses cleanly at the cap — no surprise overage. Move up a plan whenever you need more room.",
+      "Your plan has a monthly email allotment. The meter fills as you send and pauses cleanly at the cap — no surprise overage. Need more room? Move up a plan.",
     icon: MailCheck,
   },
 ];
@@ -53,23 +53,23 @@ const steps = [
 const faqs = [
   {
     q: "How is day3's pricing different from Mailchimp or ConvertKit?",
-    a: "Most email tools charge by the number of subscribers on your list, so your bill climbs as you grow — even if you barely email anyone. day3 charges by the number of emails you actually send each month. Subscribers are unlimited and free on every plan.",
+    a: "Most tools charge by subscriber count, so your bill climbs as you grow — even if you rarely email. day3 charges by emails sent. Subscribers are unlimited and free.",
   },
   {
     q: "What counts as one send?",
-    a: "One email delivered to one subscriber. If you send a campaign to 1,000 subscribers, that's 1,000 sends against your monthly allotment.",
+    a: "One email to one subscriber. A campaign to 1,000 subscribers is 1,000 sends against your monthly allotment.",
   },
   {
     q: "What happens if I hit my monthly limit?",
-    a: "Sending pauses cleanly at the cap — there's no overage and no surprise charge. You'll watch the meter fill well before you reach it, and if you need more headroom you can move up a plan in a couple of clicks; sending resumes immediately.",
+    a: "Sending pauses cleanly at the cap — no overage, no surprise charge. Move up a plan for more headroom and sending resumes immediately.",
   },
   {
     q: "Do unused emails roll over?",
-    a: "No — your allotment resets at the start of each billing period. Pick the plan that matches how often you actually send.",
+    a: "No — your allotment resets each billing period. Pick the plan that matches how often you send.",
   },
   {
     q: "Why is this cheaper for most teams?",
-    a: "Because list size and sending frequency are different things. A founder with 50,000 subscribers who emails monthly pays far less on a send-based plan than on a per-subscriber plan priced for that list size.",
+    a: "List size and sending frequency are different things. A founder with 50,000 subscribers who emails monthly pays far less than on a per-subscriber plan priced for that list.",
   },
 ];
 
@@ -95,9 +95,9 @@ export default function HowItWorksPage() {
               You&apos;re billed on emails sent, not on the size of your list.
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Every other tool turns your growing list into a growing bill. day3
-              flips that: keep as many subscribers as you like, and only pay for
-              the emails you actually send.
+              Most tools turn a growing list into a growing bill. day3 doesn&apos;t —
+              keep as many subscribers as you like, and pay only for the emails
+              you send.
             </p>
           </Container>
         </section>
@@ -138,7 +138,7 @@ export default function HowItWorksPage() {
               <Reveal>
                 <SectionHeading
                   title="One number to watch"
-                  description="No per-contact tax, no surprise overage at the end of the month. The plan price is the price, and the meter shows you exactly where you stand."
+                  description="No contact tax, no surprise overage. The plan price is the price — the meter shows exactly where you stand."
                 />
                 <div className="mt-8">
                   <Button

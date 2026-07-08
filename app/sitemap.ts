@@ -32,11 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/terms", priority: 0.3, changeFrequency: "yearly" },
   ];
 
-  const featureRoutes = featurePages.map((page) => ({
-    path: `/features/${page.slug}`,
-    priority: 0.7,
-    changeFrequency: "monthly" as const,
-  }));
+  const featureRoutes = featurePages
+    .filter((page) => !page.href)
+    .map((page) => ({
+      path: `/features/${page.slug}`,
+      priority: 0.7,
+      changeFrequency: "monthly" as const,
+    }));
 
   const compareRoutes = comparePages.map((page) => ({
     path: `/compare/${page.slug}`,

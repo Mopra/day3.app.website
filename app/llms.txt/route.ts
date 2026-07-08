@@ -71,6 +71,8 @@ function buildLlmsTxt(): string {
   lines.push("## Features");
   lines.push("");
   for (const f of featurePages) {
+    // Link-out features (e.g. deliverability) are listed above under their own page.
+    if (f.href) continue;
     lines.push(`- [${f.navLabel}](${siteUrl}/features/${f.slug}): ${f.metaDescription}`);
   }
   lines.push("");

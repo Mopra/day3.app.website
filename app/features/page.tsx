@@ -62,7 +62,7 @@ export default function FeaturesPage() {
                 return (
                   <Reveal key={feature.slug} delay={i * 80}>
                     <Link
-                      href={`/features/${feature.slug}`}
+                      href={feature.href ?? `/features/${feature.slug}`}
                       className="group flex h-full flex-col rounded-xl border border-border bg-card p-7 transition-colors duration-200 hover:border-caramel/40 hover:bg-secondary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <Icon className="size-6 text-caramel transition-transform duration-200 group-hover:scale-110" />

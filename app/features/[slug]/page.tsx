@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { ArrowRight, ArrowLeft, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -19,15 +19,18 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-/** Pre-render every feature page at build time. */
+/** Pre-render every feature page at build time (link-out cards have no page). */
 export function generateStaticParams() {
-  return featurePages.map((page) => ({ slug: page.slug }));
+  return featurePages
+    .filter((page) => !page.href)
+    .map((page) => ({ slug: page.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const feature = getFeaturePage(slug);
-  if (!feature) return {};
+  if (!feature || feature.href || !feature.metaTitle || !feature.metaDescription)
+    return {};
 
   return buildMetadata({
     title: feature.metaTitle,
@@ -41,6 +44,9 @@ export default async function FeatureDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const feature = getFeaturePage(slug);
   if (!feature) notFound();
+  // Link-out features (e.g. deliverability) live on their own page.
+  if (feature.href) permanentRedirect(feature.href);
+  if (!feature.points || !feature.faqs) notFound();
 
   const Icon = feature.icon;
 

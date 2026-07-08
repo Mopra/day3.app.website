@@ -55,8 +55,8 @@ function SiteFooter() {
           <div className="max-w-xs">
             <Logo />
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Email marketing billed on what you send, not how many people you
-              keep on the list.
+              Simple product update emails for small SaaS teams. No marketing
+              suite. No contact tax.
             </p>
             {socialLinks.length ? (
               <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2">
