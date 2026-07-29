@@ -5,7 +5,6 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
-import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { Reveal } from "@/components/marketing/reveal";
@@ -35,7 +34,6 @@ export default function AudienceHubPage() {
         { name: "Who it's for", path: "/for" },
       ])} />
 
-      <PreviewBanner />
       <SiteHeader />
 
       <main id="main">

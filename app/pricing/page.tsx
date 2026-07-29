@@ -5,7 +5,6 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
-import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { PricingSlider } from "@/components/marketing/pricing-slider";
@@ -32,10 +31,6 @@ export const metadata: Metadata = buildMetadata({
 });
 
 const faqs = [
-  {
-    q: "When does day3 launch?",
-    a: "Days, not months. Sign up now and you'll be first in — set up and ready to send the moment we go live.",
-  },
   {
     q: "What counts as a send?",
     a: "One email to one subscriber. A campaign to 1,000 people uses 1,000 emails. Subscribers are always free and unlimited.",
@@ -72,13 +67,12 @@ export default function PricingPage() {
         { name: "Pricing", path: "/pricing" },
       ])} />
 
-      <PreviewBanner />
       <SiteHeader />
       <main id="main">
         <section className="border-b border-border bg-oat/30">
           <Container className="py-20 text-center sm:py-24">
             <span className="inline-flex items-center gap-2 rounded-full border border-caramel/30 bg-[color-mix(in_srgb,var(--caramel)_12%,transparent)] px-3.5 py-1 text-xs font-medium text-foreground">
-              Launching very soon
+              Unlimited subscribers on every plan
             </span>
             <h1 className="mx-auto mt-6 max-w-2xl font-display text-4xl leading-tight text-foreground sm:text-5xl">
               Priced by what you send
@@ -93,7 +87,7 @@ export default function PricingPage() {
         <section>
           <Container className="py-16 sm:py-20">
             <h2 className="text-center font-display text-2xl text-foreground sm:text-3xl">
-              What it&apos;ll cost at launch
+              What it costs
             </h2>
             <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-relaxed text-muted-foreground">
               Slide to the volume you send each month. Change tiers whenever.
@@ -136,7 +130,7 @@ export default function PricingPage() {
         <section className="border-t border-border bg-oat/30">
           <Container className="py-16 text-center sm:py-20">
             <h2 className="font-display text-3xl text-foreground sm:text-4xl">
-              Get set up before launch
+              Set up free. Pay when you send.
             </h2>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button

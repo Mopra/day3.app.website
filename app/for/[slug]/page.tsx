@@ -6,7 +6,6 @@ import { ArrowRight, ArrowLeft, Check, Dot } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
-import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { Reveal } from "@/components/marketing/reveal";
@@ -52,7 +51,6 @@ export default async function AudienceDetailPage({ params }: PageProps) {
       ])} />
       <JsonLd data={faqSchema(page.faqs)} />
 
-      <PreviewBanner />
       <SiteHeader />
 
       <main id="main">
@@ -152,7 +150,7 @@ export default async function AudienceDetailPage({ params }: PageProps) {
         <section className="bg-oat/30">
           <Container className="py-16 text-center sm:py-20">
             <h2 className="font-display text-3xl text-foreground sm:text-4xl">
-              Get in before we launch.
+              Start free. Send from $1/month.
             </h2>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button

@@ -11,7 +11,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
-import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
@@ -69,7 +68,6 @@ export default function AboutPage() {
         ])}
       />
 
-      <PreviewBanner />
       <SiteHeader />
 
       <main id="main">

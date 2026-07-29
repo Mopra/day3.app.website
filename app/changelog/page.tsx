@@ -2,7 +2,6 @@ import * as React from "react";
 import type { Metadata } from "next";
 
 import { Container } from "@/components/marketing/container";
-import { PreviewBanner } from "@/components/marketing/preview-banner";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { Reveal } from "@/components/marketing/reveal";
@@ -15,7 +14,7 @@ import { changelogEntries } from "@/lib/changelog-content";
 export const metadata: Metadata = buildMetadata({
   title: "Changelog",
   description:
-    "What's new in day3 — the running log of features and improvements as we build toward launch.",
+    "What's new in day3 — the running log of features and improvements we ship.",
   path: "/changelog",
   keywords: ["day3 changelog", "day3 updates", "day3 what's new"],
 });
@@ -38,7 +37,6 @@ export default async function ChangelogPage() {
         ])}
       />
 
-      <PreviewBanner />
       <SiteHeader />
 
       <main id="main">
@@ -52,8 +50,8 @@ export default async function ChangelogPage() {
               What&apos;s new in day3.
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              We&apos;re building in the open. Here&apos;s what&apos;s shipped as
-              day3 heads toward launch.
+              We&apos;re building in the open. Here&apos;s everything
+              that&apos;s shipped so far.
             </p>
           </Container>
         </section>

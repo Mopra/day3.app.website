@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/site";
  * `Button` prop, so it styles exactly like any other CTA on the site.
  */
 function SubscribeButton({
-  children = "Get launch updates",
+  children = "Get product updates",
   ...props
 }: ButtonProps) {
   return (
