@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seo": "node --env-file=.env.local scripts/seo/pull-seo.mjs",
+    "seo:properties": "node --env-file=.env.local scripts/seo/list-properties.mjs",
+    "seo:index": "node --env-file=.env.local scripts/seo/index-status.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -27,6 +30,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "google-auth-library": "^9.15.0",
     "tailwindcss": "^4.3.1",
     "typescript": "^5"
   }
