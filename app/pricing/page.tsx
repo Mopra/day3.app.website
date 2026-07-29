@@ -20,7 +20,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = buildMetadata({
   title: "Pricing",
   description:
-    "The most approachable email platform: plans start at $1/mo for 1,000 emails and scale to $49/mo for 100,000 — every plan includes unlimited subscribers. Priced by emails sent, never by list size.",
+    "The most approachable email platform: plans start at $1/mo for 1,000 emails and scale to $220/mo for 1,000,000 — every plan includes unlimited subscribers and the AI writing assistant. Priced by emails sent, never by list size.",
   path: "/pricing",
   keywords: [
     "email marketing pricing",
@@ -53,7 +53,11 @@ const faqs = [
   },
   {
     q: "Is the AI writing assistant included?",
-    a: "Included on the 10k plan ($5/mo) and up — draft from a brief, suggest subject lines, rewrite highlighted copy. Smaller plans send exactly the same without it.",
+    a: "Yes — on every paid plan, from $1/mo. Draft from a brief, get subject lines, rewrite highlighted copy. Bigger plans carry a bigger AI allowance, but none of them are without one.",
+  },
+  {
+    q: "What if I send more than a million emails a month?",
+    a: "Get in touch. The self-serve ladder tops out at 1,000,000 emails for $220/mo; above that we set the plan up with you directly.",
   },
 ];
 
@@ -100,8 +104,8 @@ export default function PricingPage() {
               <span className="font-medium text-foreground">
                 unlimited subscribers
               </span>
-              , campaigns, audiences, signup forms, and metrics. AI writing
-              assistant from the 10k plan up.
+              , campaigns, audiences, signup forms, metrics, the API — and the
+              AI writing assistant.
             </p>
           </Container>
         </section>

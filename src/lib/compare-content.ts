@@ -84,7 +84,7 @@ export const comparePages: ComparePage[] = [
       {
         title: "Nothing to configure",
         description:
-          "No journeys or segments to set up first. Write the update, pick a list, send.",
+          "No journeys or automation to wire up first. Write the update, pick a list, send — saved segments are there if you want them, not a prerequisite.",
       },
       {
         title: "Deliverability included",
@@ -93,7 +93,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     stayIf:
-      "Stay with Mailchimp if you need automation, segmentation, landing pages, ads, or a CRM in one place. day3 does none of that — it just emails your users about product changes.",
+      "Stay with Mailchimp if you need automation flows, landing pages, ads, or a CRM in one place. day3 does none of that — it just emails your users about product changes.",
     faqs: [
       {
         q: "Is day3 cheaper than Mailchimp?",
@@ -101,11 +101,11 @@ export const comparePages: ComparePage[] = [
       },
       {
         q: "Can I migrate my Mailchimp list to day3?",
-        a: "Yes. Export your subscribers to CSV and import them into a day3 audience. The import dedupes and drops anyone who unsubscribed or bounced.",
+        a: "Yes — by CSV or API. Export your subscribers and import them into a day3 audience, or script it against the API in batches of 1,000, bringing your custom fields and opt-outs with you. Either way the import dedupes and drops anyone who unsubscribed or bounced.",
       },
       {
         q: "What does day3 not do that Mailchimp does?",
-        a: "By design: no automation flows, segmentation, A/B testing, template builders, landing pages, or ads. Just reliable product emails.",
+        a: "By design: no automation flows, A/B testing, drag-and-drop template builders, landing pages, or ads. Just reliable product emails — with saved segments and subscription topics where they earn their keep.",
       },
     ],
   },
@@ -148,7 +148,7 @@ export const comparePages: ComparePage[] = [
       {
         title: "AI writing help when you want it",
         description:
-          "Draft or rewrite a campaign with Claude — included on the 10k plan and up.",
+          "Draft or rewrite a campaign with Claude — included on every paid plan.",
       },
     ],
     stayIf:
@@ -257,7 +257,7 @@ export const comparePages: ComparePage[] = [
       {
         title: "AI assist when it helps",
         description:
-          "Draft and refine emails with Claude — included on the 10k plan and up.",
+          "Draft and refine emails with Claude — included on every paid plan.",
       },
     ],
     stayIf:

@@ -244,8 +244,8 @@ export default function HomePage() {
             </div>
             <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
               Free is for building. Paid is for sending — every plan includes
-              unlimited subscribers and a hard monthly cap, so no surprise bills.
-              AI starts on the 10k plan.
+              unlimited subscribers, the AI writing assistant, and a hard monthly
+              cap, so no surprise bills.
             </p>
           </Container>
         </section>

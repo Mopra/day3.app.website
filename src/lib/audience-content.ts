@@ -117,7 +117,7 @@ export const audiencePages: AudiencePage[] = [
       {
         title: "AI drafting when you're stuck",
         description:
-          "Draft a campaign or rewrite a line with Claude — included from the 10k plan up.",
+          "Draft a campaign or rewrite a line with Claude — included on every paid plan.",
       },
       {
         title: "No upsell path",
@@ -128,7 +128,7 @@ export const audiencePages: AudiencePage[] = [
     faqs: [
       {
         q: "Is day3 good for indie hackers?",
-        a: "Yes. It's deliberately minimal, priced by sends so the list grows free, and ships embeddable forms plus AI drafting from the 10k plan up. Built for solo founders, not marketing teams.",
+        a: "Yes. It's deliberately minimal, priced by sends so the list grows free, and ships embeddable forms plus AI drafting on every paid plan. Built for solo founders, not marketing teams.",
       },
       {
         q: "Can I add a signup form to my own site?",

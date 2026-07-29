@@ -17,11 +17,22 @@ export type ChangelogEntry = {
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    date: "July 29, 2026",
+    isoDate: "2026-07-29",
+    title: "A public API, cheaper volume, and AI for everyone",
+    items: [
+      "Manage your audiences from code: a REST API for contacts, custom fields, segments, topics, and suppressions — built so migrating a list off another provider is a short script.",
+      "The AI writing assistant is now included on every paid plan, starting at $1/mo. Higher plans carry a larger allowance.",
+      "High-volume plans got cheaper, and the ladder now runs all the way to 1,000,000 emails a month at $220.",
+      "Deleting your organisation now erases everything it owns — subscribers, campaigns, files, and sending identities — for real.",
+    ],
+  },
+  {
     date: "June 23, 2026",
     isoDate: "2026-06-23",
     title: "AI campaign composer, scheduling, and senders",
     items: [
-      "Write campaigns faster with an optional AI composer that drafts emails, suggests subject lines, and rewrites copy. It's powered by Claude and included on the 10k plan and up.",
+      "Write campaigns faster with an optional AI composer that drafts emails, suggests subject lines, and rewrites copy. It's powered by Claude.",
       "Set a monthly AI usage budget per account, so assisted writing never produces a surprise cost.",
       "Schedule a campaign to go out later instead of sending the moment you finish.",
       "Add multiple sending identities and pick which one a campaign comes from.",

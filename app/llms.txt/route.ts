@@ -24,7 +24,7 @@ function buildLlmsTxt(): string {
       "day3 is billed by the number of emails you send each month — never by the " +
       "size of your list. Every plan includes unlimited subscribers. It's built to " +
       "be the most approachable email tool around: plans start at $1/mo and scale " +
-      "to 100,000 emails as your app gets traction.",
+      "to 1,000,000 emails as your app gets traction.",
   );
   lines.push("");
   lines.push("## What day3 is");
@@ -39,21 +39,29 @@ function buildLlmsTxt(): string {
   );
   lines.push(
     "- Plans (set by monthly email volume, all with unlimited subscribers): " +
-      "$1/mo for 1,000 emails, $3/mo for 5,000, $5/mo for 10,000, $12/mo for " +
-      "25,000, $24/mo for 50,000, and $49/mo for 100,000.",
+      "$1/mo for 1,000 emails, $3/mo for 5,000, $5/mo for 10,000, $8/mo for " +
+      "25,000, $14/mo for 50,000, $25/mo for 100,000, $60/mo for 250,000, " +
+      "$115/mo for 500,000, and $220/mo for 1,000,000. Above 1,000,000 " +
+      "emails/mo is arranged directly, not self-serve.",
   );
   lines.push(
     "- Built in: authenticated sending domains (DKIM/SPF/DMARC), double opt-in, " +
       "one-click unsubscribe (RFC 8058), and automatic suppression of bounces and complaints.",
   );
   lines.push(
-    "- Deliberately excluded by design: marketing automation flows, audience " +
-      "segmentation, A/B testing, drag-and-drop template builders, and a free tier.",
+    "- Deliberately excluded by design: marketing automation flows, A/B testing, " +
+      "drag-and-drop template builders, and a free sending tier. (Saved segments " +
+      "and subscription topics are supported; automation is not.)",
   );
   lines.push(
-    "- An AI writing assistant (included on the 10k plan and up) can draft " +
+    "- An AI writing assistant, included on every paid plan, can draft " +
       "campaigns, suggest subject lines, write preview text, and rewrite copy. " +
-      "Powered by Claude.",
+      "Powered by Claude. Higher plans carry a larger AI allowance.",
+  );
+  lines.push(
+    "- A REST API (/api/v1) manages audiences, contacts, custom fields, segments, " +
+      "topics, and suppressions — designed for migrating a list off another " +
+      "provider (Resend, Mailchimp) and keeping an app's users in sync.",
   );
   lines.push("");
 

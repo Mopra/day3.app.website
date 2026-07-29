@@ -5,6 +5,7 @@ import {
   ShieldCheck,
   LineChart,
   Sparkles,
+  Code2,
   type LucideIcon,
 } from "lucide-react";
 
@@ -148,7 +149,7 @@ export const featurePages: FeaturePage[] = [
       },
       {
         q: "How do I import my existing list?",
-        a: "Upload a CSV with email, first_name, and last_name columns. day3 dedupes it, skips past unsubscribes and bounces, and lets you retry failed rows.",
+        a: "Upload a CSV with email, first_name, and last_name columns — day3 dedupes it, skips past unsubscribes and bounces, and lets you retry failed rows. Or script it against the API if you're migrating off another provider.",
       },
     ],
   },
@@ -271,7 +272,7 @@ export const featurePages: FeaturePage[] = [
     icon: Sparkles,
     metaTitle: "AI assist — draft and refine product emails",
     metaDescription:
-      "AI that drafts a campaign from a brief, suggests subject lines and preview text, and rewrites what you highlight. Powered by Claude, on the 10k plan and up.",
+      "AI that drafts a campaign from a brief, suggests subject lines and preview text, and rewrites what you highlight. Powered by Claude, included on every paid plan.",
     keywords: [
       "AI email writer",
       "AI newsletter generator",
@@ -281,7 +282,7 @@ export const featurePages: FeaturePage[] = [
     eyebrow: "AI assist",
     title: "A writing assistant, when you want one.",
     summary:
-      "Draft a campaign from a short brief, get subject lines and preview text, and rewrite what you highlight. Powered by Claude, and included on the 10k plan and up.",
+      "Draft a campaign from a short brief, get subject lines and preview text, and rewrite what you highlight. Powered by Claude, and included on every paid plan.",
     points: [
       {
         title: "Draft a whole campaign",
@@ -299,19 +300,78 @@ export const featurePages: FeaturePage[] = [
           "Highlight any text and describe the change in plain words — and day3 rewrites just that selection.",
       },
       {
-        title: "Included from the 10k plan up",
+        title: "Included on every paid plan",
         description:
-          "Comes with the 10k plan ($5/mo) and every plan above. Every AI output stays inbox-ready and keeps your merge tags intact.",
+          "From $1/mo up. Bigger plans carry a bigger AI allowance, but no paid plan is without one — and every AI output stays inbox-ready with your merge tags intact.",
       },
     ],
     faqs: [
       {
         q: "Which plans include the AI assistant?",
-        a: "It's included on the 10k plan ($5/mo) and up. The 1k and 5k plans work exactly the same without it — AI helps you write, but it's never required to send.",
+        a: "Every paid plan, starting at $1/mo. Higher tiers come with a larger AI allowance; the free set-up tier has none, since it can't send either.",
       },
       {
         q: "Which AI model does day3 use?",
         a: "It's powered by Claude (via OpenRouter). It can draft a campaign, suggest subject lines, write preview text, and rewrite selected copy — all kept inbox-ready.",
+      },
+      {
+        q: "What happens when I use up my AI allowance?",
+        a: "The AI tools switch off until the allowance resets — writing by hand carries on untouched. Moving up a plan buys a bigger allowance.",
+      },
+    ],
+  },
+  {
+    slug: "api",
+    navLabel: "API",
+    icon: Code2,
+    metaTitle: "API — manage audiences and migrate your list from code",
+    metaDescription:
+      "A REST API for audiences, contacts, custom fields, segments, topics, and suppressions. Built for migrating off another provider and keeping your app in sync.",
+    keywords: [
+      "email marketing API",
+      "newsletter API",
+      "migrate mailchimp list API",
+      "resend alternative API",
+      "subscriber sync API",
+    ],
+    eyebrow: "API",
+    title: "Your lists, over HTTPS.",
+    summary:
+      "A REST API for audiences, contacts, fields, segments, topics, and suppressions — built so you can migrate from another provider in one script and keep your app in sync afterwards.",
+    points: [
+      {
+        title: "Built for migration",
+        description:
+          "Import up to 1,000 contacts per call, address them by email or id, and upsert instead of colliding. Coming from Resend or Mailchimp is a short script, not a project.",
+      },
+      {
+        title: "Bring your opt-outs",
+        description:
+          "Import contacts already marked unsubscribed, and push your existing suppression list straight in — so nobody who opted out ever hears from you again.",
+      },
+      {
+        title: "Keys you control",
+        description:
+          "Create and revoke bearer keys on the API keys page. The key is shown once and only its hash is stored; every key is scoped to one organization.",
+      },
+      {
+        title: "The docs live in the app",
+        description:
+          "Quickstart, endpoint map, and cURL / JavaScript / Python snippets sit under your key list — pre-filled with your own audience id. There's also a copy-paste prompt that hands the whole reference to your AI coding assistant.",
+      },
+    ],
+    faqs: [
+      {
+        q: "Does day3 have an API?",
+        a: "Yes — a REST API at /api/v1 covering audiences, contacts, custom fields, segments, topics, and the suppression list. It uses bearer API keys, JSON with snake_case, cursor pagination, and idempotency keys on writes.",
+      },
+      {
+        q: "Can I migrate my list from another provider?",
+        a: "That's what it's designed for. Batch up to 1,000 contacts per call, upsert by email, carry over custom fields, and import your unsubscribes and suppression list so the opt-outs come with you.",
+      },
+      {
+        q: "Is the API on every plan?",
+        a: "Yes. The free set-up tier's 500-subscriber cap applies to API writes too — an import that would cross it is rejected whole rather than half-applied.",
       },
     ],
   },

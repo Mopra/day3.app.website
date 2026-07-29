@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Check, Minus } from "lucide-react";
+import { Check } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,17 +16,15 @@ import { Slider } from "@/components/ui/slider";
 import { pricingTiers, siteConfig, type PricingTier } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-// The headline differentiators per tier. Every day3 feature is on every plan,
-// so the comparison stays honest about the only two axes that move: the monthly
-// send allowance and, from the 10k tier up, the AI writing assistant.
-function tierFeatures(tier: PricingTier): { ok: boolean; label: string }[] {
+// The headline facts per tier. Every day3 feature — the AI writing assistant
+// included — is on every paid plan, so the only axis that moves is the monthly
+// send allowance.
+function tierFeatures(tier: PricingTier): string[] {
   return [
-    { ok: true, label: `Send up to ${tier.emails}/mo` },
-    tier.ai
-      ? { ok: true, label: "AI writing assistant" }
-      : { ok: false, label: "AI on the 10k plan & up" },
-    { ok: true, label: "Unlimited subscribers" },
-    { ok: true, label: "Everything else included" },
+    `Send up to ${tier.emails}/mo`,
+    "AI writing assistant",
+    "Unlimited subscribers",
+    "Everything else included",
   ];
 }
 
@@ -46,7 +44,7 @@ const POPULAR_INDEX = Math.max(
  * The plan picker as a focus carousel, mirroring the in-app billing slider. Day3
  * sells sending bandwidth, so the only axis that changes is the monthly email
  * allowance — the visitor slides along the ladder ("how many emails per month?",
- * $1 → $49) and the matching tier card snaps into focus below, scaled up while
+ * $1 → $220) and the matching tier card snaps into focus below, scaled up while
  * its neighbors dim. The slider and the horizontal scroll position are two views
  * of the same focused index: dragging the slider scrolls the track, and
  * scrolling the track moves the slider. The focused card's CTA sends visitors to
@@ -251,25 +249,16 @@ export function PricingSlider() {
                 </div>
 
                 <ul className="mt-4 space-y-1.5 text-sm">
-                  {tierFeatures(t).map((f) => (
+                  {tierFeatures(t).map((label) => (
                     <li
-                      key={f.label}
-                      className={cn(
-                        "flex items-center gap-2",
-                        f.ok
-                          ? "text-foreground"
-                          : "text-muted-foreground/60",
-                      )}
+                      key={label}
+                      className="flex items-center gap-2 text-foreground"
                     >
-                      {f.ok ? (
-                        <Check
-                          className="size-4 shrink-0 text-caramel"
-                          aria-hidden
-                        />
-                      ) : (
-                        <Minus className="size-4 shrink-0" aria-hidden />
-                      )}
-                      {f.label}
+                      <Check
+                        className="size-4 shrink-0 text-caramel"
+                        aria-hidden
+                      />
+                      {label}
                     </li>
                   ))}
                 </ul>

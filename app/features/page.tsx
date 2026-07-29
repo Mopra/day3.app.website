@@ -16,13 +16,14 @@ import { featurePages } from "@/lib/features-content";
 export const metadata: Metadata = buildMetadata({
   title: "Features — everything you need to send a good product email",
   description:
-    "Campaigns, audiences, signup forms, deliverability, metrics, and an optional AI assistant. The parts you need to email your users — not the parts that come with a manual.",
+    "Campaigns, audiences, signup forms, deliverability, metrics, an AI writing assistant, and an API. The parts you need to email your users — not the parts that come with a manual.",
   path: "/features",
   keywords: [
     "email marketing features",
     "newsletter tool features",
     "product update email tool",
     "email campaign software",
+    "email marketing api",
   ],
 });
 

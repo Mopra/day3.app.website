@@ -110,19 +110,18 @@ export type PricingTier = {
   emailsValue: number;
   emailsNote: string;
   blurb: string;
-  /** Whether the AI writing assistant is included (gated to the 10k tier and up). */
-  ai: boolean;
   /** The "Most popular" pick — highlighted in the slider carousel. */
   popular?: boolean;
 };
 
 /**
  * The paid plan ladder, mirroring `src/lib/plans-catalog.ts` in the app. day3
- * sells sending bandwidth: every plan has unlimited subscribers and the same
- * features — the only axes that change are the monthly email allowance and,
- * from the 10k tier up, the AI writing assistant. The always-on free set-up
- * tier is deliberately not listed here: it can't send, so it isn't a plan you
- * pick — it's just what an account is before it subscribes.
+ * sells sending bandwidth: every plan has unlimited subscribers and every
+ * feature — including the AI writing assistant — so the only axis that changes
+ * is the monthly email allowance. (Higher tiers carry a larger AI allowance,
+ * but no tier is without one.) The always-on free set-up tier is deliberately
+ * not listed here: it can't send, so it isn't a plan you pick — it's just what
+ * an account is before it subscribes.
  */
 export const pricingTiers: PricingTier[] = [
   {
@@ -133,7 +132,6 @@ export const pricingTiers: PricingTier[] = [
     emailsValue: 1000,
     emailsNote: "emails / month",
     blurb: "The lowest way in — a first list and your earliest updates.",
-    ai: false,
   },
   {
     name: "5k",
@@ -143,7 +141,6 @@ export const pricingTiers: PricingTier[] = [
     emailsValue: 5000,
     emailsNote: "emails / month",
     blurb: "A small list you email a few times a month.",
-    ai: false,
   },
   {
     name: "10k",
@@ -152,39 +149,62 @@ export const pricingTiers: PricingTier[] = [
     emails: "10,000",
     emailsValue: 10000,
     emailsNote: "emails / month",
-    blurb: "A growing list, regular updates, and the AI writing assistant.",
-    ai: true,
+    blurb: "A growing list on a regular update rhythm.",
     popular: true,
   },
   {
     name: "25k",
-    price: "$12",
-    priceUsd: 12,
+    price: "$8",
+    priceUsd: 8,
     emails: "25,000",
     emailsValue: 25000,
     emailsNote: "emails / month",
     blurb: "Frequent sends to a list that's finding its traction.",
-    ai: true,
   },
   {
     name: "50k",
-    price: "$24",
-    priceUsd: 24,
+    price: "$14",
+    priceUsd: 14,
     emails: "50,000",
     emailsValue: 50000,
     emailsNote: "emails / month",
     blurb: "An established list you mail on a steady schedule.",
-    ai: true,
   },
   {
     name: "100k",
-    price: "$49",
-    priceUsd: 49,
+    price: "$25",
+    priceUsd: 25,
     emails: "100,000",
     emailsValue: 100000,
     emailsNote: "emails / month",
     blurb: "A large list that hears from you often.",
-    ai: true,
+  },
+  {
+    name: "250k",
+    price: "$60",
+    priceUsd: 60,
+    emails: "250,000",
+    emailsValue: 250000,
+    emailsNote: "emails / month",
+    blurb: "Serious volume — a big list, mailed often.",
+  },
+  {
+    name: "500k",
+    price: "$115",
+    priceUsd: 115,
+    emails: "500,000",
+    emailsValue: 500000,
+    emailsNote: "emails / month",
+    blurb: "High-volume sending without a sales call.",
+  },
+  {
+    name: "1M",
+    price: "$220",
+    priceUsd: 220,
+    emails: "1,000,000",
+    emailsValue: 1000000,
+    emailsNote: "emails / month",
+    blurb: "A million emails a month, self-serve. Need more? Just ask.",
   },
 ];
 

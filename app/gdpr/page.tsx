@@ -117,6 +117,27 @@ export default function GdprPage() {
           ),
         },
         {
+          heading: "Deleting your account really deletes it",
+          body: (
+            <>
+              <p>
+                Right to erasure isn&apos;t a support ticket here — it&apos;s a
+                button. Deleting your organisation permanently erases everything
+                it owns: subscribers, campaigns, imports, forms, domains,
+                senders, email events, and the uploaded files behind them, along
+                with the sending identities we created for you. There is no
+                grace window and no undo.
+              </p>
+              <p>
+                One thing survives on purpose: the record that someone
+                unsubscribed or reported spam. Keeping those means a deleted
+                account can never cause us to email a person who opted out — a
+                duty that outlives the account.
+              </p>
+            </>
+          ),
+        },
+        {
           heading: "International transfers",
           body: (
             <p>
