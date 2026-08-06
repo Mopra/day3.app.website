@@ -45,19 +45,19 @@ Evaluated at send time, never frozen.
 const mcpFacts = [
   {
     title: "One URL, no install",
-    body: "An HTTP endpoint and the same bearer key as the REST API. No package, no OAuth dance, one place to revoke it.",
+    body: "Same bearer key as the REST API, one place to revoke it.",
   },
   {
     title: "It lands as blocks, not HTML",
-    body: "The draft opens in the visual composer as real sections you can reorder and edit — and converts back, so an email you finished by hand reads out as Markdown again.",
+    body: "Editable sections in the composer — and it reads back out as Markdown.",
   },
   {
     title: "It can't mail anyone by accident",
-    body: "Writing, previewing and test sends are open. Sending to a real audience needs a key you explicitly minted with that permission — an ordinary key drafts all day and reaches nobody.",
+    body: "Reaching a real audience needs a key you minted for it. An ordinary key drafts and tests only.",
   },
   {
-    title: "Free tier does the whole loop",
-    body: "Sandbox mode sends for real to your own team, 100 a month, no card. “Draft it and send me a test” works end to end before you pay for anything.",
+    title: "The free tier does the whole loop",
+    body: "“Draft it and send me a test” works end to end, no card.",
   },
 ];
 
@@ -70,7 +70,7 @@ function McpProof() {
             align="center"
             eyebrow="MCP"
             title="Write the email where you already work."
-            description="day3 speaks Model Context Protocol. Point Claude Code, Cursor, or VS Code at one URL and your editor becomes a composer for it — the draft shows up in day3 finished enough to send and still editable by hand."
+            description="day3 speaks Model Context Protocol. Point Claude Code, Cursor, or VS Code at one URL and your editor becomes a composer for it."
             className="mx-auto"
           />
         </Reveal>
@@ -79,17 +79,17 @@ function McpProof() {
           <CodeCard
             label="1 · Point your editor at it"
             code={installSnippet}
-            note="Cursor and VS Code take the same URL and header as a few lines of JSON."
+            note="Cursor and VS Code take the same URL as JSON."
           />
           <CodeCard
             label="2 · Ask for the email"
             code={promptSnippet}
-            note="It can read your audiences, senders, plan and sending status first, so it writes against what you actually have."
+            note="It reads your audiences and senders first, so it writes against what you have."
           />
           <CodeCard
             label="3 · This is what it writes"
             code={markdownSnippet}
-            note="Day3 Markdown: ordinary Markdown plus blocks for buttons, columns, cards and callouts. Each construct becomes an editable section in the composer."
+            note="Markdown plus blocks for buttons, columns and cards. Each one becomes an editable section."
           />
         </Reveal>
 

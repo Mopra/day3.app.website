@@ -42,46 +42,46 @@ const contactSnippet = `curl -X POST \\
   }'`;
 
 /**
- * The DX details a developer actually decides on. Stated as facts rather than
- * benefits — each one is a papercut other providers leave in, and the reader
- * recognizes the papercut without being told that it hurts.
+ * The DX details a developer actually decides on. One line each — every one is a
+ * papercut other providers leave in, and the reader recognizes it without being
+ * told that it hurts.
  */
 const apiFacts = [
   {
     title: "Retries can't double-send",
-    body: "Send an Idempotency-Key and a network failure resolves to exactly one email — even when the retry races its own first attempt.",
+    body: "An Idempotency-Key resolves to exactly one email.",
   },
   {
     title: "No look-up round-trip",
-    body: "Address a contact by email or by id. Nothing needs an id-mapping table first.",
+    body: "Address a contact by email or by id.",
   },
   {
     title: "Fields declare themselves",
-    body: "Unknown attributes register into the audience's field registry and become merge tags. Nothing to define up front.",
+    body: "Unknown attributes become merge tags on arrival.",
   },
   {
     title: "One domain, both jobs",
-    body: "Password resets and product updates leave from the same verified domain, against the same monthly allowance.",
+    body: "Resets and product updates, one allowance.",
   },
 ];
 
 /**
- * Migration, as the three calls it actually is. Deliberately the endpoint list
- * and not another snippet: the hard part of a migration was never the syntax,
- * it was knowing that suppressions have to go first.
+ * Migration, as the three calls it actually is. The endpoint list rather than
+ * another snippet: the hard part was never the syntax, it was knowing that
+ * suppressions have to go first.
  */
 const migrationCalls = [
   {
     call: "POST /v1/suppressions",
-    body: "Your old bounces and complaints — first, so nothing re-mails them.",
+    body: "Old bounces and opt-outs first, so nothing re-mails them.",
   },
   {
     call: "POST /v1/audiences/{id}/contacts/batch",
-    body: "1,000 contacts a call, per-row results, safe to re-run.",
+    body: "1,000 a call, per-row results, safe to re-run.",
   },
   {
     call: '…/batch { "status": "unsubscribed" }',
-    body: "The people who left, carried over with the date they left on.",
+    body: "The people who left, with the date they left on.",
   },
 ];
 
@@ -94,7 +94,7 @@ function ApiProof() {
             align="center"
             eyebrow="For the people who ship"
             title="Everything here has an API."
-            description="The same REST API your app already knows how to call: transactional email, contacts, audiences, and campaigns. One bearer key, JSON in, JSON out, machine-readable errors."
+            description="Transactional email, contacts, audiences, campaigns. One bearer key, JSON in, JSON out."
             className="mx-auto"
           />
         </Reveal>
@@ -103,12 +103,12 @@ function ApiProof() {
           <CodeCard
             label="Send your app's transactional email"
             code={transactionalSnippet}
-            note="Returns immediately with an id and a status you can poll — queued → sent → delivered, or the bounce that explains why not."
+            note="Returns an id you can poll: queued → sent → delivered."
           />
           <CodeCard
             label="Keep a contact in step with your app"
             code={contactSnippet}
-            note="Signups, plan changes, churn. The same call creates or updates, so your webhook handler stays one line long."
+            note="One call creates or updates — your webhook handler stays one line."
           />
         </Reveal>
 
@@ -131,10 +131,9 @@ function ApiProof() {
           <h3 className="font-display text-2xl text-foreground">
             Moving a list in is three calls.
           </h3>
-          <p className="mt-2 max-w-2xl leading-relaxed text-muted-foreground">
-            day3 asks for your opt-outs and bounces, not just your active
-            contacts — re-mailing people who left somewhere else is the fastest
-            way to wreck a new domain&apos;s reputation.
+          <p className="mt-2 max-w-xl leading-relaxed text-muted-foreground">
+            We ask for your opt-outs too — re-mailing people who left elsewhere
+            is the fastest way to wreck a new domain.
           </p>
           <ol className="mt-6 space-y-4">
             {migrationCalls.map((step, index) => (

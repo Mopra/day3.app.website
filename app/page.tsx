@@ -4,7 +4,9 @@ import {
   ArrowRight,
   BarChart3,
   CheckCircle2,
+  Code2,
   PenLine,
+  Send,
   ShieldCheck,
   Users,
 } from "lucide-react";
@@ -58,7 +60,13 @@ const hero = {
     code for a living, so "developers" would send the wrong people away.
   */
   title: ["Email for", "the people who ship"],
-  body: "The sane way to tell users what changed. Send product updates, changelogs, and launch notes at any list size.",
+  /*
+    Both jobs in one line, because they're one setup: the product update and the
+    password reset leave the same verified domain. Naming transactional here is
+    what widens the audience from "teams with a newsletter" to every developer
+    already paying something to send mail.
+  */
+  body: "Product updates and your app's transactional email, from one verified domain.",
   grain: 20,
 };
 
@@ -73,12 +81,11 @@ const popularTier = pricingTiers.find((t) => t.popular) ?? entryTier;
 
 const priceFacts = [
   /*
-    "to send" rather than "to start" — the button next to this row says free, so
-    the label has to say what the dollar actually buys, or the two read as a
-    contradiction. Carries the free-while-building / paid-when-sending split on
-    its own, which is why the hero needs no extra line spelling it out.
+    "to reach your list" rather than "to send" — the free tier sends too, in
+    sandbox, so "to send" would now be the wrong line. The label has to name
+    what the dollar actually buys or it contradicts the button beside it.
   */
-  { value: `${entryTier.price}/mo`, label: "to send" },
+  { value: `${entryTier.price}/mo`, label: "to reach your list" },
   { value: `${popularTier.price}/mo`, label: `for ${popularTier.emails} emails` },
   { value: "Unlimited", label: "subscribers, every plan" },
 ];
@@ -95,8 +102,8 @@ const priceFacts = [
 const painBlocks = [
   {
     pain: "I need the whole thing set up before I know if I'll use it.",
-    title: "Try the whole thing before you pay anything.",
-    body: "A free account sets up domains, senders, audiences, forms and drafts — and sends for real, 100 emails a month to your own team. What a paid plan buys is reaching everyone else, from $1/month.",
+    title: "Try the whole thing before you pay.",
+    body: "Domains, senders, audiences, forms, drafts — and 100 real sends a month to your own team. Reaching everyone else starts at $1/month.",
     Panel: PanelBuildMode,
   },
   {
@@ -143,17 +150,17 @@ const priceComparisons = [
   {
     name: "Mailchimp, Kit, beehiiv",
     model: "Priced by contacts",
-    body: "The bill tracks how many people you keep, so it climbs as you grow — and arrives in full in the months you send nothing.",
+    body: "The bill climbs as you grow, and arrives in the months you send nothing.",
   },
   {
     name: "Resend",
-    model: "Priced by sends, built for developers",
-    body: "An email API first, and the closest to day3 on the meter. day3 is shaped around the campaign side: the audience, the forms, the topics, and the compliance around them.",
+    model: "Priced by sends, dev-first",
+    body: "Closest to day3 on the meter. day3 adds the campaign side: audiences, forms, topics, compliance.",
   },
   {
     name: "day3",
     model: "Priced by emails sent",
-    body: `${popularTier.emails} emails is ${popularTier.price}, whether they go to 500 subscribers or 50,000. Unlimited subscribers on every plan.`,
+    body: `${popularTier.emails} emails is ${popularTier.price} — at 500 subscribers or 50,000.`,
   },
 ];
 
@@ -166,58 +173,70 @@ const priceComparisons = [
 const faqs = [
   {
     q: "Can I try it properly before paying?",
-    a: "Yes, all of it. A free account verifies a domain, imports a list, drafts a campaign, and sends for real — 100 emails a month to your own team's addresses, through the same pipeline with the same tracking. You can integrate the transactional API and rehearse a whole migration without a card. What $1 buys is reaching everyone else.",
+    a: "Yes — all of it. A free account verifies a domain, imports a list, and sends for real: 100 emails a month to your own team, same pipeline, same tracking. What $1 buys is reaching everyone else.",
   },
   {
     q: "Do I have to leave my current tool to try day3?",
-    a: "No. Import a copy of your list, send one update from day3, and compare. Nothing about it asks for exclusivity.",
+    a: "No. Import a copy of your list, send one update, and compare. Nothing here asks for exclusivity.",
   },
   {
-    q: "Can I bring my list — including the people who unsubscribed?",
-    a: "Yes, by CSV or API, with custom fields intact. You can import contacts already marked unsubscribed, and import your suppression list outright, so nobody who opted out of your old tool gets mailed by your new one.",
+    q: "Can I bring the people who unsubscribed?",
+    a: "Yes. Import contacts already marked unsubscribed, and your suppression list outright — so nobody who opted out of your old tool hears from your new one.",
   },
   {
-    q: "Is $1/month sustainable, or is it a launch price?",
-    a: "It's the real price. Delivery costs about $0.10 per 1,000 emails, so the cheap tiers are priced against payment-processing fees rather than against email — a $1 charge loses roughly a third of itself to card fees. Every tier pays for itself as it stands, which is exactly why we can leave it alone.",
+    q: "Is $1/month sustainable, or a launch price?",
+    a: "Real price. Delivery costs about $0.10 per 1,000 emails, so the cheap tiers are priced against card fees, not against email. Every tier pays for itself as it stands.",
   },
   {
     q: "What happens if I stop paying?",
-    a: "Your account drops back to the free tier — it stops mailing your subscribers, and keeps everything: audiences, domains, senders, drafts, and history. Nothing is deleted and nothing is held hostage. Everything you put in comes back out as CSV or JSON.",
+    a: "You drop to the free tier and keep everything — audiences, domains, drafts, history. It all comes back out as CSV or JSON.",
   },
   {
-    q: "I only email my users a few times a year. Is this worth it?",
-    a: "Probably, since you're not charged for the list in between. Plans are monthly and don't roll over, so pick the tier that covers the send you actually make — you can move down, or back to free, whenever.",
+    q: "I only email a few times a year. Worth it?",
+    a: "Probably, since the list costs nothing in between. Plans don't roll over, so pick the tier that covers the send you actually make and move down whenever.",
   },
   {
     q: "Who is day3 the wrong tool for?",
-    a: "Marketing teams running funnels, agencies managing client accounts, and anyone who needs automation flows, A/B testing, or a CRM. day3 does one job: telling your users what changed. If you need a marketing platform, buy a marketing platform.",
+    a: "Marketing teams running funnels and agencies managing client accounts. No A/B testing, no CRM, no landing pages. If you need a marketing platform, buy a marketing platform.",
   },
 ];
 
+/**
+ * Six, not four — transactional email and the API earned cards of their own the
+ * moment they became things day3 leads with, and a reader scanning this grid
+ * should not have to reach the hero's fine print to find them. One line each: a
+ * grid people scan is a grid that answers "is my job in here", nothing more.
+ */
 const coreFeatures = [
   {
     title: "Write clean updates",
-    description:
-      "Updates, changelogs, and launch notes in a focused composer — subject lines, layouts, images, and test sends included.",
+    description: "Changelogs and launch notes in a focused composer.",
     icon: PenLine,
   },
   {
     title: "Grow your audience",
-    description:
-      "Import subscribers, add custom fields, and publish signup forms as pages, embeds, or popups.",
+    description: "Import contacts; publish forms as pages, embeds, or popups.",
     icon: Users,
   },
   {
+    title: "Transactional email",
+    description: "Password resets and receipts, one API call, same domain.",
+    icon: Send,
+  },
+  {
     title: "Send with confidence",
-    description:
-      "Verified domains, automatic bounce and complaint handling, and risk review — so your reputation stays intact.",
+    description: "Verified domains, automatic bounce and complaint handling.",
     icon: ShieldCheck,
   },
   {
-    title: "Understand what happened",
-    description:
-      "See what was delivered, opened, clicked, and unsubscribed — per campaign and per person.",
+    title: "Know what happened",
+    description: "Delivered, opened, clicked — per campaign and per person.",
     icon: BarChart3,
+  },
+  {
+    title: "API and MCP",
+    description: "Manage lists from code. Draft campaigns in your editor.",
+    icon: Code2,
   },
 ];
 
@@ -288,14 +307,11 @@ export default function HomePage() {
 
               <Reveal delay={220}>
                 {/*
-                  The three things a stranger is quietly weighing before they
-                  click, in one line: what it costs to find out, whether they're
-                  trapped, and how far away sending is. Cheap to say and it
-                  removes the whole "what am I signing up for" pause.
+                  What it costs to find out. The price row below carries the
+                  rest, so this stays to one clause.
                 */}
                 <p className="mt-4 text-sm text-muted-foreground">
-                  No credit card. Real sends to your own team, free. Reach
-                  everyone else from $1/month.
+                  No credit card. Sends to your own team are free.
                 </p>
               </Reveal>
 
@@ -386,12 +402,9 @@ export default function HomePage() {
         <section id="features" className="scroll-mt-20 border-t border-border">
           <Container className="py-20 sm:py-24">
             <Reveal>
-              <SectionHeading
-                title="The parts you need. Not the parts you'll avoid."
-                description="Grouped around what you're doing, not a marketing-platform checklist."
-              />
+              <SectionHeading title="The parts you need. Not the parts you'll avoid." />
             </Reveal>
-            <Reveal delay={120} className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+            <Reveal delay={120} className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
               {coreFeatures.map((feature) => {
                 const Icon = feature.icon;
                 return (
@@ -409,6 +422,20 @@ export default function HomePage() {
                   </div>
                 );
               })}
+            </Reveal>
+
+            {/*
+              Labelled, not teased. Saying "in development" costs nothing and
+              buys the reader's trust in every other claim on the page — and the
+              people who need automation now can go and buy it elsewhere instead
+              of signing up and discovering the gap.
+            */}
+            <Reveal delay={200}>
+              <p className="mt-6 text-sm text-muted-foreground">
+                <span className="font-medium text-foreground">Automations</span>{" "}
+                — triggers, waits, branches — are in development. Everything else
+                on this page ships today.
+              </p>
             </Reveal>
           </Container>
         </section>
@@ -460,9 +487,8 @@ export default function HomePage() {
               </Reveal>
             </div>
             <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
-              Free proves it works. Paid is for reaching everyone else — every
-              plan includes unlimited subscribers, the AI writing assistant, the
-              API, and a hard monthly cap, so no surprise bills.
+              Every plan: unlimited subscribers, the AI assistant, the API, and a
+              hard monthly cap. No surprise bills.
             </p>
 
             {/*
@@ -490,14 +516,12 @@ export default function HomePage() {
                   </div>
                 ))}
               </div>
-              <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
-                Worked through: 10,000 users you email twice a month is 20,000
-                emails —{" "}
+              <p className="mx-auto mt-6 max-w-xl text-center text-sm leading-relaxed text-muted-foreground">
+                10,000 users, emailed twice a month, is{" "}
                 <span className="font-medium text-foreground">
                   {tierFor(20_000).price}/mo
                 </span>
-                . The same list priced per contact bills you for all 10,000 every
-                month, including the months you ship nothing.
+                . Per-contact pricing bills you for all 10,000 — every month.
               </p>
             </Reveal>
           </Container>
@@ -508,10 +532,7 @@ export default function HomePage() {
           <Container className="py-20 sm:py-24">
             <div className="mx-auto max-w-3xl">
               <Reveal>
-                <SectionHeading
-                  title="The things you're actually weighing."
-                  description="Answered here rather than a click away, because the reader who won't click still has the question."
-                />
+                <SectionHeading title="The things you're actually weighing." />
               </Reveal>
               <Reveal delay={120}>
                 <dl className="mt-10 divide-y divide-border border-t border-border">
@@ -540,9 +561,8 @@ export default function HomePage() {
                 Send your first one for free.
               </h2>
               <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
-                Verify a domain, import your list, write the update, and send it
-                to yourself — all of that on the free tier. Pay when you&apos;re
-                ready to reach everyone else.
+                Domain, list, first campaign, real send to your own team — all on
+                the free tier.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button
@@ -572,19 +592,18 @@ export default function HomePage() {
               </p>
 
               {/*
-                Sending needs a domain and DNS access, which nobody has on a
-                phone at 11pm. This is the only exit for a reader who fits and
-                can't act right now — day3's own signup form, so the ask is the
-                same thing the product does.
+                Setup needs DNS access, which nobody has on a phone at 11pm. The
+                one exit for a reader who fits but can't act right now — day3's
+                own signup form, so the ask is the thing the product does.
               */}
               <p className="mt-10 border-t border-border pt-8 text-sm text-muted-foreground">
-                Not at a machine where you can edit DNS?{" "}
+                Can&apos;t edit DNS right now?{" "}
                 <SubscribeButton
                   variant="link"
                   size="sm"
                   className="h-auto p-0 text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel"
                 >
-                  Get day3&apos;s own product updates
+                  Get our updates
                 </SubscribeButton>{" "}
                 and come back to it.
               </p>

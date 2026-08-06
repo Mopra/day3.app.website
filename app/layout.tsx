@@ -29,9 +29,10 @@ export const metadata: Metadata = {
     template: "%s · day3",
   },
   description:
-    "The most approachable email tool for startups and indie devs — unlimited subscribers, priced by emails sent. Plans start at $1/mo.",
+    "Product updates and transactional email from one verified domain. Unlimited subscribers, priced by emails sent. Plans start at $1/mo.",
   keywords: [
     "email marketing",
+    "transactional email API",
     "newsletter",
     "email campaigns",
     "send-based pricing",
