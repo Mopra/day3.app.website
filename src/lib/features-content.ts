@@ -308,7 +308,7 @@ export const featurePages: FeaturePage[] = [
     faqs: [
       {
         q: "Which plans include the AI assistant?",
-        a: "Every paid plan, starting at $1/mo. Higher tiers come with a larger AI allowance; the free set-up tier has none, since it can't send either.",
+        a: "Every paid plan, starting at $1/mo. Higher tiers come with a larger AI allowance. The free tier has none — it can send in sandbox mode, but the writing assistant is what a paid plan turns on.",
       },
       {
         q: "Which AI model does day3 use?",
@@ -324,54 +324,78 @@ export const featurePages: FeaturePage[] = [
     slug: "api",
     navLabel: "API",
     icon: Code2,
-    metaTitle: "API — manage audiences and migrate your list from code",
+    metaTitle: "API & MCP — transactional email, contacts, and campaigns from code",
     metaDescription:
-      "A REST API for audiences, contacts, custom fields, segments, topics, and suppressions. Built for migrating off another provider and keeping your app in sync.",
+      "A REST API for transactional email, audiences, contacts, fields, segments, topics, suppressions, and campaigns — plus an MCP server so your AI editor can write the email. Built for migrating off another provider and keeping your app in sync.",
     keywords: [
       "email marketing API",
+      "transactional email API",
       "newsletter API",
+      "MCP email server",
       "migrate mailchimp list API",
       "resend alternative API",
       "subscriber sync API",
     ],
-    eyebrow: "API",
-    title: "Your lists, over HTTPS.",
+    eyebrow: "API & MCP",
+    title: "All of it, over HTTPS.",
     summary:
-      "A REST API for audiences, contacts, fields, segments, topics, and suppressions — built so you can migrate from another provider in one script and keep your app in sync afterwards.",
+      "One REST API for your app's transactional email, your audiences, and your campaigns — plus an MCP server that turns your AI editor into a composer. Built so migrating from another provider is one script and staying in sync afterwards is a webhook handler.",
     points: [
+      {
+        title: "Transactional email in one call",
+        description:
+          "POST /v1/emails sends password resets, receipts, and magic links from the same verified domain and the same monthly allowance as your newsletter. Send an Idempotency-Key and a network retry can never double-send — even when it races its own first attempt. Poll the email for queued → sent → delivered, or the bounce that explains why not.",
+      },
       {
         title: "Built for migration",
         description:
-          "Import up to 1,000 contacts per call, address them by email or id, and upsert instead of colliding. Coming from Resend or Mailchimp is a short script, not a project.",
+          "Import up to 1,000 contacts per call with per-row results, address them by email or id, and upsert instead of colliding. Coming from Resend or Mailchimp is a short script, not a project.",
       },
       {
         title: "Bring your opt-outs",
         description:
-          "Import contacts already marked unsubscribed, and push your existing suppression list straight in — so nobody who opted out ever hears from you again.",
+          "Import contacts already marked unsubscribed with the date they left on, and push your existing suppression list straight in — so nobody who opted out ever hears from you again. Do that first and their contact rows are rejected on the way in.",
       },
       {
-        title: "Keys you control",
+        title: "MCP: your editor is a composer",
         description:
-          "Create and revoke bearer keys on the API keys page. The key is shown once and only its hash is stored; every key is scoped to one organization.",
+          "Point Claude Code, Cursor, or VS Code at one URL and describe the email where you already work. It arrives in day3 as editable composer blocks rather than a wall of HTML — and converts back, so an email you finished by hand reads out as Markdown again.",
+      },
+      {
+        title: "Keys you control, scoped to what you meant",
+        description:
+          "Create and revoke bearer keys on the API keys page; the key is shown once and only its hash is stored. Sending a campaign to a real audience needs a key explicitly minted with that permission, and it can't be added later — so an assistant holding an ordinary key can draft all day and reach nobody.",
       },
       {
         title: "The docs live in the app",
         description:
-          "Quickstart, endpoint map, and cURL / JavaScript / Python snippets sit under your key list — pre-filled with your own audience id. There's also a copy-paste prompt that hands the whole reference to your AI coding assistant.",
+          "Quickstart, endpoint map, and cURL / JavaScript / Python snippets sit under your key list, pre-filled with your own audience id. Every resource page has a `</>` panel with its ids copyable, and there's a copy-paste prompt that hands the whole reference to your AI coding assistant.",
       },
     ],
     faqs: [
       {
         q: "Does day3 have an API?",
-        a: "Yes — a REST API at /api/v1 covering audiences, contacts, custom fields, segments, topics, and the suppression list. It uses bearer API keys, JSON with snake_case, cursor pagination, and idempotency keys on writes.",
+        a: "Yes — a REST API at /api/v1 covering transactional email, audiences, contacts, custom fields, segments, topics, the suppression list, and campaigns. It uses bearer API keys, JSON with snake_case, cursor pagination, machine-readable error codes, and idempotency keys on writes.",
+      },
+      {
+        q: "Can I send transactional email through day3?",
+        a: "Yes. POST /v1/emails takes from, to (up to 50 recipients), subject, and html or text, and returns an id you can poll for delivery status. It leaves from the same verified domain as your campaigns and draws on the same monthly allowance. Unsubscribes are ignored — someone who left the newsletter still gets their password reset — but hard bounces and complaints are still refused.",
       },
       {
         q: "Can I migrate my list from another provider?",
-        a: "That's what it's designed for. Batch up to 1,000 contacts per call, upsert by email, carry over custom fields, and import your unsubscribes and suppression list so the opt-outs come with you.",
+        a: "That's what it's designed for. Batch up to 1,000 contacts per call, upsert by email, carry over custom fields, and import your unsubscribes and suppression list so the opt-outs come with you. Import the suppressions first and day3 will refuse those contacts on the way in, which is the guard working rather than an error.",
+      },
+      {
+        q: "What is day3's MCP server?",
+        a: "An HTTP endpoint at /api/mcp that lets an AI editor — Claude Code, Cursor, VS Code — read your audiences and senders, write and preview a campaign, and send you a test. Setup is one line with the same bearer key as the REST API. What it writes lands in day3 as real editable blocks, so you can finish the email in the visual composer.",
+      },
+      {
+        q: "Can an AI assistant email my subscribers by accident?",
+        a: "No. Writing, previewing, and test sends are open — a test only reaches addresses you name. Sending or scheduling to a real audience needs a key you deliberately created with the campaigns:send permission, and it can't be granted to an existing key. Both send tools are also marked destructive, so editors prompt before running them.",
       },
       {
         q: "Is the API on every plan?",
-        a: "Yes. The free set-up tier's 500-subscriber cap applies to API writes too — an import that would cross it is rejected whole rather than half-applied.",
+        a: "Yes, including free. The free tier's 500-subscriber cap applies to API writes too — an import that would cross it is rejected whole rather than half-applied — and its sandbox sending means you can integrate the transactional API end to end before paying.",
       },
     ],
   },

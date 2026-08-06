@@ -44,7 +44,8 @@ export type ComparePage = {
 const DAY3 = {
   pricing: "By emails sent each month",
   subscribers: "Unlimited on every plan",
-  freeTier: "No free tier — paid from $1/mo, free to set up",
+  freeTier:
+    "Free tier sends in sandbox mode (100/mo, your own team) — paid from $1/mo to reach everyone else",
   scope: "Product updates & newsletters, on purpose narrow",
   startingPrice: "$1/mo for 1,000 emails",
 };

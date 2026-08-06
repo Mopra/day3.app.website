@@ -47,7 +47,7 @@ export const company = {
   // Also the maker of exit1.dev — a real, verifiable track record is an EEAT win.
   alsoBuilds: { name: "exit1.dev", href: "https://exit1.dev" },
   foundingYear: 2026, // TODO: confirm for schema.org foundingDate
-  city: "Copenhagen",
+  city: "Herning",
   country: "Denmark",
   countryCode: "DK",
 };
@@ -119,9 +119,10 @@ export type PricingTier = {
  * sells sending bandwidth: every plan has unlimited subscribers and every
  * feature — including the AI writing assistant — so the only axis that changes
  * is the monthly email allowance. (Higher tiers carry a larger AI allowance,
- * but no tier is without one.) The always-on free set-up tier is deliberately
- * not listed here: it can't send, so it isn't a plan you pick — it's just what
- * an account is before it subscribes.
+ * but no tier is without one.) The always-on free tier is deliberately not
+ * listed here: it buys no bandwidth, so it isn't a plan you pick — it's just
+ * what an account is before it subscribes. It isn't silent, though; sandbox mode
+ * sends 100 real emails a month to the org's own members.
  */
 export const pricingTiers: PricingTier[] = [
   {

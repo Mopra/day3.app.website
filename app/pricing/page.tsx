@@ -45,11 +45,11 @@ const faqs = [
   },
   {
     q: "Can I try it before I pay?",
-    a: "Yes. Signing up is free: connect your domain, build an audience, and set up your first campaign. You just can't send until you pick a plan.",
+    a: "Yes, properly. Signing up is free: connect your domain, import an audience, write a campaign — and send it for real. Sandbox mode covers up to 100 emails a month to your own team's addresses, through the same pipeline with the same tracking, so you can see the thing arrive before you pay for anything.",
   },
   {
     q: "Is there a free tier?",
-    a: "No free sending tier — but sending starts at just $1/mo. Sign up free to set everything up first. A tool anyone can start with, that scales as your app grows.",
+    a: "Yes, and it isn't silent — it sends in sandbox mode, 100 emails a month to your own organization's members. What a paid plan unlocks is mailing everyone else, from $1/mo. You can integrate the transactional API and rehearse a whole migration without a card.",
   },
   {
     q: "Is the AI writing assistant included?",

@@ -35,7 +35,9 @@ function buildLlmsTxt(): string {
   );
   lines.push(
     "- Pricing model: priced by emails sent, not by subscriber count. There is no " +
-      "per-contact tax and no free tier (it is free to set up, paid to send).",
+      "per-contact tax. A free account is not silent: sandbox mode sends for real, " +
+      "up to 100 emails a month, to the organization's own members only. A paid " +
+      "plan is what unlocks sending to everyone else.",
   );
   lines.push(
     "- Plans (set by monthly email volume, all with unlimited subscribers): " +
@@ -50,8 +52,20 @@ function buildLlmsTxt(): string {
   );
   lines.push(
     "- Deliberately excluded by design: marketing automation flows, A/B testing, " +
-      "drag-and-drop template builders, and a free sending tier. (Saved segments " +
-      "and subscription topics are supported; automation is not.)",
+      "drag-and-drop template builders, landing pages, and a CRM. (Saved segments " +
+      "and subscription topics are supported; automation is designed but not shipped.)",
+  );
+  lines.push(
+    "- Transactional email is a first-class surface: an app's password resets, " +
+      "receipts, and magic links go out through POST /api/v1/emails from the same " +
+      "verified domain and the same monthly allowance as the newsletter, with " +
+      "Idempotency-Key retry safety and per-email delivery status.",
+  );
+  lines.push(
+    "- day3 runs a Model Context Protocol (MCP) server at /api/mcp, so an AI " +
+      "editor (Claude Code, Cursor, VS Code) can draft a campaign that lands in " +
+      "day3 as editable composer blocks rather than opaque HTML. Sending to a real " +
+      "audience requires an API key explicitly granted the campaigns:send scope.",
   );
   lines.push(
     "- An AI writing assistant, included on every paid plan, can draft " +

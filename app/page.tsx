@@ -16,23 +16,182 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { PricingSlider } from "@/components/marketing/pricing-slider";
-import { AppPreview } from "@/components/marketing/app-preview";
 import { Reveal } from "@/components/marketing/reveal";
-import { HeroAurora } from "@/components/marketing/hero-aurora";
-import { ProductVideoTabs } from "@/components/marketing/product-video-tabs";
+import { HeroVideo } from "@/components/marketing/hero-video";
+import { ComposerShot } from "@/components/marketing/composer-shot";
+import { Provenance } from "@/components/marketing/provenance";
+import { ApiProof } from "@/components/marketing/api-proof";
+import { McpProof } from "@/components/marketing/mcp-proof";
+import { SubscribeButton } from "@/components/marketing/subscribe-button";
+import { PanelBuildMode } from "@/components/marketing/panel-build-mode";
+import { PanelDnsSync } from "@/components/marketing/panel-dns-sync";
+import { PanelSending } from "@/components/marketing/panel-sending";
+import { PanelActivity } from "@/components/marketing/panel-activity";
 import {
   JsonLd,
+  faqSchema,
   organizationSchema,
   softwareApplicationSchema,
 } from "@/components/seo/json-ld";
-import { siteConfig } from "@/lib/site";
+import { pricingTiers, siteConfig } from "@/lib/site";
 
-const pains = [
-  "I just shipped something, but now I need to tell users",
-  "Mailchimp feels like too much",
-  "I do not want to pay more because my list grew",
-  "I do not want my emails branded by someone else",
-  "I need this to be safe and compliant without becoming my new job",
+/*
+  Title, description, and canonical come from the root layout's defaults — the
+  homepage is the one route that owns them, so it deliberately exports no
+  metadata of its own.
+*/
+
+/**
+ * The hero loop. Pale watercolour study, high-key on purpose so ~58% of the
+ * frame sits within a hair of `--background` and the video dissolves into the
+ * page rather than sitting in a box. `scene` is not rendered — it records what
+ * the loop shows, so the picture and the headline stay in step.
+ */
+const hero = {
+  video: "hero-aqueduct-weir",
+  scene:
+    "The aqueduct still stands and the water still runs over the weir beneath it, unattended.",
+  /*
+    Two lines on purpose: the break falls after "for", so the audience lands
+    alone on line two and carries the weight. Defined by the act rather than
+    the job title — this segment ships software and stores, but doesn't write
+    code for a living, so "developers" would send the wrong people away.
+  */
+  title: ["Email for", "the people who ship"],
+  body: "The sane way to tell users what changed. Send product updates, changelogs, and launch notes at any list size.",
+  grain: 20,
+};
+
+/**
+ * The three price facts that do the disrupting, read straight off the pricing
+ * ladder so the hero can never quote a number the pricing section contradicts.
+ * Stated bare — no "only", no "just" — because the figures are startling enough
+ * on their own and an adjective would make them sound like a promotion.
+ */
+const entryTier = pricingTiers[0];
+const popularTier = pricingTiers.find((t) => t.popular) ?? entryTier;
+
+const priceFacts = [
+  /*
+    "to send" rather than "to start" — the button next to this row says free, so
+    the label has to say what the dollar actually buys, or the two read as a
+    contradiction. Carries the free-while-building / paid-when-sending split on
+    its own, which is why the hero needs no extra line spelling it out.
+  */
+  { value: `${entryTier.price}/mo`, label: "to send" },
+  { value: `${popularTier.price}/mo`, label: `for ${popularTier.emails} emails` },
+  { value: "Unlimited", label: "subscribers, every plan" },
+];
+
+/**
+ * The four things that actually stand between shipping and telling users, each
+ * paired with the part of day3 that removes it.
+ *
+ * `pain` is quoted verbatim from how people describe it, which is why the
+ * grammar is loose — it's someone talking, not a headline. The panel beside it
+ * animates the fix rather than screenshotting it: the page argues the problem
+ * is gone, so it has to show the problem going.
+ */
+const painBlocks = [
+  {
+    pain: "I need the whole thing set up before I know if I'll use it.",
+    title: "Try the whole thing before you pay anything.",
+    body: "A free account sets up domains, senders, audiences, forms and drafts — and sends for real, 100 emails a month to your own team. What a paid plan buys is reaching everyone else, from $1/month.",
+    Panel: PanelBuildMode,
+  },
+  {
+    pain: "DNS records are not my job.",
+    title: "Connect Cloudflare. We write the records.",
+    body: "DKIM, SPF and DMARC published for you, then rechecked until the domain verifies. No pasting TXT records into a registry at midnight.",
+    Panel: PanelDnsSync,
+  },
+  {
+    pain: "I don't want to sit and watch a send.",
+    title: "Hit send and walk away.",
+    body: "Delivery goes out in batches with a hard monthly cap and no duplicates if a job retries. A rate limit pauses the send and resumes it on its own.",
+    Panel: PanelSending,
+  },
+  {
+    pain: "Did jane@ actually get it?",
+    title: "Every email, accounted for.",
+    body: "Delivered, opened, clicked, bounced — searchable per person. Bad addresses suppress themselves, so one dead list doesn't cost you the inbox.",
+    Panel: PanelActivity,
+  },
+];
+
+/**
+ * The cheapest tier that covers a given monthly volume. Worked examples read
+ * their prices through this so a change to the ladder can never leave a stale
+ * number sitting in the copy.
+ */
+function tierFor(emails: number) {
+  return (
+    pricingTiers.find((tier) => tier.emailsValue >= emails) ??
+    pricingTiers[pricingTiers.length - 1]
+  );
+}
+
+/**
+ * What the price means next to the tools a reader already knows.
+ *
+ * Model-level only — never a competitor's dollar figure. Their prices change
+ * without telling us and a stale one reads as a lie, which costs more trust than
+ * the comparison earns. The pricing *model* is durable, verifiable, and happens
+ * to be the whole argument anyway.
+ */
+const priceComparisons = [
+  {
+    name: "Mailchimp, Kit, beehiiv",
+    model: "Priced by contacts",
+    body: "The bill tracks how many people you keep, so it climbs as you grow — and arrives in full in the months you send nothing.",
+  },
+  {
+    name: "Resend",
+    model: "Priced by sends, built for developers",
+    body: "An email API first, and the closest to day3 on the meter. day3 is shaped around the campaign side: the audience, the forms, the topics, and the compliance around them.",
+  },
+  {
+    name: "day3",
+    model: "Priced by emails sent",
+    body: `${popularTier.emails} emails is ${popularTier.price}, whether they go to 500 subscribers or 50,000. Unlimited subscribers on every plan.`,
+  },
+];
+
+/**
+ * The objections that decide it, answered on the page rather than one click
+ * away on /pricing. Doubles as FAQPage structured data — these are the exact
+ * questions an AI answer engine gets asked about a tool like this, and it can
+ * only quote answers it can see.
+ */
+const faqs = [
+  {
+    q: "Can I try it properly before paying?",
+    a: "Yes, all of it. A free account verifies a domain, imports a list, drafts a campaign, and sends for real — 100 emails a month to your own team's addresses, through the same pipeline with the same tracking. You can integrate the transactional API and rehearse a whole migration without a card. What $1 buys is reaching everyone else.",
+  },
+  {
+    q: "Do I have to leave my current tool to try day3?",
+    a: "No. Import a copy of your list, send one update from day3, and compare. Nothing about it asks for exclusivity.",
+  },
+  {
+    q: "Can I bring my list — including the people who unsubscribed?",
+    a: "Yes, by CSV or API, with custom fields intact. You can import contacts already marked unsubscribed, and import your suppression list outright, so nobody who opted out of your old tool gets mailed by your new one.",
+  },
+  {
+    q: "Is $1/month sustainable, or is it a launch price?",
+    a: "It's the real price. Delivery costs about $0.10 per 1,000 emails, so the cheap tiers are priced against payment-processing fees rather than against email — a $1 charge loses roughly a third of itself to card fees. Every tier pays for itself as it stands, which is exactly why we can leave it alone.",
+  },
+  {
+    q: "What happens if I stop paying?",
+    a: "Your account drops back to the free tier — it stops mailing your subscribers, and keeps everything: audiences, domains, senders, drafts, and history. Nothing is deleted and nothing is held hostage. Everything you put in comes back out as CSV or JSON.",
+  },
+  {
+    q: "I only email my users a few times a year. Is this worth it?",
+    a: "Probably, since you're not charged for the list in between. Plans are monthly and don't roll over, so pick the tier that covers the send you actually make — you can move down, or back to free, whenever.",
+  },
+  {
+    q: "Who is day3 the wrong tool for?",
+    a: "Marketing teams running funnels, agencies managing client accounts, and anyone who needs automation flows, A/B testing, or a CRM. day3 does one job: telling your users what changed. If you need a marketing platform, buy a marketing platform.",
+  },
 ];
 
 const coreFeatures = [
@@ -67,30 +226,42 @@ export default function HomePage() {
     <>
       <JsonLd data={organizationSchema()} />
       <JsonLd data={softwareApplicationSchema()} />
+      <JsonLd data={faqSchema(faqs)} />
 
       <SiteHeader />
 
       <main id="main">
         {/* ---------------------------------------------------------- Hero */}
         <section className="relative overflow-hidden">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_50%_0%,color-mix(in_srgb,var(--caramel)_12%,transparent),transparent_70%)]"
-          />
-          <HeroAurora />
-          <Container className="py-20 sm:py-28">
+          <HeroVideo name={hero.video} scene={hero.scene} grain={hero.grain} />
+          {/*
+            Fills exactly one viewport. The header is `sticky` (not fixed) so it
+            occupies layout space above this — hence subtracting its h-16.
+            `svh` rather than `vh` so mobile browser chrome doesn't push the
+            bottom of the artwork off-screen, and rather than `dvh` so the hero
+            doesn't resize while the toolbar hides on scroll.
+
+            The loop is pinned to the bottom at its own aspect ratio, so its
+            height tracks viewport width (≈0.55 × width). Top padding is in
+            `svh` so the copy keeps its proportion of the frame instead of
+            drifting into the artwork on short viewports.
+
+            Held under 10svh: the risk line and the price row below the buttons
+            cost about two lines between them, and the padding has to give that
+            back or the row lands in the water on a laptop.
+          */}
+          <Container className="flex min-h-[calc(100svh-4rem)] flex-col justify-start pt-[9svh] pb-16">
             <div className="mx-auto max-w-3xl text-center">
               <Reveal>
                 <h1 className="font-display text-4xl leading-[1.08] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-                  Send product updates.
-                  <br className="hidden sm:block" /> Not marketing campaigns.
+                  {hero.title[0]}
+                  <br className="hidden sm:block" /> {hero.title[1]}
                 </h1>
               </Reveal>
 
               <Reveal delay={90}>
                 <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-                  For small teams who ship before they market. Start free, send
-                  from $1/month.
+                  {hero.body}
                 </p>
               </Reveal>
 
@@ -101,7 +272,7 @@ export default function HomePage() {
                     className="group w-full sm:w-auto"
                     render={<a href={siteConfig.signupUrl} />}
                   >
-                    Start building for free
+                    Start free
                     <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                   </Button>
                   <Button
@@ -115,61 +286,104 @@ export default function HomePage() {
                 </div>
               </Reveal>
 
-              <Reveal delay={260}>
-                <p className="mt-5 text-sm text-muted-foreground">
-                  Set everything up for free. Pay only when you&apos;re ready to
-                  send.
+              <Reveal delay={220}>
+                {/*
+                  The three things a stranger is quietly weighing before they
+                  click, in one line: what it costs to find out, whether they're
+                  trapped, and how far away sending is. Cheap to say and it
+                  removes the whole "what am I signing up for" pause.
+                */}
+                <p className="mt-4 text-sm text-muted-foreground">
+                  No credit card. Real sends to your own team, free. Reach
+                  everyone else from $1/month.
                 </p>
               </Reveal>
-            </div>
 
-            {/* Product preview */}
-            <Reveal delay={200} className="mx-auto mt-16 max-w-4xl">
-              <AppPreview />
-            </Reveal>
+              <Reveal delay={260}>
+                {/*
+                  Price sits above the fold because it's the disrupter, but as a
+                  quiet row of facts rather than a badge — the numbers carry the
+                  argument, so shouting them would undercut it. Hairline rules
+                  between items on `sm+` only; they'd fight the wrap on mobile,
+                  where the facts stack.
+                */}
+                <ul className="mt-6 flex flex-col items-center justify-center gap-y-1.5 text-sm sm:flex-row sm:flex-wrap sm:gap-x-5">
+                  {priceFacts.map((fact) => (
+                    <li
+                      key={fact.label}
+                      className="flex items-baseline gap-1.5 sm:border-l sm:border-border sm:pl-5 sm:first:border-l-0 sm:first:pl-0"
+                    >
+                      <span className="font-medium text-foreground tabular-nums">
+                        {fact.value}
+                      </span>
+                      <span className="text-muted-foreground">
+                        {fact.label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </Reveal>
+
+            </div>
           </Container>
         </section>
 
-        {/* -------------------------------------------------- Product video */}
-        <section id="product" className="scroll-mt-20 border-t border-border bg-oat/30">
+        {/*
+          -------------------------------------------------- Product & proof
+          The evidence, before the argument. Renders nothing until the composer
+          asset lands (see composer-shot.tsx); the provenance strip stands on its
+          own either way.
+        */}
+        <ComposerShot />
+        <Provenance />
+
+        {/* --------------------------------------------------------- Pains */}
+        <section id="pains" className="scroll-mt-20 border-t border-border bg-oat/30">
           <Container className="py-20 sm:py-24">
             <Reveal>
               <SectionHeading
                 align="center"
-                title="Everything you need to tell users what changed."
-                description="Write it, grow the list, send safely, see what happened. Nothing extra to learn."
-              />
-            </Reveal>
-            <Reveal delay={120} className="mt-12">
-              <ProductVideoTabs />
-            </Reveal>
-          </Container>
-        </section>
-
-        {/* --------------------------------------------------------- Pains */}
-        <section id="pains" className="scroll-mt-20 border-t border-border">
-          <Container className="py-20 sm:py-24">
-            <Reveal>
-              <SectionHeading
                 title="For the moment after you ship."
-                description="The product is live. Now users need to hear what changed."
+                description="The product is live. Everything between you and telling users, removed."
               />
             </Reveal>
-            <Reveal delay={120} className="mt-10 grid gap-3 md:grid-cols-2">
-              {pains.map((pain) => (
-                <div key={pain} className="rounded-xl border border-border bg-card p-5 text-lg text-foreground">
-                  “{pain}”
-                </div>
-              ))}
-            </Reveal>
+
+            {/*
+              Alternating sides on `lg`, stacked everywhere else. The panel is
+              ordered first in the DOM on the flipped rows only visually — on
+              mobile the copy always leads, because a panel with no sentence
+              above it is a puzzle.
+            */}
+            <div className="mt-16 space-y-20 sm:space-y-24">
+              {painBlocks.map((block, index) => {
+                const flipped = index % 2 === 1;
+                return (
+                  <Reveal
+                    key={block.title}
+                    className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14"
+                  >
+                    <div className={flipped ? "lg:order-2" : undefined}>
+                      <p className="text-lg leading-relaxed text-muted-foreground">
+                        “{block.pain}”
+                      </p>
+                      <h3 className="mt-4 font-display text-3xl leading-tight text-foreground sm:text-4xl">
+                        {block.title}
+                      </h3>
+                      <p className="mt-4 max-w-md leading-relaxed text-muted-foreground">
+                        {block.body}
+                      </p>
+                    </div>
+
+                    <block.Panel />
+                  </Reveal>
+                );
+              })}
+            </div>
           </Container>
         </section>
 
         {/* ------------------------------------------------------ Features */}
-        <section
-          id="features"
-          className="scroll-mt-20 border-t border-border"
-        >
+        <section id="features" className="scroll-mt-20 border-t border-border">
           <Container className="py-20 sm:py-24">
             <Reveal>
               <SectionHeading
@@ -189,16 +403,19 @@ export default function HomePage() {
                     <h3 className="mt-4 font-medium text-foreground">
                       {feature.title}
                     </h3>
-                    <p
-                      className="mt-2 text-sm leading-relaxed text-muted-foreground"
-                      dangerouslySetInnerHTML={{ __html: feature.description }}
-                    />
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {feature.description}
+                    </p>
                   </div>
                 );
               })}
             </Reveal>
           </Container>
         </section>
+
+        {/* ----------------------------------------------------- API and MCP */}
+        <ApiProof />
+        <McpProof />
 
         {/* ------------------------------------------------------- Pricing */}
         <section id="pricing" className="scroll-mt-20 border-t border-border bg-oat/30">
@@ -214,13 +431,13 @@ export default function HomePage() {
               <Reveal>
                 <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
                   <p className="text-sm font-medium text-muted-foreground">
-                    Build mode / Free
+                    Sandbox / Free
                   </p>
                   <div className="mt-2 font-display text-4xl text-foreground">
                     $0<span className="text-sm font-normal text-muted-foreground">/mo</span>
                   </div>
                   <p className="mt-4 font-medium text-foreground">
-                    Build everything before you send.
+                    Try the whole thing for real.
                   </p>
                   <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
                     <li className="flex gap-2">
@@ -229,7 +446,7 @@ export default function HomePage() {
                     </li>
                     <li className="flex gap-2">
                       <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-caramel" />
-                      No sending until you pick a paid plan
+                      100 real sends a month, to your own team
                     </li>
                     <li className="flex gap-2">
                       <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-caramel" />
@@ -243,10 +460,75 @@ export default function HomePage() {
               </Reveal>
             </div>
             <p className="mx-auto mt-8 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
-              Free is for building. Paid is for sending — every plan includes
-              unlimited subscribers, the AI writing assistant, and a hard monthly
-              cap, so no surprise bills.
+              Free proves it works. Paid is for reaching everyone else — every
+              plan includes unlimited subscribers, the AI writing assistant, the
+              API, and a hard monthly cap, so no surprise bills.
             </p>
+
+            {/*
+              The number needs something to push against. Nobody carries a
+              competitor's price list in their head, so $5 for 10,000 emails is
+              only startling once you can see what the alternative bills you for.
+              Stated as models, never as their dollar figures — a competitor's
+              price changes without telling us, and a stale one reads as a lie.
+              (Same policy as the /compare pages; see compare-content.ts.)
+            */}
+            <Reveal delay={180} className="mt-14">
+              <h3 className="text-center font-display text-2xl text-foreground sm:text-3xl">
+                What that means next to the tools you know
+              </h3>
+              <div className="mt-8 grid gap-px overflow-hidden rounded-xl border border-border bg-border md:grid-cols-3">
+                {priceComparisons.map((item) => (
+                  <div key={item.name} className="flex flex-col bg-card p-6">
+                    <p className="font-medium text-foreground">{item.name}</p>
+                    <p className="mt-1 text-sm font-medium text-caramel">
+                      {item.model}
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {item.body}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
+                Worked through: 10,000 users you email twice a month is 20,000
+                emails —{" "}
+                <span className="font-medium text-foreground">
+                  {tierFor(20_000).price}/mo
+                </span>
+                . The same list priced per contact bills you for all 10,000 every
+                month, including the months you ship nothing.
+              </p>
+            </Reveal>
+          </Container>
+        </section>
+
+        {/* ----------------------------------------------------- Objections */}
+        <section id="questions" className="scroll-mt-20 border-t border-border">
+          <Container className="py-20 sm:py-24">
+            <div className="mx-auto max-w-3xl">
+              <Reveal>
+                <SectionHeading
+                  title="The things you're actually weighing."
+                  description="Answered here rather than a click away, because the reader who won't click still has the question."
+                />
+              </Reveal>
+              <Reveal delay={120}>
+                <dl className="mt-10 divide-y divide-border border-t border-border">
+                  {faqs.map((faq) => (
+                    <div
+                      key={faq.q}
+                      className="grid gap-2 py-6 sm:grid-cols-[1fr_1.4fr] sm:gap-8"
+                    >
+                      <dt className="font-medium text-foreground">{faq.q}</dt>
+                      <dd className="leading-relaxed text-muted-foreground">
+                        {faq.a}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </Reveal>
+            </div>
           </Container>
         </section>
 
@@ -255,11 +537,12 @@ export default function HomePage() {
           <Container className="py-20 sm:py-28">
             <Reveal className="mx-auto max-w-2xl text-center">
               <h2 className="font-display text-4xl leading-tight text-foreground sm:text-5xl">
-                Start for free. Send from $1/month.
+                Send your first one for free.
               </h2>
               <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
-                Set up your domain, audience, forms, and senders now. Upgrade
-                when you&apos;re ready to send.
+                Verify a domain, import your list, write the update, and send it
+                to yourself — all of that on the free tier. Pay when you&apos;re
+                ready to reach everyone else.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button
@@ -267,7 +550,7 @@ export default function HomePage() {
                   className="group w-full sm:w-auto"
                   render={<a href={siteConfig.signupUrl} />}
                 >
-                  Start building for free
+                  Start free
                   <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                 </Button>
                 <Button
@@ -279,10 +562,31 @@ export default function HomePage() {
                   See pricing
                 </Button>
               </div>
+              <p className="mt-5 text-sm text-muted-foreground">
+                No credit card. Cancel anytime.
+              </p>
               <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground">
                 For permission-based product updates only. Cold outreach and
                 purchased lists get paused — it keeps deliverability good for
                 everyone.
+              </p>
+
+              {/*
+                Sending needs a domain and DNS access, which nobody has on a
+                phone at 11pm. This is the only exit for a reader who fits and
+                can't act right now — day3's own signup form, so the ask is the
+                same thing the product does.
+              */}
+              <p className="mt-10 border-t border-border pt-8 text-sm text-muted-foreground">
+                Not at a machine where you can edit DNS?{" "}
+                <SubscribeButton
+                  variant="link"
+                  size="sm"
+                  className="h-auto p-0 text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                >
+                  Get day3&apos;s own product updates
+                </SubscribeButton>{" "}
+                and come back to it.
               </p>
             </Reveal>
           </Container>

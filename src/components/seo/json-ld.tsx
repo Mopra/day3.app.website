@@ -84,8 +84,12 @@ export function softwareApplicationSchema() {
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "USD",
-      lowPrice: "1",
-      highPrice: "49",
+      // Read off the ladder rather than written down: a hardcoded bound goes
+      // stale the first time pricing moves, and a price a crawler can catch us
+      // contradicting is worse than no price at all. (It had: highPrice said
+      // "49" long after the ladder topped out at $220.)
+      lowPrice: String(Math.min(...pricingTiers.map((tier) => tier.priceUsd))),
+      highPrice: String(Math.max(...pricingTiers.map((tier) => tier.priceUsd))),
       offerCount: pricingTiers.length,
       offers: pricingTiers.map((tier) => ({
         "@type": "Offer",

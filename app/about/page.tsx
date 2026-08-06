@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
+  Calculator,
   Infinity as InfinityIcon,
   ShieldCheck,
   MapPin,
   Ban,
+  Sprout,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -22,7 +24,7 @@ import {
   personSchema,
 } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
-import { company, siteConfig } from "@/lib/site";
+import { company, siteConfig, socialLinks } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "About day3",
@@ -53,6 +55,48 @@ const principles = [
     icon: ShieldCheck,
     title: "Your list is yours",
     body: "We never sell, rent, or mine your subscribers. We process them to send your email and report on it — nothing else.",
+  },
+];
+
+/**
+ * The pages a careful reader goes looking for before handing over a list, in one
+ * place. Linking them plainly is itself the trust signal — a tool with something
+ * to hide summarises this into a badge.
+ */
+const trustLinks = [
+  {
+    href: "/security",
+    label: "Security",
+    description:
+      "How the application, database, and mail are hosted, and what's encrypted where.",
+  },
+  {
+    href: "/gdpr",
+    label: "GDPR & data protection",
+    description:
+      "What we process, why, how long for, and how erasure actually works.",
+  },
+  {
+    href: "/legal/subprocessors",
+    label: "Sub-processors",
+    description:
+      "Every third party that can touch your data, named, with what it does.",
+  },
+  {
+    href: "/legal/dpa",
+    label: "Data processing agreement",
+    description: "The DPA, in full, without asking anyone for it.",
+  },
+  {
+    href: "/legal/acceptable-use",
+    label: "Acceptable use",
+    description:
+      "What day3 won't send — the reason deliverability holds for everyone else.",
+  },
+  {
+    href: "/changelog",
+    label: "Changelog",
+    description: "Every change that shipped, dated. Judge the pace yourself.",
   },
 ];
 
@@ -152,7 +196,8 @@ export default function AboutPage() {
               />
               <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
                 <p>
-                  day3 is built by {company.founder} — the same person behind{" "}
+                  day3 is built by {company.founder}, {company.founderTitle} —
+                  the same person behind{" "}
                   <a
                     href={company.alsoBuilds.href}
                     className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
@@ -174,6 +219,167 @@ export default function AboutPage() {
                     {siteConfig.contactEmail}
                   </a>{" "}
                   and a human who can actually change the software reads it.
+                </p>
+              </div>
+
+              {/*
+                The verifiable half of "trust us". A name and a city are a claim;
+                a registration number, a parent company, and a public code
+                profile are things a stranger — or a model deciding whether to
+                recommend this tool — can go and check.
+              */}
+              <dl className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
+                <div className="bg-card p-6">
+                  <dt className="text-sm text-muted-foreground">
+                    Registered company
+                  </dt>
+                  <dd className="mt-1 font-medium text-foreground">
+                    <a
+                      href={company.website}
+                      className="underline underline-offset-4 hover:text-caramel"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {company.legalName}
+                    </a>
+                  </dd>
+                </div>
+                <div className="bg-card p-6">
+                  <dt className="text-sm text-muted-foreground">
+                    Danish company number
+                  </dt>
+                  <dd className="mt-1 font-medium tabular-nums text-foreground">
+                    CVR {company.cvr}
+                  </dd>
+                </div>
+                <div className="bg-card p-6">
+                  <dt className="text-sm text-muted-foreground">
+                    Written in public
+                  </dt>
+                  <dd className="mt-1 font-medium text-foreground">
+                    {socialLinks.length ? (
+                      <a
+                        href={socialLinks[0].href}
+                        className="underline underline-offset-4 hover:text-caramel"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {socialLinks[0].label}
+                      </a>
+                    ) : (
+                      <Link
+                        href="/changelog"
+                        className="underline underline-offset-4 hover:text-caramel"
+                      >
+                        Changelog
+                      </Link>
+                    )}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </Container>
+        </section>
+
+        {/* --------------------------------------------- Why $1 is real */}
+        <section className="border-b border-border bg-oat/30">
+          <Container className="py-20 sm:py-24">
+            <div className="mx-auto max-w-3xl">
+              <div className="flex items-center gap-3">
+                <Calculator className="size-6 text-caramel" />
+                <p className="text-sm font-medium uppercase tracking-wider text-caramel">
+                  Why it costs what it costs
+                </p>
+              </div>
+              <h2 className="mt-3 font-display text-3xl leading-tight text-foreground sm:text-4xl">
+                $1 a month is the real price, not a launch price.
+              </h2>
+              <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
+                <p>
+                  A price this low invites a fair question: is it a loss leader
+                  that gets repriced the moment we have you? It isn&apos;t, and
+                  the arithmetic is short enough to show you.
+                </p>
+                <p>
+                  Delivery costs us about{" "}
+                  <span className="font-medium text-foreground">
+                    $0.10 per 1,000 emails
+                  </span>{" "}
+                  through AWS SES, and it&apos;s perfectly linear — there are no
+                  volume discounts upstream for us to hand down. That&apos;s why
+                  the price per thousand flattens as the plans get bigger instead
+                  of collapsing.
+                </p>
+                <p>
+                  At the cheap end the binding cost isn&apos;t email at all —
+                  it&apos;s card fees. A $1 charge loses roughly a third of itself
+                  to payment processing before we see it, which is why nothing
+                  below $1 a month can exist and why the smallest plans sit above
+                  the trend line rather than on it.
+                </p>
+                <p>
+                  Every tier covers its own costs as it stands. Nothing here is
+                  subsidised by a future price rise, and there&apos;s no venture
+                  money that needs a return on a schedule.
+                </p>
+              </div>
+              <div className="mt-8">
+                <Button
+                  variant="outline"
+                  render={<Link href="/pricing" />}
+                >
+                  See the whole ladder
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* --------------------------------------------- Honest status */}
+        <section className="border-b border-border">
+          <Container className="py-20 sm:py-24">
+            <div className="mx-auto max-w-3xl">
+              <div className="flex items-center gap-3">
+                <Sprout className="size-6 text-caramel" />
+                <p className="text-sm font-medium uppercase tracking-wider text-caramel">
+                  Where we are
+                </p>
+              </div>
+              <h2 className="mt-3 font-display text-3xl leading-tight text-foreground sm:text-4xl">
+                day3 is new. Here&apos;s what that buys you, and what it costs
+                you.
+              </h2>
+              <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
+                <p>
+                  We&apos;re not going to invent a customer count or borrow
+                  someone else&apos;s logo. day3 is early, and you&apos;d find out
+                  soon enough anyway.
+                </p>
+                <p>
+                  <span className="font-medium text-foreground">
+                    What that buys you:
+                  </span>{" "}
+                  the person who reads your email is the person who can ship the
+                  fix, usually in days. Nothing is grandfathered into a legacy
+                  plan, because there isn&apos;t one yet. And every change that
+                  lands is dated and public in the{" "}
+                  <Link
+                    href="/changelog"
+                    className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                  >
+                    changelog
+                  </Link>
+                  , so you can judge the pace yourself rather than take our word
+                  for it.
+                </p>
+                <p>
+                  <span className="font-medium text-foreground">
+                    What it costs you:
+                  </span>{" "}
+                  no third-party reviews to read, no separate docs site yet, and a
+                  narrower product than the platform you might be leaving. If
+                  those matter more than the price and the focus, a bigger tool is
+                  the right call and we&apos;d rather you knew now.
                 </p>
               </div>
             </div>
@@ -216,6 +422,36 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
+          </Container>
+        </section>
+
+        {/* ------------------------------------------- Trust & transparency */}
+        <section className="border-b border-border">
+          <Container className="py-20 sm:py-24">
+            <SectionHeading
+              align="center"
+              eyebrow="Trust & transparency"
+              title="Everything we'd want to read before trusting a tool with a list."
+              description="Written out in full rather than summarised into a badge."
+              className="mx-auto"
+            />
+            <ul className="mx-auto mt-12 grid max-w-4xl gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2">
+              {trustLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="flex h-full flex-col bg-card p-6 transition-colors duration-200 hover:bg-secondary/40"
+                  >
+                    <span className="font-medium text-foreground">
+                      {item.label}
+                    </span>
+                    <span className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                      {item.description}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Container>
         </section>
 

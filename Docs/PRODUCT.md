@@ -8,7 +8,7 @@
 > **Keep it current.** This document MUST be updated whenever a feature, flow,
 > price, limit, or integration changes. See [Maintaining this document](#maintaining-this-document).
 >
-> Last verified against the codebase: **2026-07-29**.
+> Last verified against the codebase: **2026-08-06**.
 
 ---
 
@@ -17,33 +17,61 @@
 **Simple product update emails for small SaaS teams. No marketing suite. No contact
 tax. Set up and draft for free — pay only when you're ready to send.**
 
-Day3 is a deliberately minimal newsletter/email tool for small software teams that
-just want to send product updates and changelogs to their users — without learning,
-paying for, or fighting a full marketing automation platform.
+Day3 is a deliberately minimal email tool for small software teams: send product
+updates and changelogs to your users (newsletters/campaigns), and send your app's
+**transactional email** — password resets, receipts, magic links — through one
+Resend-style API call (§6.15). One domain setup, one allowance, one place to see
+delivery — without learning, paying for, or fighting a full marketing automation
+platform.
 
 ## 2. Positioning & philosophy
 
-Day3 is opinionated and narrow on purpose. It does a few things well and refuses to
-become a marketing suite.
+Day3 is opinionated: simple to use, honest about pricing, and built so the
+default path is the deliverable one.
 
 - **For small SaaS teams**, not agencies or large marketing departments.
 - **Product updates, not campaigns-in-the-marketing-sense.** Changelogs, release
   notes, "what's new" emails.
 - **No contact tax.** You are not billed per subscriber. Pricing is bandwidth:
   you pick a monthly email allowance.
-- **Free to build, paid to send.** A free account can set up domains, audiences,
-  senders and draft campaigns (up to **500 subscribers**), but **cannot send** —
-  sending is what a paid plan unlocks. Paid tiers differ only by monthly email
-  allowance and by the size of their **AI writing assistant** allowance — every
-  paid tier includes the assistant.
+- **Free to try for real, paid to reach your audience.** A free account can set up
+  domains, audiences, senders and draft campaigns (up to **500 subscribers**), and
+  can **send for real in sandbox mode** — up to 100 emails a month, to its own
+  team's addresses only, through the same pipeline with the same tracking. What a
+  paid plan unlocks is sending to *everyone else*. Paid tiers differ only by
+  monthly email allowance and by the size of their **AI writing assistant**
+  allowance — every paid tier includes the assistant.
 - **Deliverability and compliance are built in, not add-ons:** verified sending
   domains, double opt-in, one-click unsubscribe, automatic bounce/complaint
   suppression, and account auto-pause on bad reputation.
-- **Deliberately excluded:** marketing automation flows, A/B testing, and
-  drag-and-drop template builders. Open and click tracking plus a
-  deliverability/reputation/engagement dashboard are included (see §6.10), and
+- **Dev-first transactional email, same product.** The same verified domain that
+  sends your newsletter sends your password resets — one `POST /v1/emails` call,
+  Resend-compatible in shape, with per-email delivery status and a free-tier
+  sandbox to integrate before paying (§6.15).
+- **Your AI editor is a first-class composer.** Day3 speaks **MCP**, so Claude
+  Code, Cursor or VS Code can write a campaign where you already work — and the
+  draft lands in Day3 as *editable blocks*, not a wall of HTML, so you finish it
+  in the visual composer if you want to. Writing, previewing and test-sending are
+  open; mailing a real audience needs a key you explicitly allowed to send. This
+  is the deliberate counter-position to marketing suites that bolt a chat box
+  onto their own editor: the email is one artifact, editable from both ends
+  (§6.16).
+- **Simple by default, deep when you need it.** The common path — write an email,
+  pick an audience, send — stays a few clicks. Open and click tracking and a
+  deliverability/reputation/engagement dashboard are included (§6.10), and
   audiences support **segments** (saved filters) and **topics** (subscription
-  categories) — see §6.3; the rest are out of scope by design.
+  categories) — see §6.3.
+- **Switching to Day3 is a supported path, not an afterthought.** Moving a list off
+  Mailchimp / ConvertKit / Substack / Resend / Brevo is a CSV upload, a short batch
+  script, or a prompt handed to an AI assistant — and Day3 deliberately asks for
+  your **opt-outs and bounces**, not just your active contacts, because re-mailing
+  people who left elsewhere is the fastest way to wreck a new domain's reputation.
+  The same doors open outward: everything you put in comes back out as CSV or JSON,
+  so there is no lock-in. See **§10 Migrating to Day3**.
+- **Planned (designed, not yet shipped): Automations** — a node canvas with
+  triggers, branches, waits, and sends for onboarding and lifecycle email.
+  Automations and automation runs will be **unlimited on every paid tier** —
+  emails stay the only metered resource. Design: `docs/automations-design.md`.
 
 ## 3. Who it's for
 
@@ -58,8 +86,9 @@ HubSpot, ConvertKit, etc.
 
 Billing runs through **Clerk Billing** (Stripe-backed) and is scoped to the
 **organization** (the tenant), not individual users. **Day3 sells sending
-bandwidth:** a paid plan is a monthly email allowance at a price. The free tier is
-set-up-only (no sending). **Every paid tier includes the AI assistant**; tiers
+bandwidth:** a paid plan is a monthly email allowance at a price. The free tier
+buys no bandwidth but is not silent — it sends in **sandbox mode** (100/month, own
+org members only; see below). **Every paid tier includes the AI assistant**; tiers
 differ in how large an AI allowance they carry.
 
 The AI allowance is denominated in **credits — 1 credit = $0.01 of metered AI
@@ -69,7 +98,7 @@ org can burn on that tier.
 
 | Plan | Clerk slug | Emails / month | Subscribers | AI assistant (window / month) | Price | $ / 1k |
 |------|-----------|----------------|-------------|-------------------------------|-------|--------|
-| **Free** | `free_org` | **0 — cannot send** | up to **500** | ❌ none | **$0** | — |
+| **Free** | `free_org` | **100 — sandbox only** (own team) | up to **500** | ❌ none | **$0** | — |
 | **1k** | `1k_plan` | **1,000** | unlimited | ✅ 10 / **20** credits | **$1 / mo** | $1.00 |
 | **5k** | `5k_plan` | **5,000** | unlimited | ✅ 15 / **50** credits | **$3 / mo** | $0.60 |
 | **10k** | `10k_plan` | **10,000** | unlimited | ✅ 20 / **100** credits | **$5 / mo** | $0.50 |
@@ -114,6 +143,30 @@ Key pricing facts:
   mailto fallback); there is no checkout for a custom tier (operators set one up
   manually, e.g. via the plan metadata override).
 - **No per-contact / per-subscriber pricing.** Subscriber count does not affect price.
+- **Transactional email draws from the same monthly allowance.** One meter,
+  campaign or API send alike — an email is an email.
+- **Sandbox mode — how the free tier sends.** The free tier is not "no sending":
+  it runs the *real* send path, restricted to what protects the shared SES
+  reputation. **Up to 100 emails/month, to the org's own members' addresses
+  only** — real SES delivery, real recipient rows, real open/click tracking, real
+  metrics. One allowance covers **every** surface: campaign sends, `POST
+  /v1/emails`, and test sends, all reserved against the same
+  `monthly_email_sent_count` ledger as a paid send. So a team can run a whole
+  campaign end to end — compose, review, send, watch the opens arrive — before
+  paying, and a developer can integrate the API against it. Upgrading lifts both
+  restrictions with no code change.
+  - Sandbox campaigns are flagged `campaigns.sandbox` (stamped once, when the
+    campaign leaves draft, so a mid-flight plan change can't re-target or
+    re-meter a live send) and are badged **Sandbox** in the campaign list, on the
+    campaign, and in Metrics. Their numbers count toward the metrics totals —
+    they are real sends.
+  - Recipients are narrowed to the org roster at recipient-generation time. The
+    audience page's **"Add your team"** action puts the org's members in an
+    audience as contacts in one click, which is what makes a first sandbox send
+    reach anyone.
+  - A sandbox account whose allowance runs out is blocked with one shared
+    message across all three surfaces; a risk pause still outranks the sandbox.
+    An *unrecognized* plan value is not granted a sandbox — it fails closed.
 - **Subscription lifecycle → behavior:**
   - `active` → can send up to the plan's allowance.
   - `past_due` → plan still visible, but **sending is blocked** until payment is fixed.
@@ -159,14 +212,16 @@ guards make that observable:
 |---------|-----------|
 | **Account** | The tenant. One per Clerk **organization**. Holds plan, usage, sending status, company mailing address, and a public `slug` for forms. |
 | **Account user** | A team member (Clerk user) belonging to an account, with a role (`admin` / `member`). |
+| **API key** | A bearer credential (`day3_live_…`) for the public API and the MCP server, minted by an org admin and shown once (only its hash is stored). Every key is scoped to one account. Its **base grant** covers reading and writing contacts, audiences and campaign *drafts*; the one elevated **scope**, `campaigns:send`, is required to send or schedule a campaign to a real audience and is chosen at creation, never added later. |
 | **Audience** | A named list of subscribers. |
 | **Subscriber** | A contact in an audience. Status: `subscribed`, `pending` (awaiting double opt-in), `unsubscribed`, `bounced`, `complained`, or `suppressed`. Only `subscribed` contacts receive campaigns. |
-| **Sending domain** | A verified email-sending identity (e.g. `news.yourcompany.com`), set up via AWS SES with DKIM/SPF/DMARC DNS records. Campaigns require a verified domain. Adding one auto-creates its first **sender**. |
+| **Sending domain** | A verified email-sending identity (e.g. `news.yourcompany.com`), set up via AWS SES with DKIM/SPF/DMARC DNS records. Campaigns and transactional sends both require a verified domain. Adding one auto-creates its first **sender**. **Globally exclusive:** one domain belongs to one account — the SES identity is shared across the whole platform, so a second account claiming it would inherit its verified status (and could send as it). |
 | **Sender** | A saved **From** identity — a from-name + from-address pair (e.g. `Jane from Acme <jane@news.acme.com>`) on a verified sending domain. Campaigns pick a sender instead of typing the From each time; an account can keep several per domain, with one marked default. |
 | **Campaign** | A single email send to one audience. Lifecycle: `draft` → (optionally `scheduled`) → `pending_review` → `approved` → `generating_recipients` → `sending` → `sent` (or `paused`, `blocked`, `failed`). |
 | **Campaign recipient** | A per-email send record — the source of truth for idempotent, no-duplicate delivery. Tracks delivery status (`pending`, `sending`, `sent`, `delivered`, `bounced`, `complained`, `unsubscribed`, `failed`, `skipped`). |
 | **Segment** | A saved, named filter over an audience's subscribers ("plan is pro"), evaluated live — never materialized. Campaigns can send to a segment instead of the whole audience. |
 | **Topic** | A subscription category on an audience ("Product updates", "Promotions"). Opt-out model (everyone in by default) or opt-in. Campaigns sent under a topic skip contacts who opted out; the unsubscribe page offers a per-topic opt-out. |
+| **Transactional email** | One email sent through the public API (`POST /v1/emails`) — password resets, receipts, magic links. Up to 50 recipients per message, tracked per email: `queued` → `sent` → `delivered` (or `bounced` / `complained` / `failed` / `suppressed`). Listed on the **Emails** page and addressable as `eml_…` over the API. |
 | **Form** | A hosted/embeddable signup form that captures new subscribers into an audience. |
 | **Suppression entry** | A blocklist record (per-account or global) that prevents sending to an address that unsubscribed, bounced, complained, or was manually suppressed. |
 | **Import** | A CSV upload job that adds subscribers to an audience. |
@@ -211,6 +266,22 @@ guards make that observable:
   reads cleanly on mobile without a separate layout. Desktop clients keep the side-by-side
   layout. A **brand-new campaign opens on a starter layout** (a text block plus a ready-made
   call-to-action button) rather than a blank canvas.
+- **Templates — ready-made starting points:** a gallery of five hand-built layouts
+  (**Product update**, **Launch announcement**, **Founder note**, **Weekly digest**,
+  **Event invite**), each shipping both a **section layout** and a matching **global
+  theme**, plus a suggested subject line and preview text. It opens automatically on a
+  brand-new campaign (dismissible) and is reachable any time from the **Templates**
+  button in the composer toolbar. Each card's thumbnail is a live miniature of the real
+  email — rendered through the same sanitizer and document wrapper the send pipeline
+  uses — so it can never misrepresent the template. Applying one replaces the body and
+  theme (confirmed first if you've already written something) but **keeps your subject
+  line and preview text**; the suggested copy only fills fields you left empty.
+  Templates ship **placeholders, never borrowed content**: image slots start empty and
+  buttons start unlinked, so an unfinished template can't send someone else's picture or
+  a dead link, and every merge tag carries a fallback (`{{first_name|there}}`).
+  Templates are available on **every plan** and are **not metered** — they send no mail
+  and cost no AI credits, so they're the fastest path to a good-looking email on the
+  free tier, which has no AI allowance.
 - **Section types** — chosen per section from a type menu, switchable at any time
   without losing work:
   - **Text** — rich content per column (see the WYSIWYG editor below), with a
@@ -315,6 +386,10 @@ AI features are **optional and gated** — if no AI key is configured, the AI UI
 hidden and the app works normally. Powered by **OpenRouter**, defaulting to
 **Claude Sonnet 4.6** (`anthropic/claude-sonnet-4.6`, configurable).
 
+AI and **templates** (§6.1) solve different halves and compose: a template supplies the
+structure and the look, AI supplies the words. Neither is a required step — the composer
+always opens on a writable canvas.
+
 - **Draft a full campaign** from a short brief → generates subject, preview text,
   and a complete **multi-section body** assembled from the builder's blocks — a
   heading, intro, dividers, the occasional callout/quote, a feature row of columns,
@@ -352,12 +427,24 @@ themselves, and manual writing continues unaffected.
 - Create, **rename**, and **delete** named audiences. Deleting an audience removes it and
   all its subscribers (sent campaigns are unaffected).
 - **CSV import** (email, first_name, last_name, **plus any extra columns**, which become
-  custom fields keyed by a slug of the header; up to ~5,000 rows per file) with dedup,
-  suppression filtering, progress tracking, and re-upload/retry for failed imports.
-  Column order is flexible and headers are alias-matched — only an `email` column is
-  required — and a downloadable sample template shows the expected shape.
-- **CSV export** of an audience's subscribers (all statuses) in the same column shape the
-  importer reads, so an export can be edited and re-imported cleanly.
+  custom fields keyed by a slug of the header; up to **5,000 rows / 5 MB** per file) with
+  dedup, suppression filtering, progress tracking, and re-upload/retry for failed imports.
+  Column order is flexible and headers are alias-matched (`email` / `e-mail` /
+  `email_address`, `first_name` / `firstname` / `first name`, …) — only an `email` column
+  is required — and a downloadable sample template shows the expected shape. Import
+  behavior worth knowing before a migration (§10.2):
+  - **Imported contacts land as `subscribed` immediately** — a CSV upload is you
+    vouching for consent you already have, so it does **not** run double opt-in and
+    sends nothing to anyone.
+  - **Already-suppressed addresses are filtered out on the way in** and reported in the
+    import's skip breakdown, so a suppression list loaded first is automatically honored.
+  - **A `status` column is export-only and ignored on import.** There is no way to bring
+    opt-outs in by CSV — they come in over the API (§10.3) or stay out of the file.
+  - The import history lists every upload with added/skipped counts and the reason for
+    each skip (invalid, duplicate, suppressed, over the plan's subscriber cap).
+- **CSV export** of an audience's subscribers (all statuses, including their custom-field
+  values) in the same column shape the importer reads, so an export can be edited and
+  re-imported cleanly — and so leaving Day3 is a one-click download (§10.7).
 - **Custom fields:** beyond email/first/last name, a subscriber can carry any number of
   custom attributes (phone, company, …) collected by signup forms or CSV import. They
   show as columns in the subscriber list and are usable as `{{merge_tags}}` in campaigns.
@@ -443,11 +530,35 @@ the same "Saving… / Saved" indicator as the campaign composer.
   address.
 
 ### 6.5 Sending domains (deliverability)
-- Add a domain and get the DKIM/SPF/DMARC DNS records to publish.
+- Add a domain and get the DKIM/SPF/DMARC DNS records to publish. A subdomain
+  (`news.yourcompany.com`) is recommended, so newsletter sending stays separate from
+  the company's day-to-day mail.
+- **Migration guidance at the point of entry.** The add-domain dialog carries a callout
+  for anyone arriving from another platform: *use the same subdomain you sent from there*
+  — inbox providers track reputation per subdomain, so reusing it carries the history
+  over, while a brand-new one starts from zero (§10.6).
+- **A domain can only be claimed by one account.** Because a sending domain is a
+  single SES identity for the entire platform, adding one that another account
+  already has would return SES's account-wide "already verified" state and stamp
+  the new row verified with no DNS proof — letting its owner send DKIM-signed,
+  DMARC-aligned mail as the other tenant. Adding an already-claimed domain is a
+  409, whoever holds it.
 - **Auto-check / manual recheck** of verification status.
+- **Recovery from a timed-out verification.** SES stops watching for the DKIM
+  records 72 hours after a domain is added and then reports a permanent failure.
+  If the records are published later, a recheck detects that they resolve
+  correctly and reopens verification against them — the published records stay
+  valid, so there is nothing for the user to re-add.
 - Optional **Return-Path (custom MAIL FROM)** setup for better deliverability.
 - **One-click DNS auto-configuration via Cloudflare OAuth** (connect a Cloudflare
   account; Day3 writes the records for you).
+  - **Existing records are never overwritten.** The required DKIM records sit at
+    names only Day3 uses, so they are always written. The optional deliverability
+    records (Return-Path, DMARC) share their names with whatever the account may
+    already publish — another provider's Return-Path during a migration, or a
+    stricter DMARC policy — so when a different value is already there, Day3 leaves
+    it alone and reports it, showing both values side by side for the user to
+    decide. Verification is unaffected either way.
 
 ### 6.6 Senders (From identities)
 - A **Senders** page manages the From name + address pairs campaigns send as. Each
@@ -570,18 +681,30 @@ link to its results), and **signups turned away at the free-plan subscriber cap*
 (throttled to once a day, with an upgrade link). The service fails open — a
 notification never blocks the flow that triggered it.
 
-### 6.14 Public API (v1) — audiences over HTTPS
+### 6.14 Public API (v1) — audiences, campaigns and transactional email over HTTPS
 
-A REST API at **`/api/v1`** exposes everything inside Audiences — audiences,
-contacts, custom fields, segments, topics, and the suppression list — so teams can
-manage their lists from code and, above all, **migrate from another provider**
-(Resend, Mailchimp) with a short script. Full reference spec: `docs/api-v1-spec.md`.
+A REST API at **`/api/v1`** does three jobs: it **sends transactional email**
+(`POST /v1/emails` — see §6.15), it exposes everything inside Audiences —
+audiences, contacts, custom fields, segments, topics, and the suppression list —
+so teams can manage their lists from code and **migrate from another provider**
+(Resend, Mailchimp, …) with a short script (§10), and it exposes **campaigns**, so a
+newsletter can be written, previewed and sent from outside the app (see §6.16).
+Full reference spec: `docs/api-v1-spec.md`.
 
 - **Auth:** bearer API keys (`day3_live_…`), created and revoked on the **API keys**
   page (its own item in the sidebar), org admins only. The full key is shown once at
   creation; only its SHA-256 hash is stored. Keys cannot manage keys (no key
   endpoints in the public API). Every key belongs to one organization and every
   request is scoped to it.
+- **Scopes:** the base grant is wide — read and write contacts, audiences and
+  campaign *drafts*. Exactly one action needs an explicit opt-in:
+  **`campaigns:send`**, which covers sending or scheduling a campaign to a real
+  audience. It is a checkbox at key creation ("Allow sending campaigns"), off by
+  default, and cannot be added to an existing key — granting it means minting a
+  new one, so a key's powers stay visible in the list rather than drifting. This
+  exists because of MCP (§6.16): a script does what its author wrote, but an
+  agent holding the same key decides for itself, and "email everyone" is not a
+  decision to hand over by default.
 - **The API keys page is also the documentation.** There is no separate docs site;
   everything needed to use the API sits below the key list, filled in with the
   account's real audience id:
@@ -593,15 +716,27 @@ manage their lists from code and, above all, **migrate from another provider**
     looking anything up. The reference is also copyable on its own, as Markdown to
     drop into a repo's `AGENTS.md` / `CLAUDE.md`. Prompts never contain a live key:
     they instruct the assistant to read `DAY3_API_KEY` from the environment.
-  - **cURL / JavaScript / Python snippets** for the five things people actually do
-    (add a contact, import a list, unsubscribe someone, list contacts, import a
-    suppression list), and a map of every endpoint.
+  - **cURL / JavaScript / Python snippets** for the things people actually do
+    (send a transactional email, add a contact, import a list, unsubscribe
+    someone, list contacts, import a suppression list), and a map of every
+    endpoint.
   - **A subscriber-cap warning shown up front** on a capped (free) plan, stating
     the exact remaining headroom. An import that would cross the cap is rejected
     whole, on the first batch, so the page says so before anything is copied —
     and the same figure is written into the AI prompts, instructing the assistant
     to count the source rows and stop for an upgrade rather than half-migrate.
-- **Migration-first design:**
+- **The API panel (`</>`) brings the API to the resource pages.** Next to the page
+  title on Audiences (list and detail), Sending domains (list and detail), and
+  Senders sits a small `</>` button that slides out a panel with everything a
+  developer needs *for the resource in view*: the base URL, API-key status (with a
+  one-click path to create a key when the org has none), **every id on the page as
+  a copyable row** (audience id, segment ids, topic ids, field keys, domain and
+  sender ids), cURL/JS/Python snippets scoped to the open tab (contacts, fields,
+  segments, or topics — prefilled with the real ids), and a copyable **AI context
+  pack** — the ids in view plus the full API reference, ready to paste into an
+  assistant ahead of any request. Domains and senders have no v1 endpoints; their
+  panels say so plainly and show ids for support purposes instead of pretending.
+- **Migration-first design** (the full playbook is §10):
   - **Batch endpoint** — up to 1,000 contacts per call with per-row results,
     counting as a single rate-limit request.
   - **Upsert + address-by-email** — contacts are addressable by id *or* email;
@@ -619,7 +754,151 @@ manage their lists from code and, above all, **migrate from another provider**
   writes too (batches that would cross it are rejected whole, never partially
   applied).
 
-### 6.15 Getting around
+### 6.15 Transactional email — the dev-first sending API
+
+Day3 sends an app's operational email — password resets, receipts, magic links,
+alerts — through one Resend-style API call. It is a **headline product surface**:
+its own **Emails** page in the sidebar, its own API endpoints, and its own docs
+in the API panel. The design goal is "integrated in ten minutes": precise
+synchronous errors, copy-paste snippets, and a sandbox that works before paying.
+
+**The API** (auth, conventions, and error envelope shared with the rest of v1):
+
+- `POST /v1/emails` — send. Body: `from` (any local-part on a **verified sending
+  domain** — `"Acme <notify@acme.com>"` or a bare address; no pre-created sender
+  needed), `to` (string or array, up to **50 recipients** on one message),
+  `subject`, `html` and/or `text`, optional `reply_to`, custom `headers`
+  (platform-owned ones like `List-Unsubscribe` are reserved), and string
+  `tags`. Returns the email object (`eml_…`, `status: "queued"`) immediately;
+  delivery is asynchronous and typically takes a couple of seconds.
+- `GET /v1/emails/{id}` — the status poll: `queued` → `sent` → `delivered` (or
+  `bounced` / `complained` / `failed` / `suppressed`) plus the raw `events`
+  timeline. `GET /v1/emails` lists sends, filterable by `?status=`.
+- **`Idempotency-Key` makes retries safe** — the single most important
+  transactional DX feature; a network-failure retry can never double-send a
+  password reset. The key is claimed *before* the send is processed, so even a
+  client retry that races its own first attempt resolves to one email (the
+  loser gets a "already in progress" 409).
+- **Transactional ignores unsubscribes but honors deliverability suppressions**:
+  someone who unsubscribed from the newsletter still gets their password reset;
+  an address that hard-bounced or complained is rejected up front with
+  `email_suppressed`.
+- Its own rate bucket (default 120 sends/min per account, env-tunable) inside
+  the general API limit, plus an aggregate content-size ceiling.
+- **Header-injection hardened**: the `from` display name is emitted as a
+  quoted string and may not contain bracket/quote/control characters, so it can
+  never smuggle a second mailbox (which in a shared SES account would mean
+  sending as another tenant's verified domain); control characters are rejected
+  in the subject, header values and addresses; and callers cannot set
+  auth/trace headers (`DKIM-Signature`, `Authentication-Results`, `ARC-*`,
+  `Received`, `Sender`), the unsubscribe headers, our own attribution headers,
+  or any `X-SES-*` (which could redirect event tracking).
+
+**Reliability** (same non-negotiables as campaign sending, §7.2): the API
+validates everything synchronously (domain, plan, quota, suppression), persists
+the email to Postgres, reserves quota atomically, and enqueues an ID-only job.
+Transactional jobs ride the same BullMQ queue at **top priority** — every job
+type carries an explicit priority, so a password reset never waits behind a
+100k-recipient campaign drain. The worker's send is duplicate-safe by the same
+status-ledger claim pattern as campaigns: only provably-unsent errors retry;
+ambiguous ones go terminal (observable via the API) rather than risk a double
+send. The cron sweep fails crashed sends, re-enqueues lost jobs, gives up
+loudly after 6 hours, and prunes bodies after **30 days** (metadata stays).
+
+Bounces and complaints on transactional mail feed the suppression list **and
+count toward the account's reputation auto-pause** (§6.7) on equal footing with
+campaign sends — the API is the higher-volume path and the one that skips
+campaign review, so excluding it would have left the 4%-bounce guard blind
+exactly where it matters most.
+
+**The Emails page** (sidebar, between Campaigns and Audiences) is the log: every
+API send with status chips, recipient/subject search, a status filter, and a
+detail drawer with the delivery timeline, error, tags, provider message id, and
+a rendered content preview (until the 30-day prune). Its `</>` API panel carries
+verified from-domains, send/status/list snippets, and an AI context pack; the
+empty state routes a first-time user to an API key. SES delivery/bounce/
+complaint webhooks update each email live — per recipient, since one message can
+carry fifty and SES reports each separately — and transactional events appear in
+the Activity log (§6.11) alongside campaign events.
+
+**Plans:** sends draw from the same monthly allowance as campaigns; the free
+tier gets the member-only 100/month sandbox (§4). Delivery lifecycle statuses,
+per-email, come free with the existing SES event pipeline.
+
+> Source of truth in code: routes `app/api/v1/emails/**`, shared vocabulary
+> `src/services/transactional.ts`, worker job
+> `src/queue/handlers/send-transactional.ts`, sweeps in `src/queue/cron.ts`,
+> UI `app/(app)/emails/page.tsx`, docs content `src/lib/api-docs.ts`.
+
+### 6.16 MCP — write campaigns in your AI editor
+
+Day3 runs a **Model Context Protocol server at `/api/mcp`**, so an AI coding
+editor (Claude Code, Cursor, VS Code) becomes an external composer for Day3
+emails. You describe the email where you already work; the draft appears in the
+Day3 workspace, ready to open, edit by hand, and send. It is the same product
+from the other side: not a second editor, a second *front door* onto the one in
+the app.
+
+- **Setup is one line.** A single HTTP endpoint, authenticated with the same
+  bearer key as the REST API — no package to install, no OAuth dance, one
+  credential and one revocation path. The API keys page carries the exact
+  install snippet for each editor.
+- **Day3 Markdown is what makes it work.** The composer's body is a structured
+  list of blocks, which is not what a language model writes well. So the API
+  takes a **small Markdown dialect** — ordinary Markdown plus block constructs
+  for buttons, images, multi-column layouts, cards, callouts, social rows and
+  section tints — and maps each construct onto a real builder block. The result
+  is that an AI-written email **opens in the visual composer as editable
+  blocks**, not as one frozen lump of HTML. It converts back too, so a campaign
+  a human edited in Day3 can be read as Markdown, revised, and written again.
+  Anything the dialect can't express round-trips through a raw-HTML escape
+  hatch rather than being silently dropped.
+- **Tools:** read the workspace (audiences, senders, plan and sending status),
+  list/read/create/update campaigns, render a preview, send a test email, and —
+  scope permitting — send or schedule to the audience.
+- **The safety line runs at "who receives it".** Writing, previewing and test
+  sending are unrestricted: a test reaches only addresses the user names, and
+  iterating on an email is the point. Sending to a real audience needs a key
+  minted with `campaigns:send` (§6.14), so an assistant with an ordinary key can
+  draft all day and still cannot mail anyone. Both send tools are marked
+  destructive so editors prompt before running them.
+- **Same gates as the app.** MCP calls the same service layer as the composer's
+  own buttons — plan eligibility, mailing address, verified domain, recipient
+  checks, risk review, sandbox mode. There is no path through MCP that skips a
+  check the UI applies.
+- **Why it matters commercially:** the free tier is set-up-only but sandbox mode
+  makes real sends to your own team possible, so *"draft my launch email and
+  send me a test"* works end to end with no credit card. The paywall lands
+  exactly where it should — at mailing real subscribers.
+
+> Source of truth in code: transport `src/mcp/protocol.ts`, tools
+> `src/mcp/tools.ts`, endpoint `app/api/mcp/route.ts`, the dialect
+> `src/lib/campaign-markdown.ts` (+ its reference text in
+> `src/lib/campaign-markdown-docs.ts`), campaign endpoints
+> `app/api/v1/campaigns/**`, shared send gates `src/services/campaign-send.ts`.
+
+### 6.17 Dashboard & getting around
+
+**The Dashboard** is the landing screen — a sending overview for the current
+organization, built to answer "what state am I in, and what should I do next?":
+- **Onboarding checklist** — the real first-run path (verify a sending domain → import
+  an audience → create a campaign → send your first campaign), with a completed count
+  and a CTA on the first unfinished step. It disappears as it's satisfied.
+- **Three KPI tiles:** **Plan** (tier + subscription status, or a *Sandbox* badge on
+  free, linking to billing), **Emails this month** (used / allowance with a usage bar and
+  the remaining headroom), and **Sending status** — a single traffic light over the real
+  states: *Enabled*, *Sandbox* ("real sends, your team only"), *Degraded* (shows the live
+  bounce/complaint rates), *Disabled*, or *Paused*. Free-tier sandbox reads as
+  informational blue, not red: day one never looks like a failure.
+- **Alerts and nudges:** a risk-pause banner with its reason when sending is stopped, and
+  a usage-driven upgrade nudge that appears only when the allowance is running low and a
+  bigger tier actually exists.
+- **Recent campaigns** — the last five with status, sent count, and created date.
+
+**Navigation:** the sidebar follows the actual job order — Dashboard, Campaigns, Emails,
+Audiences, then what you send as (Domains, Senders), how you grow (Forms), how you
+measure (Metrics, Activity), and account (Billing, API keys, Settings).
+
 - A **command palette** (⌘K / Ctrl-K) jumps to any page or the common create actions
   from anywhere.
 - A **plan pill** in the sidebar shows the current tier on every screen; on the free
@@ -667,6 +946,14 @@ Day3 is split into two cooperating tiers that share one Postgres database:
 6. **Sweeps** — cron recovers stuck sends, re-checks pending domains, releases due
    scheduled campaigns, and reconciles campaign completion.
 
+**The transactional path** (§6.15) is the same pipeline minus review and
+recipient generation: the API route validates + persists + reserves quota
+synchronously, then enqueues a single ID-only `send_transactional` job that
+rides the same queue at top priority (explicit per-type priorities keep a
+password reset from waiting behind a campaign drain). The same SNS webhook
+updates transactional emails' delivery status, and the same cron sweep recovers
+their crashed/lost sends.
+
 ### 7.2 Reliability rules (non-negotiable)
 - **Idempotent jobs:** a retried message never duplicates a send. `campaign_recipients.status`
   is the source of truth; sends are claimed via atomic `UPDATE … LIMIT n`.
@@ -691,6 +978,7 @@ Day3 is split into two cooperating tiers that share one Postgres database:
 | Auth / tenancy / billing | Clerk (Organizations = tenant boundary; Clerk Billing, beta) |
 | File storage | Supabase Storage (CSV imports) |
 | AI (optional) | OpenRouter (default Claude Sonnet 4.6) via the Vercel AI SDK |
+| MCP server | Hand-rolled JSON-RPC over Streamable HTTP at `/api/mcp` — tools only and stateless, so no SDK or session store is needed |
 | DNS automation | Cloudflare OAuth (optional, for auto-configuring SES records) |
 | Testing | Vitest with pglite (in-memory Postgres per test) |
 
@@ -718,10 +1006,241 @@ Day3 is split into two cooperating tiers that share one Postgres database:
    reviews, generates recipients, and sends in batches → watch live delivery stats.
 4. **Stay compliant:** unsubscribes, bounces, and complaints auto-suppress; bad
    reputation can auto-pause the account.
+5. **Move in from another platform:** reuse your old sending subdomain → verify it →
+   import your bounce/complaint list → import contacts (CSV, batch API, or by handing
+   the prompt on the API keys page to an AI assistant) → send to your most engaged
+   segment first → watch Metrics and Activity. Detailed in §10.
+6. **Send transactional email from your app:** verify a domain → mint an API key →
+   `POST /v1/emails` → watch each send on the Emails page (§6.15).
+7. **Draft an email from your editor:** point Claude Code / Cursor at `/api/mcp` with an
+   API key → describe the email → open the draft in the composer and send (§6.16).
 
 ---
 
-## 10. Maintaining this document
+## 10. Migrating to Day3 from another platform
+
+Most Day3 accounts arrive with a list somewhere else — Mailchimp, ConvertKit,
+Substack, Beehiiv, Klaviyo, Brevo, Resend, Loops, Buttondown. Migration is treated
+as a first-class flow rather than a support ticket: everything needed is in the
+product, and the parts that *can't* transfer are stated plainly instead of glossed
+over.
+
+There are three routes in, all landing on the same data:
+
+| Route | Best for | Where |
+|-------|----------|-------|
+| **A — CSV export/import** | Non-technical users, one-off moves, lists up to 5,000 per file | Audience page → **Import CSV** (§10.2) |
+| **B — the v1 API** | Anything scripted, big lists, opt-outs and bounces, repeatable runs | `POST /api/v1/...` (§10.3) |
+| **C — hand it to an AI assistant** | "I have an export and a coding assistant, do it for me" | **API keys** page → *Migrate from another provider* prompt (§10.4) |
+
+### 10.1 What transfers, and what can't
+
+Being straight about this up front is the point — a migration that silently drops
+data is worse than one that says what it dropped.
+
+| Data | Transfers? | How |
+|------|-----------|-----|
+| Email addresses | ✅ | CSV or API; canonicalized (trimmed + lowercased) |
+| First / last name | ✅ | `first_name` / `last_name` columns or fields |
+| Custom / merge fields | ✅ | Extra CSV columns, or `attributes` over the API — both **auto-register** in the audience's field registry (§6.3) and become `{{merge_tags}}` |
+| **Unsubscribes** | ✅ **API only** | `status: "unsubscribed"`, with the original `unsubscribed_at` preserved. Not possible by CSV — the `status` column is ignored on import |
+| **Hard bounces & spam complaints** | ✅ **API only** | `POST /v1/suppressions` with an explicit `reason` |
+| Topic / group / interest preferences | ✅ **API only** | Create topics (§6.3), then `PATCH /v1/audiences/{id}/contacts/{ref}/topics` |
+| Segments / saved filters | ⚠️ Re-created | Segments are live filters over your fields — recreate them once the fields are in (usually a minute per segment, and they then stay current) |
+| **Original signup dates** | ❌ | `created_at` in a payload is ignored; there is no backdating. Keep the original date as a custom field (e.g. `signed_up_at`) if you need it — it's then usable in segments and merge tags |
+| Per-contact engagement history (opens/clicks) | ❌ | Starts fresh. Metrics (§6.10) measures Day3 sends only |
+| Past campaign archives & their stats | ❌ | Stay with the old provider; export anything you want to keep before closing that account |
+| Email templates / HTML | ⚠️ Manual | Rebuild from Day3's five built-in templates (§6.1), or paste HTML into a `:::html` block over the API / MCP (§6.16) — Day3's builder is section-based, so a foreign HTML template imported wholesale would not stay editable |
+| Automations / drip flows | ❌ | Not shipped yet (§2, designed) |
+| **Domain sending reputation** | ⚠️ Partly | Domain-level reputation and recipient engagement history follow the **subdomain** — reuse it and it comes with you. IP reputation does not: Day3 sends on AWS SES shared IPs (§10.6) |
+
+### 10.2 Route A — CSV export/import (no code)
+
+1. **Export from the old provider.** Ask for the *active/subscribed* contacts, with
+   every merge field. Also export the **unsubscribe and bounce lists** separately —
+   they go in via §10.3, or the list is left behind.
+2. **Filter the file to people you may still email.** Every row in a CSV import lands
+   as `subscribed`, so an export that still contains opt-outs would re-subscribe them.
+   Delete those rows (or use the API instead).
+3. **Create an audience** in Day3 and open **Import CSV** on it. Only an `email` column
+   is required; column order is free, headers are alias-matched, and any extra column
+   becomes a custom field keyed by a slug of its header (`Phone number` → `phone_number`).
+   A **sample template** is downloadable from the same panel.
+4. **Split large lists.** The cap is **5,000 rows / 5 MB per file** — a 40,000-contact
+   list is eight uploads, which is fine (they merge into the same audience and dedup
+   against each other), or one API run instead.
+5. **Watch the import.** Each upload appears in the import history with rows added and a
+   skip breakdown — invalid addresses, duplicates, already-suppressed addresses, and
+   anything over the free plan's 500-subscriber cap. A **failed import is never
+   auto-retried** — nothing happens behind your back: fix the file and re-upload it
+   against the same import row from the history's retry action (§6.3).
+6. **Verify.** The audience's status breakdown should match your source count minus the
+   skips. **CSV export** the audience and diff it against the original if you want proof.
+
+CSV imports send nothing and do not run double opt-in (§6.4) — importing is silent by
+design.
+
+### 10.3 Route B — the v1 API (a script)
+
+The API (§6.14) was built with migration as its first use case, so the order of
+operations matters more than the code:
+
+1. **Mint an API key** on the API keys page. A migration needs no `campaigns:send`
+   scope — importing contacts is part of the base grant, so keep the key unable to
+   mail anyone.
+2. **Import bounces and complaints *first*** —
+   `POST /v1/suppressions { "reason": "bounced" | "complained" | "unsubscribed",
+   "emails": [...] }`, up to 1,000 per call. `reason` is required and stored per entry,
+   so an import is attributable. The response echoes its blast radius
+   (`added`, `already_suppressed`, `invalid`, `total_suppressed_before/after`). Doing
+   this first means contact rows for those addresses are **rejected on the way in**
+   with `email_suppressed` — that's the guard working, not an error to retry.
+   ⚠️ **Suppression is account-wide and add-only over the API** — there is no
+   `DELETE /v1/suppressions/{email}` and no self-serve un-suppress screen, so posting
+   the wrong file (say, the full contact list) makes those addresses unmailable and
+   needs support to undo. Entries are tagged with the key that created them, so an
+   accidental import is at least identifiable. Dry-run first.
+   **Plain unsubscribes generally belong in step 3, not here** — suppressing them stops
+   them being imported as contacts at all, which loses the record that they opted out.
+3. **Load contacts in batches** —
+   `POST /v1/audiences/{id}/contacts/batch { "upsert": true, "contacts": [...] }`,
+   **up to 1,000 per call**, counting as a single rate-limit request and returning
+   **per-row results** (`created` / `updated` / `failed` with an `error.code`) so one
+   bad address never sinks the batch. Send an `Idempotency-Key` per batch and an
+   interrupted run is safe to re-run (a replay within 24h returns the original result).
+4. **Bring the opt-outs as contacts** — same endpoint, `status: "unsubscribed"` plus the
+   source's `unsubscribed_at`. Writable statuses are `subscribed` and `unsubscribed`
+   only; `bounced`, `complained`, `suppressed` and `pending` belong to the delivery
+   pipeline and an upsert leaves them alone.
+5. **Restore topic preferences** (if the old provider had groups/interests): create the
+   topics on the audience, then `PATCH .../contacts/{id_or_email}/topics` with
+   `{ "topics": { "top_…": false } }` for people who had opted out of that group.
+   Contacts are addressable **by id or by email**, so no id mapping table is needed.
+6. **Verify**: list contacts (cursor pagination — `?limit=` up to 100 and
+   `?after={next_cursor}` until `has_more` is false) and compare counts, then spot-check
+   a few contacts' fields in the app.
+
+Five things reject a *whole* batch rather than a row — four are caller bugs, the fifth is
+the plan cap, and all five are worth handling before the first real run:
+
+- more than 1,000 contacts in one call (`batch_too_large`);
+- **the same address twice in one payload** — emails are canonicalized first, so
+  `Ada@acme.com` and `ada@acme.com` collide; de-duplicate case-insensitively;
+- a non-string `attributes` value (`{"orders": 5}`) — **stringify every value**;
+- an unknown topic id;
+- `403 plan_limit_reached` — the free tier's **500-subscriber cap** would be crossed.
+  The batch is rejected whole, never partially applied, so the run can simply be
+  re-executed after upgrading. Don't split batches to sneak under the cap.
+
+Other API facts that bite during a migration: `email`, `first_name` and `last_name` are
+real columns and are **silently ignored inside `attributes`** (send them top-level);
+attribute keys are normalized to `snake_case`, so two source columns can collide into
+one; unknown top-level fields are dropped rather than rejected, so a payload can look
+accepted while quietly losing data; `attributes` upserts are a **shallow merge** (absent
+keys survive, an explicit `null` deletes one); and the rate limit is **600 requests per
+minute per account** with `Retry-After` on a `429` — sleep for what it says. `DELETE` on
+a contact **erases** it (GDPR); to stop mailing someone while keeping the record,
+`PATCH { "status": "unsubscribed" }`.
+
+Full reference: `docs/api-v1-spec.md`, and the copyable Markdown reference on the API
+keys page.
+
+### 10.4 Route C — hand it to an AI assistant
+
+For anyone with a coding assistant and no appetite for writing the script, the **API
+keys** page carries a ready-made **"Migrate from another provider"** prompt (one of
+three; the others are *integrate into my app* and *keep my users in sync*). It is
+copy-paste, self-contained, and prefilled with the account's real audience id:
+
+- It carries the **complete API reference inline**, so the assistant writes working
+  code without looking anything up or inventing endpoints.
+- It encodes the order of operations above — suppressions before contacts, batches of
+  1,000 with `upsert` and a fresh `Idempotency-Key`, opt-outs as `status: "unsubscribed"`
+  with their original dates, attributes stringified.
+- It instructs a **dry run on the first 10 contacts** with the field mapping shown for
+  approval before the full run, a re-runnable and chatty script, and **every failed row
+  written to a CSV** with its `error.code`.
+- It requires the assistant to report **what did not come across** (signup dates,
+  engagement history) rather than implying a clean sweep.
+- On a capped plan it states the **exact remaining headroom** and tells the assistant to
+  count the source rows first and stop for an upgrade rather than half-migrate.
+- It never contains a live key — the assistant is told to read `DAY3_API_KEY` from the
+  environment.
+
+The same content is reachable per-resource through the **`</>` API panel** (§6.14) as a
+copyable **AI context pack**: the ids in view plus the full reference. And once a list is
+in, **MCP** (§6.16) lets the same assistant write the first campaign against it.
+
+### 10.5 The migration checklist, end to end
+
+1. **Reuse your old sending subdomain** (`news.yourcompany.com`) when adding the domain
+   — the add-domain dialog says so too (§6.5).
+2. **Verify it** (DKIM/SPF/DMARC — or one-click via Cloudflare OAuth), and add a
+   **sender** for the From address people already recognize (§6.6).
+3. **Set your company mailing address** in Settings — sending is blocked without it
+   (§6.7).
+4. **Create the audience**, then import **suppressions first**, contacts second.
+5. **Verify the counts** against the source, and spot-check merge fields.
+6. **Recreate segments and topics** you relied on (§6.3).
+7. **Swap your signup forms** to Day3 (§6.4) so new subscribers land in the right place
+   from cutover onward — the raw-HTML surface drops into an existing site without JS.
+8. **Point transactional email at `POST /v1/emails`** if the old provider was sending it
+   (§6.15) — `Idempotency-Key` makes the retry path safe from day one.
+9. **Send to your most engaged segment first**, then widen. Don't open with a blast to
+   the whole list (§10.6).
+10. **Watch Metrics and Activity** for the first sends — bounce and complaint spikes show
+    up there per-email, and sustained bad rates auto-pause the account (§6.7).
+
+**You can rehearse the whole thing free.** Steps 1–8 all work on the free tier (within
+its 500-subscriber cap), and sandbox mode sends real mail **to your own team** —
+100/month, same pipeline, same tracking — so the entire migration can be walked through,
+first campaign included, before any card is entered. Only the real list needs a paid
+plan: sending to anyone outside the org, and importing more than 500 contacts.
+
+### 10.6 Deliverability during a migration (the part people get wrong)
+
+- **Reuse the subdomain.** Inbox providers track reputation per sending domain. A
+  migrator who reuses `news.yourcompany.com` carries their history and their recipients'
+  engagement signals over; one who mints a fresh subdomain restarts from zero.
+- **What doesn't come with you is the IP.** Day3 sends on AWS SES shared IPs, so the
+  domain↔IP association is new regardless. Authentication is not the issue — the domain
+  setup provisions Easy DKIM, a custom Return-Path for SPF/DMARC alignment, and a
+  recommended DMARC record out of the box.
+- **Expect 2–4 weeks of scrutiny on a brand-new subdomain**, most visibly at
+  Microsoft/Outlook, even with perfect authentication. Gmail filing a newsletter under
+  Promotions is *correct*, not a defect.
+- **Ramp manually.** There is **no automatic domain warm-up throttle yet** (designed, not
+  shipped — `docs/deliverability-migration.md`). Start with your most engaged segment,
+  grow the volume over days, and keep sending consistently rather than in bursts.
+- **Never blast a stale list on day one.** The worst possible migration is a fresh
+  subdomain plus a two-year-old import: bounces and complaints arrive together, and
+  sustained bad rates auto-pause the account (bounce < 5%, complaints < 0.1%).
+- **Bring the bounces.** Addresses that already hard-bounced elsewhere will bounce here,
+  against a domain with no history to absorb it.
+- **Existing DNS is never overwritten.** If another provider's Return-Path or a stricter
+  DMARC record is already published, Day3 leaves it alone and shows both values side by
+  side for you to decide (§6.5) — so you can keep the old provider live through the
+  cutover instead of going dark between them.
+- **A sending domain belongs to exactly one Day3 account** (the SES identity is
+  platform-wide), so a second org claiming the same domain gets a 409 — worth knowing if
+  you're trialling Day3 in one org and migrating into another.
+
+### 10.7 Migrating *away* from Day3
+
+Stated because it's a reason to trust the migration in: nothing here is a one-way door.
+
+- **CSV export** per audience — all statuses, all custom fields, in the same shape the
+  importer reads.
+- **The v1 API reads everything it writes** — contacts, fields, segments, topics, the
+  suppression list, campaigns, and transactional email records, all cursor-paginated.
+- **Campaign bodies convert to Day3 Markdown** (§6.16), so an email's content is
+  portable text rather than trapped in a proprietary builder.
+- **Deleting the organization is real erasure** (§6.8) — the account, its data, and its
+  SES identities go, with only global suppression records surviving by design.
+
+---
+
+## 11. Maintaining this document
 
 **Rule: PRODUCT.md is the single source of truth and must be kept in sync with the
 product.**
