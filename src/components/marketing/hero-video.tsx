@@ -5,7 +5,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 type HeroVideoProps = {
-  /** Basename under /public/video, without extension — e.g. "hero-aqueduct-weir". */
+  /** Basename under /public/video, without extension, e.g. "hero-aqueduct-weir". */
   name: string;
   /**
    * What the loop depicts. Not rendered (the video is decorative), but kept as a
@@ -28,7 +28,7 @@ type HeroVideoProps = {
  * top (where the copy sits) and again at the very bottom (so the section joins
  * the page seamlessly). Decorative: `aria-hidden`, no controls, no audio track.
  *
- * Motion is opt-in rather than declarative — `autoPlay` is deliberately absent
+ * Motion is opt-in rather than declarative. `autoPlay` is deliberately absent
  * so that `prefers-reduced-motion` viewers keep the poster frame as a still
  * image. Playback also pauses while scrolled out of view to save battery.
  */
@@ -89,7 +89,7 @@ function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
         style={{
           // Dissolve the clip's own top edge. Anchored to the video box rather
           // than the hero box, so the seam stays invisible at any viewport
-          // ratio — where a fixed gradient stop would drift off the edge.
+          // ratio, where a fixed gradient stop would drift off the edge.
           maskImage: "linear-gradient(to bottom, transparent 0%, #000 20%)",
           WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 20%)",
         }}

@@ -43,7 +43,7 @@ export default function DpaPage() {
             <p>
               You are the Controller of the subscriber personal data you upload
               and send to. day3 is the Processor, acting only on your documented
-              instructions — which include your configuration and use of the
+              instructions, which include your configuration and use of the
               service. For account and billing data, {company.legalName} is the
               Controller and that processing is governed by our{" "}
               <Link href="/privacy" className={linkClass}>
@@ -111,9 +111,9 @@ export default function DpaPage() {
           heading: "6. Security measures",
           body: (
             <p>
-              day3 maintains appropriate technical and organisational measures —
+              day3 maintains appropriate technical and organisational measures:
               EU-only data residency, encryption in transit and at rest,
-              least-privilege access, and managed backups — described on our{" "}
+              least-privilege access, and managed backups. They are described on our{" "}
               <Link href="/security" className={linkClass}>
                 Security page
               </Link>

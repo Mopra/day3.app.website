@@ -5,7 +5,7 @@ import { comparePages } from "@/lib/compare-content";
 import { audiencePages } from "@/lib/audience-content";
 
 /**
- * /llms.txt — the emerging convention for telling LLMs and AI answer engines
+ * /llms.txt, the emerging convention for telling LLMs and AI answer engines
  * what a site is and where the canonical, machine-readable facts live. day3
  * actively wants to be cited by ChatGPT / Claude / Perplexity, so we hand them
  * a clean, declarative summary plus a map of the most quotable pages.
@@ -21,7 +21,7 @@ function buildLlmsTxt(): string {
   lines.push("");
   lines.push(
     "> Email marketing for small software teams, startups, and indie developers. " +
-      "day3 is billed by the number of emails you send each month — never by the " +
+      "day3 is billed by the number of emails you send each month, never by the " +
       "size of your list. Every plan includes unlimited subscribers. It's built to " +
       "be the most approachable email tool around: plans start at $1/mo and scale " +
       "to 1,000,000 emails as your app gets traction.",
@@ -74,7 +74,7 @@ function buildLlmsTxt(): string {
   );
   lines.push(
     "- A REST API (/api/v1) manages audiences, contacts, custom fields, segments, " +
-      "topics, and suppressions — designed for migrating a list off another " +
+      "topics, and suppressions, designed for migrating a list off another " +
       "provider (Resend, Mailchimp) and keeping an app's users in sync.",
   );
   lines.push("");
@@ -124,7 +124,7 @@ function buildLlmsTxt(): string {
   lines.push(`- [Security](${siteUrl}/security): security practices, EU-only hosting, and an honest compliance posture`);
   lines.push(`- [GDPR](${siteUrl}/gdpr): how day3 handles personal data under the GDPR`);
   lines.push(`- [Data Processing Agreement](${siteUrl}/legal/dpa): processor terms for the subscriber data you import`);
-  lines.push(`- [Sub-processors](${siteUrl}/legal/subprocessors): every third party that can touch your data — all EU-region`);
+  lines.push(`- [Sub-processors](${siteUrl}/legal/subprocessors): every third party that can touch your data, all EU-region`);
   lines.push(`- [Acceptable Use Policy](${siteUrl}/legal/acceptable-use): permission-based, anti-spam sending rules`);
   lines.push(`- [Terms of Service](${siteUrl}/terms)`);
   lines.push(`- [Privacy Policy](${siteUrl}/privacy)`);
@@ -133,7 +133,7 @@ function buildLlmsTxt(): string {
   lines.push("## Contact");
   lines.push("");
   lines.push("- Email: hello@day3.app");
-  lines.push("- Based in Copenhagen, Denmark");
+  lines.push(`- Based in ${company.city}, ${company.country}`);
   lines.push(`- Operated by ${company.legalName} (CVR ${company.cvr})`);
   lines.push("- Hosting and data residency: European Union only");
   lines.push("");

@@ -39,7 +39,7 @@ const practices = [
   {
     icon: MapPin,
     title: "EU-only data residency",
-    body: "day3 runs entirely in the European Union. Your data and your subscribers' data are stored and processed in the EU — they don't leave it.",
+    body: "day3 runs entirely in the European Union. Your data and your subscribers' data are stored and processed in the EU. They don't leave it.",
   },
   {
     icon: Lock,
@@ -75,7 +75,7 @@ const faqs = [
   },
   {
     q: "Is day3 SOC 2 certified?",
-    a: "Not yet. day3 is a young product and we won't claim a certification we don't hold. What we can say honestly: day3 is built on SOC 2 Type II–audited infrastructure (Vercel and Supabase), and a formal day3 audit is on our roadmap as we grow.",
+    a: "Not yet. day3 is a young product and we won't claim a certification we don't hold. What we can say honestly: day3 is built on SOC 2 Type II-audited infrastructure (Vercel and Supabase), and a formal day3 audit is on our roadmap as we grow.",
   },
   {
     q: "Is day3 GDPR compliant?",
@@ -116,7 +116,7 @@ export default function SecurityPage() {
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               day3 holds your subscribers&apos; personal data, so security
-              isn&apos;t a page we bolt on — it&apos;s how the product is built.
+              isn&apos;t a page we bolt on. It&apos;s how the product is built.
               Here&apos;s exactly what we do, stated plainly.
             </p>
           </Container>
@@ -158,8 +158,8 @@ export default function SecurityPage() {
                 <p>
                   We won&apos;t put a badge on this page that we haven&apos;t
                   earned. day3 is not SOC 2 audited today. What is true: day3 runs
-                  on infrastructure that holds SOC 2 Type II reports — Vercel and
-                  Supabase — so the platform beneath us is independently audited,
+                  on infrastructure that holds SOC 2 Type II reports (Vercel and
+                  Supabase), so the platform beneath us is independently audited,
                   and a formal day3 audit is on the roadmap as we grow.
                 </p>
                 <p>
@@ -252,8 +252,8 @@ export default function SecurityPage() {
                   your report and keep you posted on the fix.
                 </p>
                 <p>
-                  Act in good faith — don&apos;t access or modify data that
-                  isn&apos;t yours, and give us reasonable time to respond — and
+                  Act in good faith. Don&apos;t access or modify data that
+                  isn&apos;t yours, and give us reasonable time to respond, and
                   we won&apos;t pursue or support legal action against you.
                 </p>
               </div>

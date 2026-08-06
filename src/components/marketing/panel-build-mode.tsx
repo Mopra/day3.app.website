@@ -55,7 +55,7 @@ function PanelBuildMode() {
         })}
       </div>
 
-      {/* The gate. Same row shape as the four above, deliberately — it reads as
+      {/* The gate. Same row shape as the four above, deliberately, so it reads as
           the fifth step, not as an ad bolted to the bottom. */}
       <div
         className={cn(

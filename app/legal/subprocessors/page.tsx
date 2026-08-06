@@ -8,7 +8,7 @@ import { siteConfig, subprocessors } from "@/lib/site";
 export const metadata: Metadata = buildMetadata({
   title: "Sub-processors",
   description:
-    "The complete list of third parties day3 uses to process personal data — every one EU-region. Vercel for hosting, Supabase for database and storage.",
+    "The complete list of third parties day3 uses to process personal data, every one EU-region. Vercel for hosting, Supabase for database and storage.",
   path: "/legal/subprocessors",
   keywords: [
     "day3 subprocessors",

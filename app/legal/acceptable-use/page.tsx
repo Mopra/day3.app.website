@@ -28,14 +28,14 @@ export default function AcceptableUsePage() {
       title="Acceptable Use Policy"
       updated="June 2026"
       path="/legal/acceptable-use"
-      intro="day3 is a tool for people emailing audiences who asked to hear from them. This policy keeps it that way. It protects your delivery and everyone else's — one sender's spam hurts the whole platform's reputation. Breaking these rules can get an account suspended."
+      intro="day3 is a tool for people emailing audiences who asked to hear from them. This policy keeps it that way. It protects your delivery and everyone else's. One sender's spam hurts the whole platform's reputation. Breaking these rules can get an account suspended."
       sections={[
         {
           heading: "Send only with permission",
           body: (
             <>
               <p>
-                You may only email people who gave you permission to — by signing
+                You may only email people who gave you permission to, by signing
                 up, buying from you, or otherwise clearly opting in. You must be
                 able to show how and when that permission was given.
               </p>
@@ -50,7 +50,7 @@ export default function AcceptableUsePage() {
           heading: "Every email must be honest",
           body: (
             <ul className="list-disc space-y-1.5 pl-5">
-              <li>Accurate &ldquo;from&rdquo;, &ldquo;to&rdquo;, and routing — no spoofing or disguising the sender.</li>
+              <li>Accurate &ldquo;from&rdquo;, &ldquo;to&rdquo;, and routing. No spoofing or disguising the sender.</li>
               <li>A subject line that reflects the actual content.</li>
               <li>A visible, working unsubscribe in every message.</li>
               <li>A real physical postal address for the sender.</li>
@@ -87,7 +87,7 @@ export default function AcceptableUsePage() {
               Sustained high spam-complaint or bounce rates, sending to stale or
               non-consenting lists, or anything that threatens day3&apos;s sending
               reputation may trigger a review. We&apos;d rather help you fix it
-              than cut you off — but protecting deliverability for every sender
+              than cut you off, but protecting deliverability for every sender
               comes first.
             </p>
           ),

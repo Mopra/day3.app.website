@@ -14,9 +14,9 @@ import { siteConfig } from "@/lib/site";
 import { featurePages } from "@/lib/features-content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Features — everything you need to send a good product email",
+  title: "Features: everything you need to send a good product email",
   description:
-    "Campaigns, audiences, signup forms, deliverability, metrics, an AI writing assistant, and an API. The parts you need to email your users — not the parts that come with a manual.",
+    "Campaigns, audiences, signup forms, deliverability, metrics, an AI writing assistant, and an API. The parts you need to email your users, not the parts that come with a manual.",
   path: "/features",
   keywords: [
     "email marketing features",
@@ -48,7 +48,7 @@ export default function FeaturesPage() {
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               Not the parts that come with a manual. Here&apos;s everything day3
-              does — and, just as deliberately, the bloat it leaves out.
+              does, and, just as deliberately, the bloat it leaves out.
             </p>
           </Container>
         </section>

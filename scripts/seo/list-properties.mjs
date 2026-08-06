@@ -2,7 +2,7 @@
 //
 // Use it to find the numeric GA4_PROPERTY_ID (the Data API needs that, not the
 // G-XXXX measurement id), and to confirm access was granted before running the
-// puller — a property missing here means the SA email hasn't been added to it.
+// puller. A property missing here means the SA email hasn't been added to it.
 //
 // Run: npm run seo:properties
 
@@ -30,7 +30,7 @@ async function get(url) {
   return res.json();
 }
 
-// Either API can fail independently (not enabled, no grants) — report both.
+// Either API can fail independently (not enabled, no grants), so report both.
 async function attempt(label, fn) {
   try {
     return await fn();
@@ -46,14 +46,14 @@ console.log(`\nService account: ${client_email}`);
 await attempt('Search Console', async () => {
   const { siteEntry = [] } = await get('https://searchconsole.googleapis.com/webmasters/v3/sites');
   console.log('\nSearch Console sites');
-  if (!siteEntry.length) console.log('  (none — add the SA email under Settings → Users and permissions)');
+  if (!siteEntry.length) console.log('  (none. Add the SA email under Settings → Users and permissions)');
   for (const s of siteEntry) console.log(`  ${s.siteUrl}  [${s.permissionLevel}]`);
 });
 
 await attempt('GA4', async () => {
   const { accountSummaries = [] } = await get('https://analyticsadmin.googleapis.com/v1beta/accountSummaries');
   console.log('\nGA4 properties');
-  if (!accountSummaries.length) console.log('  (none — add the SA email under Admin → Property access management)');
+  if (!accountSummaries.length) console.log('  (none. Add the SA email under Admin → Property access management)');
   for (const acc of accountSummaries) {
     console.log(`  ${acc.displayName}`);
     for (const p of acc.propertySummaries || []) {

@@ -3,7 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 type CodeCardProps = {
-  /** Chrome label — what this snippet does, in a few words. */
+  /** Chrome label: what this snippet does, in a few words. */
   label: string;
   /** The snippet itself. Rendered verbatim; keep lines short enough to read. */
   code: string;
@@ -17,8 +17,14 @@ type CodeCardProps = {
  *
  * Every snippet on the site goes through here, for two reasons. A code block
  * that reads as a terminal says who a section is written for before a word of it
- * is read — and having one component means a long line can only ever scroll
- * inside its own box, never drag the page sideways on a phone.
+ * is read. And having one component means a long line is dealt with in one
+ * place, so it can never drag the page sideways on a phone.
+ *
+ * Lines wrap rather than scroll. A horizontal scrollbar inside a card is a
+ * permanent grey bar on Windows, and it hides the end of the line behind a
+ * gesture nobody makes on a marketing page. Each source line is its own block so
+ * a wrap can hang-indent under it, which keeps a wrapped shell continuation from
+ * reading as a new command.
  *
  * Snippets are checked against the app's own reference (`src/lib/api-docs.ts`
  * and `docs/api-v1-spec.md` in the app repo) rather than written from memory. A
@@ -32,9 +38,21 @@ function CodeCard({ label, code, note, className }: CodeCardProps) {
         <figcaption className="border-b border-white/10 px-4 py-2.5 text-xs font-medium text-cream/70">
           {label}
         </figcaption>
-        <div className="overflow-x-auto p-4">
+        <div className="p-4">
           <pre className="font-mono text-[0.78rem] leading-relaxed text-cream/90">
-            <code>{code}</code>
+            <code>
+              {code.split("\n").map((line, index) => (
+                <span
+                  // Source order is the only identity a line has, and the
+                  // snippets are static, so the index is stable.
+                  key={index}
+                  className="block whitespace-pre-wrap break-words pl-5 -indent-5"
+                >
+                  {/* A blank line still has to occupy one. */}
+                  {line === "" ? " " : line}
+                </span>
+              ))}
+            </code>
           </pre>
         </div>
       </div>

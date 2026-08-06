@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "How day3 handles your data and your subscribers' data — plainly stated.",
+    "How day3 handles your data and your subscribers' data, plainly stated.",
 };
 
 export default function PrivacyPage() {
@@ -15,7 +15,7 @@ export default function PrivacyPage() {
     <LegalPage
       title="Privacy Policy"
       updated="June 2026"
-      intro="How we handle your data and your subscribers' data. This is a lightweight stub for the marketing site — the full policy presented at signup takes precedence."
+      intro="How we handle your data and your subscribers' data. This is a lightweight stub for the marketing site. The full policy presented at signup takes precedence."
       sections={[
         {
           heading: "What we collect",
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
           body: (
             <p>
               The contacts you bring to day3 belong to you. We process them to
-              deliver your email and report on it — we don&apos;t sell them,
+              deliver your email and report on it. We don&apos;t sell them,
               rent them, or use them to market anything of our own.
             </p>
           ),

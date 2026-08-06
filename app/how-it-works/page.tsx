@@ -32,19 +32,19 @@ const steps = [
   {
     title: "Bring your whole list",
     description:
-      "Import 200 contacts or 200,000 — same price. Subscribers are free and unlimited, so a growing audience never grows your bill.",
+      "Import 200 contacts or 200,000, same price. Subscribers are free and unlimited, so a growing audience never grows your bill.",
     icon: InfinityIcon,
   },
   {
     title: "Send when you have something to say",
     description:
-      "Each email to each subscriber is one send. A campaign to 1,000 people uses 1,000 emails — the only number that touches your bill.",
+      "Each email to each subscriber is one send. A campaign to 1,000 people uses 1,000 emails, the only number that touches your bill.",
     icon: Gauge,
   },
   {
     title: "Watch one monthly cap",
     description:
-      "Your plan has a monthly email allotment. The meter fills as you send and pauses cleanly at the cap — no surprise overage. Need more room? Move up a plan.",
+      "Your plan has a monthly email allotment. The meter fills as you send and pauses cleanly at the cap, with no surprise overage. Need more room? Move up a plan.",
     icon: MailCheck,
   },
 ];
@@ -52,7 +52,7 @@ const steps = [
 const faqs = [
   {
     q: "How is day3's pricing different from Mailchimp or ConvertKit?",
-    a: "Most tools charge by subscriber count, so your bill climbs as you grow — even if you rarely email. day3 charges by emails sent. Subscribers are unlimited and free.",
+    a: "Most tools charge by subscriber count, so your bill climbs as you grow, even if you rarely email. day3 charges by emails sent. Subscribers are unlimited and free.",
   },
   {
     q: "What counts as one send?",
@@ -60,11 +60,11 @@ const faqs = [
   },
   {
     q: "What happens if I hit my monthly limit?",
-    a: "Sending pauses cleanly at the cap — no overage, no surprise charge. Move up a plan for more headroom and sending resumes immediately.",
+    a: "Sending pauses cleanly at the cap. No overage, no surprise charge. Move up a plan for more headroom and sending resumes immediately.",
   },
   {
     q: "Do unused emails roll over?",
-    a: "No — your allotment resets each billing period. Pick the plan that matches how often you send.",
+    a: "No. Your allotment resets each billing period. Pick the plan that matches how often you send.",
   },
   {
     q: "Why is this cheaper for most teams?",
@@ -93,8 +93,8 @@ export default function HowItWorksPage() {
               You&apos;re billed on emails sent, not on the size of your list.
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Most tools turn a growing list into a growing bill. day3 doesn&apos;t —
-              keep as many subscribers as you like, and pay only for the emails
+              Most tools turn a growing list into a growing bill. day3 doesn&apos;t.
+              Keep as many subscribers as you like, and pay only for the emails
               you send.
             </p>
           </Container>
@@ -136,7 +136,7 @@ export default function HowItWorksPage() {
               <Reveal>
                 <SectionHeading
                   title="One number to watch"
-                  description="No contact tax, no surprise overage. The plan price is the price — the meter shows exactly where you stand."
+                  description="No contact tax, no surprise overage. The plan price is the price, and the meter shows exactly where you stand."
                 />
                 <div className="mt-8">
                   <Button

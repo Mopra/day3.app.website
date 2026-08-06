@@ -14,7 +14,7 @@ import { changelogEntries } from "@/lib/changelog-content";
 export const metadata: Metadata = buildMetadata({
   title: "Changelog",
   description:
-    "What's new in day3 — the running log of features and improvements we ship.",
+    "What's new in day3: the running log of features and improvements we ship.",
   path: "/changelog",
   keywords: ["day3 changelog", "day3 updates", "day3 what's new"],
 });

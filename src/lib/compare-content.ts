@@ -1,7 +1,7 @@
 /**
  * Source of truth for the /compare/<slug> "alternative" pages.
  *
- * IMPORTANT — accuracy policy: competitor claims here are deliberately about the
+ * IMPORTANT. Accuracy policy: competitor claims here are deliberately about the
  * *pricing model and product philosophy* (per-subscriber vs per-send, breadth of
  * scope), which are durable and verifiable. We do NOT quote competitors' specific
  * dollar prices or feature counts, because those change often and a stale number
@@ -33,9 +33,9 @@ export type ComparePage = {
   /** The core model-level distinction, one tight paragraph. */
   difference: string;
   comparison: CompareRow[];
-  /** Why teams move to day3 — bullet points. */
+  /** Why teams move to day3, as bullet points. */
   reasonsToSwitch: { title: string; description: string }[];
-  /** Honest "stay where you are if…" — builds trust and earns AI citations. */
+  /** Honest "stay where you are if…". Builds trust and earns AI citations. */
   stayIf: string;
   faqs: { q: string; a: string }[];
 };
@@ -45,7 +45,7 @@ const DAY3 = {
   pricing: "By emails sent each month",
   subscribers: "Unlimited on every plan",
   freeTier:
-    "Free tier sends in sandbox mode (100/mo, your own team) — paid from $1/mo to reach everyone else",
+    "Free tier sends in sandbox mode (100/mo, your own team). Paid from $1/mo to reach everyone else",
   scope: "Product updates and transactional email, on purpose narrow",
   startingPrice: "$1/mo for 1,000 emails",
 };
@@ -62,14 +62,14 @@ export const comparePages: ComparePage[] = [
     do. The internal spec keeps that table because it drove our design, but a
     competitor's API changes without telling us, and a public page listing their
     gaps ages into a page listing our inaccuracies. Every row here is about what
-    each tool is built around — durable, and the actual decision anyway.
+    each tool is built around, which is durable and the actual decision anyway.
   */
   {
     slug: "resend-alternative",
     competitor: "Resend",
     metaTitle: "A Resend alternative with the list layer built in",
     metaDescription:
-      "Resend is a developer-first email API. day3 sends transactional the same shape — one POST, idempotent retries, per-email status — and brings the campaign side with it: audiences, segments, topics, forms, and compliance.",
+      "Resend is a developer-first email API. day3 sends transactional the same shape (one POST, idempotent retries, per-email status) and brings the campaign side with it: audiences, segments, topics, forms, and compliance.",
     keywords: [
       "resend alternative",
       "resend alternative for newsletters",
@@ -81,7 +81,7 @@ export const comparePages: ComparePage[] = [
     intro:
       "Resend set the bar for what an email API should feel like, and day3 sends transactional in the same shape: one POST, an idempotency key, per-email delivery status.",
     difference:
-      "The difference is everything around the send. day3 is built for the campaign side too — audiences with custom fields, live segments, subscription topics, hosted signup forms, double opt-in, one-click unsubscribe — so your password resets and your product updates run on one domain, one allowance, and one bill.",
+      "The difference is everything around the send. day3 is built for the campaign side too: audiences with custom fields, live segments, subscription topics, hosted signup forms, double opt-in, one-click unsubscribe. So your password resets and your product updates run on one domain, one allowance, and one bill.",
     comparison: [
       { dimension: "Pricing model", day3: DAY3.pricing, competitor: "By monthly email volume" },
       { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered" },
@@ -97,7 +97,7 @@ export const comparePages: ComparePage[] = [
       },
       {
         dimension: "Growing the list",
-        day3: "Hosted pages, embeds, popups and raw HTML forms — double opt-in on by default",
+        day3: "Hosted pages, embeds, popups and raw HTML forms, with double opt-in on by default",
         competitor: "Bring your own form",
       },
       {
@@ -129,11 +129,11 @@ export const comparePages: ComparePage[] = [
       },
     ],
     stayIf:
-      "Stay with Resend if transactional email is the whole job. It's an excellent API with deep infrastructure behind it, and if you don't need audiences, forms, segments or compliance handling, day3's campaign half is weight you won't use. Keeping both is also fine — neither tool asks for exclusivity.",
+      "Stay with Resend if transactional email is the whole job. It's an excellent API with deep infrastructure behind it, and if you don't need audiences, forms, segments or compliance handling, day3's campaign half is weight you won't use. Keeping both is also fine. Neither tool asks for exclusivity.",
     faqs: [
       {
         q: "Is day3 a Resend alternative?",
-        a: "For teams who need product-update emails as well as transactional, yes — day3 does both from one domain and one allowance. If you only need an email API, Resend is excellent and there's no reason to move.",
+        a: "For teams who need product-update emails as well as transactional, yes. day3 does both from one domain and one allowance. If you only need an email API, Resend is excellent and there's no reason to move.",
       },
       {
         q: "Can day3 send transactional email like Resend?",
@@ -164,12 +164,12 @@ export const comparePages: ComparePage[] = [
     ],
     title: "A Mailchimp alternative that charges for sends, not your list size.",
     intro:
-      "Mailchimp is a broad marketing platform, and its bill climbs as your contact count grows — even in a month you send nothing.",
+      "Mailchimp is a broad marketing platform, and its bill climbs as your contact count grows, even in a month you send nothing.",
     difference:
-      "day3 decouples list size from price. Keep any number of subscribers and pay only for the emails you send — so a big list you email occasionally costs far less.",
+      "day3 decouples list size from price. Keep any number of subscribers and pay only for the emails you send, so a big list you email occasionally costs far less.",
     comparison: [
       { dimension: "Pricing model", day3: DAY3.pricing, competitor: "By number of contacts/audience size" },
-      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered — more contacts cost more" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered: more contacts cost more" },
       { dimension: "Product scope", day3: DAY3.scope, competitor: "Full marketing suite (automations, ads, CRM, sites)" },
       { dimension: "Best for", day3: "Founders & small SaaS sending updates", competitor: "Marketing teams running campaigns at scale" },
       { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Free tier, then priced by contacts" },
@@ -178,12 +178,12 @@ export const comparePages: ComparePage[] = [
       {
         title: "No contact tax",
         description:
-          "200 contacts or 200,000 — same price. The meter is sends, nothing else.",
+          "200 contacts or 200,000, same price. The meter is sends, nothing else.",
       },
       {
         title: "Nothing to configure",
         description:
-          "No journeys or automation to wire up first. Write the update, pick a list, send — saved segments are there if you want them, not a prerequisite.",
+          "No journeys or automation to wire up first. Write the update, pick a list, send. Saved segments are there if you want them, not a prerequisite.",
       },
       {
         title: "Deliverability included",
@@ -192,19 +192,19 @@ export const comparePages: ComparePage[] = [
       },
     ],
     stayIf:
-      "Stay with Mailchimp if you need automation flows, landing pages, ads, or a CRM in one place. day3 does none of that — it just emails your users about product changes.",
+      "Stay with Mailchimp if you need automation flows, landing pages, ads, or a CRM in one place. day3 does none of that. It just emails your users about product changes.",
     faqs: [
       {
         q: "Is day3 cheaper than Mailchimp?",
-        a: "Usually, for a growing list — day3 never charges by contact count. Your bill tracks emails sent, not audience size.",
+        a: "Usually, for a growing list, because day3 never charges by contact count. Your bill tracks emails sent, not audience size.",
       },
       {
         q: "Can I migrate my Mailchimp list to day3?",
-        a: "Yes — by CSV or API. Export your subscribers and import them into a day3 audience, or script it against the API in batches of 1,000, bringing your custom fields and opt-outs with you. Either way the import dedupes and drops anyone who unsubscribed or bounced.",
+        a: "Yes, by CSV or API. Export your subscribers and import them into a day3 audience, or script it against the API in batches of 1,000, bringing your custom fields and opt-outs with you. Either way the import dedupes and drops anyone who unsubscribed or bounced.",
       },
       {
         q: "What does day3 not do that Mailchimp does?",
-        a: "By design: no automation flows, A/B testing, drag-and-drop template builders, landing pages, or ads. Just reliable product emails — with saved segments and subscription topics where they earn their keep.",
+        a: "By design: no automation flows, A/B testing, drag-and-drop template builders, landing pages, or ads. Just reliable product emails, with saved segments and subscription topics where they earn their keep.",
       },
     ],
   },
@@ -225,10 +225,10 @@ export const comparePages: ComparePage[] = [
     intro:
       "Kit is built for creators growing audiences and sales funnels, and it prices by subscriber count.",
     difference:
-      "day3 is for software teams shipping product and telling users about it. Subscribers stay unlimited; you pay only for sends — so the bill stays flat as the list grows.",
+      "day3 is for software teams shipping product and telling users about it. Subscribers stay unlimited; you pay only for sends, so the bill stays flat as the list grows.",
     comparison: [
       { dimension: "Pricing model", day3: DAY3.pricing, competitor: "By number of subscribers" },
-      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered — more subscribers cost more" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered: more subscribers cost more" },
       { dimension: "Product scope", day3: DAY3.scope, competitor: "Creator funnels, sequences, commerce" },
       { dimension: "Best for", day3: "Small SaaS & indie devs", competitor: "Creators, newsletters, digital products" },
       { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Free tier, then priced by subscribers" },
@@ -247,7 +247,7 @@ export const comparePages: ComparePage[] = [
       {
         title: "AI writing help when you want it",
         description:
-          "Draft or rewrite a campaign with Claude — included on every paid plan.",
+          "Draft or rewrite a campaign with Claude, included on every paid plan.",
       },
     ],
     stayIf:
@@ -259,7 +259,7 @@ export const comparePages: ComparePage[] = [
       },
       {
         q: "Does day3 have automated sequences like Kit?",
-        a: "No — day3 leaves out automation and sequences. It sends one-off campaigns: product updates, changelogs, announcements.",
+        a: "No. day3 leaves out automation and sequences. It sends one-off campaigns: product updates, changelogs, announcements.",
       },
     ],
   },
@@ -268,7 +268,7 @@ export const comparePages: ComparePage[] = [
     competitor: "beehiiv",
     metaTitle: "A focused beehiiv alternative for product emails",
     metaDescription:
-      "beehiiv is a growth platform for media newsletters. day3 is a small tool for product updates — unlimited subscribers, billed by sends.",
+      "beehiiv is a growth platform for media newsletters. day3 is a small tool for product updates, with unlimited subscribers, billed by sends.",
     keywords: [
       "beehiiv alternative",
       "beehiiv alternative for saas",
@@ -280,7 +280,7 @@ export const comparePages: ComparePage[] = [
     intro:
       "beehiiv is a platform for growing and monetizing media newsletters, priced by subscriber tier. A software team announcing what shipped won't touch most of it.",
     difference:
-      "day3 isn't a media business tool. It's a focused way for product teams to send updates — unlimited subscribers, with a bill driven only by sends.",
+      "day3 isn't a media business tool. It's a focused way for product teams to send updates, with unlimited subscribers and a bill driven only by sends.",
     comparison: [
       { dimension: "Pricing model", day3: DAY3.pricing, competitor: "By subscriber tiers (+ paid add-ons)" },
       { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered by subscriber count" },
@@ -306,7 +306,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     stayIf:
-      "Stay with beehiiv if you're building a newsletter as a media product — monetizing it, running referrals, or selling ads. That's its strength; day3 doesn't compete there.",
+      "Stay with beehiiv if you're building a newsletter as a media product: monetizing it, running referrals, or selling ads. That's its strength; day3 doesn't compete there.",
     faqs: [
       {
         q: "Is day3 a good beehiiv alternative for a SaaS?",
@@ -314,7 +314,7 @@ export const comparePages: ComparePage[] = [
       },
       {
         q: "Does day3 do newsletter monetization?",
-        a: "No — no paid subscriptions, ad network, or referral programs. Just reliable product emails.",
+        a: "No. No paid subscriptions, ad network, or referral programs. Just reliable product emails.",
       },
     ],
   },
@@ -323,7 +323,7 @@ export const comparePages: ComparePage[] = [
     competitor: "EmailOctopus",
     metaTitle: "An EmailOctopus alternative priced by sends",
     metaDescription:
-      "EmailOctopus is a low-cost tool priced by subscribers. day3 keeps subscribers unlimited and prices by sends — better for a big list you mail occasionally.",
+      "EmailOctopus is a low-cost tool priced by subscribers. day3 keeps subscribers unlimited and prices by sends, which is better for a big list you mail occasionally.",
     keywords: [
       "emailoctopus alternative",
       "cheap email marketing tool",
@@ -356,7 +356,7 @@ export const comparePages: ComparePage[] = [
       {
         title: "AI assist when it helps",
         description:
-          "Draft and refine emails with Claude — included on every paid plan.",
+          "Draft and refine emails with Claude, included on every paid plan.",
       },
     ],
     stayIf:
@@ -364,7 +364,7 @@ export const comparePages: ComparePage[] = [
     faqs: [
       {
         q: "How does day3's pricing compare to EmailOctopus?",
-        a: "EmailOctopus prices by subscriber count; day3 by sends. Which is cheaper depends on list size versus sending frequency — day3 favors larger lists mailed occasionally.",
+        a: "EmailOctopus prices by subscriber count; day3 by sends. Which is cheaper depends on list size versus sending frequency. day3 favors larger lists mailed occasionally.",
       },
     ],
   },
@@ -414,7 +414,7 @@ export const comparePages: ComparePage[] = [
     faqs: [
       {
         q: "Is day3 as simple as Buttondown?",
-        a: "It's just as focused — a campaign fits on one screen — while adding signup forms, built-in deliverability, and send-based pricing.",
+        a: "It's just as focused, since a campaign fits on one screen, while adding signup forms, built-in deliverability, and send-based pricing.",
       },
     ],
   },

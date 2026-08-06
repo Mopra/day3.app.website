@@ -2,7 +2,7 @@
  * Live changelog source: published GitHub Releases from the app repo, fetched at
  * build time and revalidated hourly. Drafts and pre-releases are skipped.
  *
- * On any error — or before the first release exists — getReleases() returns an
+ * On any error, or before the first release exists, getReleases() returns an
  * empty array, and the /changelog page falls back to the curated entries in
  * changelog-content.ts. So the page is never blank and the build never fails on
  * a network hiccup.
@@ -46,7 +46,7 @@ export async function getReleases(): Promise<Release[]> {
         Accept: "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
       },
-      // Build-time fetch with hourly ISR — new releases appear without a redeploy.
+      // Build-time fetch with hourly ISR, so new releases appear without a redeploy.
       next: { revalidate: 3600 },
     });
     if (!res.ok) return [];

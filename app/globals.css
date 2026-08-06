@@ -3,7 +3,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* ------------------------------------------------------------------ *
- * day3 — "Warm Swiss SaaS" design tokens
+ * day3 "Warm Swiss SaaS" design tokens
  * Cream + Espresso + Caramel. Calm, warm, competent, trustworthy.
  * ------------------------------------------------------------------ */
 
@@ -16,7 +16,7 @@
   --clay: #a35f45;
   --olive: #6f7654;
 
-  /* Semantic — light (default) */
+  /* Semantic, light (default) */
   --background: #f7f1e8; /* cream */
   --foreground: #241c17; /* espresso */
 
@@ -113,7 +113,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Type — Geist for UI/body, Instrument Serif for marketing headlines */
+  /* Type: Geist for UI/body, Instrument Serif for marketing headlines */
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
 
@@ -161,7 +161,7 @@
 }
 
 /* ------------------------------------------------------------------ *
- * Motion — ambient life + scroll reveals.
+ * Motion: ambient life + scroll reveals.
  * Warm, slow, unobtrusive. Everything here is decorative and is fully
  * switched off under `prefers-reduced-motion: reduce` (see the guard at
  * the bottom of this block).
@@ -192,7 +192,7 @@
 .animate-aurora-3 { animation: day3-aurora-3 18s ease-in-out infinite; }
 .animate-live-dot { animation: day3-live-dot 1.8s ease-in-out infinite; }
 
-/* Scroll reveal — paired with the <Reveal> client wrapper, which toggles
+/* Scroll reveal, paired with the <Reveal> client wrapper, which toggles
    `.is-visible` once the element enters the viewport. */
 .reveal {
   opacity: 0;

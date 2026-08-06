@@ -7,7 +7,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "The terms that govern your use of day3 — plain-language, fair, and short.",
+    "The terms that govern your use of day3: plain-language, fair, and short.",
 };
 
 export default function TermsPage() {
@@ -15,7 +15,7 @@ export default function TermsPage() {
     <LegalPage
       title="Terms of Service"
       updated="June 2026"
-      intro="These terms cover your use of day3. They're written to be readable. This is a lightweight stub for the marketing site — the binding terms presented at signup take precedence."
+      intro="These terms cover your use of day3. They're written to be readable. This is a lightweight stub for the marketing site. The binding terms presented at signup take precedence."
       sections={[
         {
           heading: "The short version",

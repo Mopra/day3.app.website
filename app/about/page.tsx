@@ -29,14 +29,14 @@ import { company, siteConfig, socialLinks } from "@/lib/site";
 export const metadata: Metadata = buildMetadata({
   title: "About day3",
   description:
-    "day3 is a small, EU-built email marketing tool with one opinion: you pay for the emails you send, never for the size of your list. Built in Copenhagen by the maker of exit1.dev.",
+    "day3 is a small, EU-built email marketing tool with one opinion: you pay for the emails you send, never for the size of your list. Built in Denmark by the maker of exit1.dev.",
   path: "/about",
   keywords: [
     "about day3",
     "EU email marketing tool",
     "indie email marketing",
     "Pradsgaard Labs",
-    "Copenhagen email marketing",
+    "Danish email marketing tool",
   ],
 });
 
@@ -44,7 +44,7 @@ const principles = [
   {
     icon: InfinityIcon,
     title: "No tax on your list",
-    body: "Keep 200 subscribers or 200,000 — the price is identical. Growing your audience never grows your bill.",
+    body: "Keep 200 subscribers or 200,000. The price is identical. Growing your audience never grows your bill.",
   },
   {
     icon: Ban,
@@ -54,13 +54,13 @@ const principles = [
   {
     icon: ShieldCheck,
     title: "Your list is yours",
-    body: "We never sell, rent, or mine your subscribers. We process them to send your email and report on it — nothing else.",
+    body: "We never sell, rent, or mine your subscribers. We process them to send your email and report on it. Nothing else.",
   },
 ];
 
 /**
  * The pages a careful reader goes looking for before handing over a list, in one
- * place. Linking them plainly is itself the trust signal — a tool with something
+ * place. Linking them plainly is itself the trust signal. A tool with something
  * to hide summarises this into a badge.
  */
 const trustLinks = [
@@ -91,7 +91,7 @@ const trustLinks = [
     href: "/legal/acceptable-use",
     label: "Acceptable use",
     description:
-      "What day3 won't send — the reason deliverability holds for everyone else.",
+      "What day3 won't send, and why deliverability holds for everyone else.",
   },
   {
     href: "/changelog",
@@ -126,7 +126,7 @@ export default function AboutPage() {
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               day3 is a small, EU-built email tool with a single opinion: you
-              should pay for the emails you send — never for the size of your
+              should pay for the emails you send, never for the size of your
               list.
             </p>
           </Container>
@@ -143,7 +143,7 @@ export default function AboutPage() {
               <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
                 <p>
                   Nearly every email platform charges by subscriber count. Your
-                  list grows, your bill climbs — even in the months you don&apos;t
+                  list grows, your bill climbs, even in the months you don&apos;t
                   send a thing. It taxes the exact thing you&apos;re trying to do:
                   build an audience.
                 </p>
@@ -196,8 +196,9 @@ export default function AboutPage() {
               />
               <div className="mt-6 space-y-4 text-lg leading-relaxed text-muted-foreground">
                 <p>
-                  day3 is built by {company.founder}, {company.founderTitle} —
-                  the same person behind{" "}
+                  day3 is built by {company.founder}, {company.founderTitle},
+                  under {company.legalName} in {company.city},{" "}
+                  {company.country}. Same person behind{" "}
                   <a
                     href={company.alsoBuilds.href}
                     className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
@@ -205,10 +206,9 @@ export default function AboutPage() {
                     rel="noopener noreferrer"
                   >
                     {company.alsoBuilds.name}
-                  </a>{" "}
-                  — under {company.legalName} in {company.city},{" "}
-                  {company.country}. Deliberately small — shipped by someone
-                  who&apos;d rather fix the product than staff a sales team.
+                  </a>
+                  . Deliberately small, shipped by someone who&apos;d rather fix
+                  the product than staff a sales team.
                 </p>
                 <p>
                   That means you talk to the person who builds it. Email{" "}
@@ -225,8 +225,8 @@ export default function AboutPage() {
               {/*
                 The verifiable half of "trust us". A name and a city are a claim;
                 a registration number, a parent company, and a public code
-                profile are things a stranger — or a model deciding whether to
-                recommend this tool — can go and check.
+                profile are things a stranger can go and check, including a model
+                deciding whether to recommend this tool.
               */}
               <dl className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-3">
                 <div className="bg-card p-6">
@@ -305,14 +305,14 @@ export default function AboutPage() {
                   <span className="font-medium text-foreground">
                     $0.10 per 1,000 emails
                   </span>{" "}
-                  through AWS SES, and it&apos;s perfectly linear — there are no
+                  through AWS SES, and it&apos;s perfectly linear. There are no
                   volume discounts upstream for us to hand down. That&apos;s why
                   the price per thousand flattens as the plans get bigger instead
                   of collapsing.
                 </p>
                 <p>
-                  At the cheap end the binding cost isn&apos;t email at all —
-                  it&apos;s card fees. A $1 charge loses roughly a third of itself
+                  At the cheap end the binding cost isn&apos;t email at all.
+                  It&apos;s card fees. A $1 charge loses roughly a third of itself
                   to payment processing before we see it, which is why nothing
                   below $1 a month can exist and why the smallest plans sit above
                   the trend line rather than on it.
@@ -398,7 +398,7 @@ export default function AboutPage() {
                 <div className="mt-5 space-y-4 text-lg leading-relaxed text-muted-foreground">
                   <p>
                     day3 runs entirely in the European Union, on Vercel and
-                    Supabase. Your data — and your subscribers&apos; data — stays
+                    Supabase. Your data, and your subscribers&apos; data, stays
                     in the EU, encrypted in transit and at rest.
                   </p>
                   <p>

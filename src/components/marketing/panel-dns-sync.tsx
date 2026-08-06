@@ -9,7 +9,7 @@ import { LivePanel, StepRow, useSequence } from "@/components/marketing/live-pan
 /*
   The three records a sending domain actually needs. Names are real shapes
   (SES-style DKIM selectors, an SPF include, a DMARC policy) rather than
-  invented strings — anyone who has done this by hand should recognise them.
+  invented strings. Anyone who has done this by hand should recognise them.
 */
 const records = [
   { type: "CNAME", name: "s1._domainkey", note: "DKIM" },
@@ -96,7 +96,7 @@ function PanelDnsSync() {
             : "bg-secondary/40 text-muted-foreground opacity-60",
         )}
       >
-        {verified ? "Domain verified — ready to send" : "Checking DNS…"}
+        {verified ? "Domain verified, ready to send" : "Checking DNS…"}
       </div>
     </LivePanel>
   );

@@ -11,8 +11,8 @@ import { Reveal } from "@/components/marketing/reveal";
  *
  * Everything else on the page is an argument; this is the evidence. It sits
  * directly under the hero because the first question a stranger asks of a
- * $1/month tool from a brand they've never heard of isn't "how is it priced" —
- * it's "does this exist". A watercolour and four animated abstractions can't
+ * $1/month tool from a brand they've never heard of isn't "how is it priced".
+ * It's "does this exist". A watercolour and four animated abstractions can't
  * answer that. One frame of the real composer can.
  *
  * `shot` is null until the asset lands, and the section then renders nothing at
@@ -22,7 +22,7 @@ import { Reveal } from "@/components/marketing/reveal";
  * To turn it on, drop the file into `public/product/` and fill in `shot`:
  *  - screen recording → { kind: "video", name: "composer", … }, which expects
  *    `composer.webm`, `composer.mp4`, and a `composer.jpg` poster frame. Keep it
- *    short, silent, and loopable — it's a demo, not a film.
+ *    short, silent, and loopable. It's a demo, not a film.
  *  - still screenshot → { kind: "image", src: "/product/composer.png", … } with
  *    the file's real pixel dimensions, so Next can reserve the space.
  *
@@ -46,7 +46,7 @@ type Shot =
 const shot: Shot | null = null;
 
 /** Caption under the frame. Names what you're looking at, in one line. */
-const caption = "The composer — write the update, pick who gets it, send.";
+const caption = "The composer: write the update, pick who gets it, send.";
 
 function ComposerShot() {
   if (!shot) return null;

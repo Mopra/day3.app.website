@@ -5,7 +5,7 @@ import * as React from "react";
  * release notes: headings, bullet / numbered lists, bold, inline code, and links
  * (including bare URLs). Anything it doesn't recognise degrades to plain text.
  *
- * Kept dependency-free on purpose — release notes are structurally simple and
+ * Kept dependency-free on purpose. Release notes are structurally simple and
  * the stack stays lean. If notes ever need full CommonMark, swap in react-markdown.
  */
 

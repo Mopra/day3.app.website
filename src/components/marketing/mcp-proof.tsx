@@ -6,7 +6,7 @@ import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
 
 /**
- * MCP — the part of day3 that nothing else in this category has.
+ * MCP: the part of day3 that nothing else in this category has.
  *
  * The pitch has to survive the reader's first objection, which is "so it's a
  * chat box bolted onto an editor". It isn't, and the difference is the whole
@@ -14,7 +14,7 @@ import { SectionHeading } from "@/components/marketing/section-heading";
  * a human would have dragged into place, so the email is one artifact worked on
  * from both ends rather than a wall of generated HTML you can't touch.
  *
- * Hence three beats instead of a feature list — the install, the sentence you
+ * Hence three beats instead of a feature list: the install, the sentence you
  * type, and the thing that lands. The install line is the app's own, verbatim
  * from `buildMcpSetups()`; the dialect is real syntax from the reference the MCP
  * server hands the model.
@@ -49,7 +49,7 @@ const mcpFacts = [
   },
   {
     title: "It lands as blocks, not HTML",
-    body: "Editable sections in the composer — and it reads back out as Markdown.",
+    body: "Editable sections in the composer, and it reads back out as Markdown.",
   },
   {
     title: "It can't mail anyone by accident",

@@ -38,7 +38,7 @@ import {
 import { pricingTiers, siteConfig } from "@/lib/site";
 
 /*
-  Title, description, and canonical come from the root layout's defaults — the
+  Title, description, and canonical come from the root layout's defaults. The
   homepage is the one route that owns them, so it deliberately exports no
   metadata of its own.
 */
@@ -46,7 +46,7 @@ import { pricingTiers, siteConfig } from "@/lib/site";
 /**
  * The hero loop. Pale watercolour study, high-key on purpose so ~58% of the
  * frame sits within a hair of `--background` and the video dissolves into the
- * page rather than sitting in a box. `scene` is not rendered — it records what
+ * page rather than sitting in a box. `scene` is not rendered. It records what
  * the loop shows, so the picture and the headline stay in step.
  */
 const hero = {
@@ -56,7 +56,7 @@ const hero = {
   /*
     Two lines on purpose: the break falls after "for", so the audience lands
     alone on line two and carries the weight. Defined by the act rather than
-    the job title — this segment ships software and stores, but doesn't write
+    the job title. This segment ships software and stores, but doesn't write
     code for a living, so "developers" would send the wrong people away.
   */
   title: ["Email for", "the people who ship"],
@@ -64,17 +64,17 @@ const hero = {
     "The sane way" is load-bearing: it's the anti-marketing-suite promise, and
     the four nouns after it are what widen the audience from "teams with a
     newsletter" to every developer already paying something to send mail. Both
-    jobs named, because they're one setup — the receipt and the changelog leave
+    jobs named, because they're one setup: the receipt and the changelog leave
     the same verified domain.
   */
-  body: "The sane way to send everything your product emails — updates, changelogs, receipts, resets.",
+  body: "The sane way to send everything your product emails: updates, changelogs, receipts, resets.",
   grain: 20,
 };
 
 /**
  * The three price facts that do the disrupting, read straight off the pricing
  * ladder so the hero can never quote a number the pricing section contradicts.
- * Stated bare — no "only", no "just" — because the figures are startling enough
+ * Stated bare, with no "only" and no "just", because the figures are startling enough
  * on their own and an adjective would make them sound like a promotion.
  */
 const entryTier = pricingTiers[0];
@@ -82,8 +82,8 @@ const popularTier = pricingTiers.find((t) => t.popular) ?? entryTier;
 
 const priceFacts = [
   /*
-    "to reach your list" rather than "to send" — the free tier sends too, in
-    sandbox, so "to send" would now be the wrong line. The label has to name
+    "to reach your list" rather than "to send", because the free tier sends
+    too, in sandbox, so "to send" would now be the wrong line. The label has to name
     what the dollar actually buys or it contradicts the button beside it.
   */
   { value: `${entryTier.price}/mo`, label: "to reach your list" },
@@ -96,7 +96,7 @@ const priceFacts = [
  * paired with the part of day3 that removes it.
  *
  * `pain` is quoted verbatim from how people describe it, which is why the
- * grammar is loose — it's someone talking, not a headline. The panel beside it
+ * grammar is loose. It's someone talking, not a headline. The panel beside it
  * animates the fix rather than screenshotting it: the page argues the problem
  * is gone, so it has to show the problem going.
  */
@@ -104,7 +104,7 @@ const painBlocks = [
   {
     pain: "I need the whole thing set up before I know if I'll use it.",
     title: "Try the whole thing before you pay.",
-    body: "Domains, senders, audiences, forms, drafts — and 100 real sends a month to your own team. Reaching everyone else starts at $1/month.",
+    body: "Domains, senders, audiences, forms, drafts, and 100 real sends a month to your own team. Reaching everyone else starts at $1/month.",
     Panel: PanelBuildMode,
   },
   {
@@ -122,7 +122,7 @@ const painBlocks = [
   {
     pain: "Did jane@ actually get it?",
     title: "Every email, accounted for.",
-    body: "Delivered, opened, clicked, bounced — searchable per person. Bad addresses suppress themselves, so one dead list doesn't cost you the inbox.",
+    body: "Delivered, opened, clicked, bounced, all searchable per person. Bad addresses suppress themselves, so one dead list doesn't cost you the inbox.",
     Panel: PanelActivity,
   },
 ];
@@ -142,7 +142,7 @@ function tierFor(emails: number) {
 /**
  * What the price means next to the tools a reader already knows.
  *
- * Model-level only — never a competitor's dollar figure. Their prices change
+ * Model-level only, never a competitor's dollar figure. Their prices change
  * without telling us and a stale one reads as a lie, which costs more trust than
  * the comparison earns. The pricing *model* is durable, verifiable, and happens
  * to be the whole argument anyway.
@@ -161,20 +161,20 @@ const priceComparisons = [
   {
     name: "day3",
     model: "Priced by emails sent",
-    body: `${popularTier.emails} emails is ${popularTier.price} — at 500 subscribers or 50,000.`,
+    body: `${popularTier.emails} emails is ${popularTier.price}, at 500 subscribers or 50,000.`,
   },
 ];
 
 /**
  * The objections that decide it, answered on the page rather than one click
- * away on /pricing. Doubles as FAQPage structured data — these are the exact
+ * away on /pricing. Doubles as FAQPage structured data. These are the exact
  * questions an AI answer engine gets asked about a tool like this, and it can
  * only quote answers it can see.
  */
 const faqs = [
   {
     q: "Can I try it properly before paying?",
-    a: "Yes — all of it. A free account verifies a domain, imports a list, and sends for real: 100 emails a month to your own team, same pipeline, same tracking. What $1 buys is reaching everyone else.",
+    a: "Yes, all of it. A free account verifies a domain, imports a list, and sends for real: 100 emails a month to your own team, same pipeline, same tracking. What $1 buys is reaching everyone else.",
   },
   {
     q: "Do I have to leave my current tool to try day3?",
@@ -182,7 +182,7 @@ const faqs = [
   },
   {
     q: "Can I bring the people who unsubscribed?",
-    a: "Yes. Import contacts already marked unsubscribed, and your suppression list outright — so nobody who opted out of your old tool hears from your new one.",
+    a: "Yes. Import contacts already marked unsubscribed, and your suppression list outright, so nobody who opted out of your old tool hears from your new one.",
   },
   {
     q: "Is $1/month sustainable, or a launch price?",
@@ -190,7 +190,7 @@ const faqs = [
   },
   {
     q: "What happens if I stop paying?",
-    a: "You drop to the free tier and keep everything — audiences, domains, drafts, history. It all comes back out as CSV or JSON.",
+    a: "You drop to the free tier and keep everything: audiences, domains, drafts, history. It all comes back out as CSV or JSON.",
   },
   {
     q: "I only email a few times a year. Worth it?",
@@ -203,7 +203,7 @@ const faqs = [
 ];
 
 /**
- * Six, not four — transactional email and the API earned cards of their own the
+ * Six, not four. Transactional email and the API earned cards of their own the
  * moment they became things day3 leads with, and a reader scanning this grid
  * should not have to reach the hero's fine print to find them. One line each: a
  * grid people scan is a grid that answers "is my job in here", nothing more.
@@ -231,7 +231,7 @@ const coreFeatures = [
   },
   {
     title: "Know what happened",
-    description: "Delivered, opened, clicked — per campaign and per person.",
+    description: "Delivered, opened, clicked. Per campaign and per person.",
     icon: BarChart3,
   },
   {
@@ -256,7 +256,7 @@ export default function HomePage() {
           <HeroVideo name={hero.video} scene={hero.scene} grain={hero.grain} />
           {/*
             Fills exactly one viewport. The header is `sticky` (not fixed) so it
-            occupies layout space above this — hence subtracting its h-16.
+            occupies layout space above this, hence subtracting its h-16.
             `svh` rather than `vh` so mobile browser chrome doesn't push the
             bottom of the artwork off-screen, and rather than `dvh` so the hero
             doesn't resize while the toolbar hides on scroll.
@@ -319,7 +319,7 @@ export default function HomePage() {
               <Reveal delay={260}>
                 {/*
                   Price sits above the fold because it's the disrupter, but as a
-                  quiet row of facts rather than a badge — the numbers carry the
+                  quiet row of facts rather than a badge. The numbers carry the
                   argument, so shouting them would undercut it. Hairline rules
                   between items on `sm+` only; they'd fight the wrap on mobile,
                   where the facts stack.
@@ -367,7 +367,7 @@ export default function HomePage() {
 
             {/*
               Alternating sides on `lg`, stacked everywhere else. The panel is
-              ordered first in the DOM on the flipped rows only visually — on
+              ordered first in the DOM on the flipped rows only visually. On
               mobile the copy always leads, because a panel with no sentence
               above it is a puzzle.
             */}
@@ -427,15 +427,15 @@ export default function HomePage() {
 
             {/*
               Labelled, not teased. Saying "in development" costs nothing and
-              buys the reader's trust in every other claim on the page — and the
+              buys the reader's trust in every other claim on the page. And the
               people who need automation now can go and buy it elsewhere instead
               of signing up and discovering the gap.
             */}
             <Reveal delay={200}>
               <p className="mt-6 text-sm text-muted-foreground">
                 <span className="font-medium text-foreground">Automations</span>{" "}
-                — triggers, waits, branches — are in development. Everything else
-                on this page ships today.
+                are in development: triggers, waits, and branches. Everything
+                else on this page ships today.
               </p>
             </Reveal>
           </Container>
@@ -496,7 +496,7 @@ export default function HomePage() {
               The number needs something to push against. Nobody carries a
               competitor's price list in their head, so $5 for 10,000 emails is
               only startling once you can see what the alternative bills you for.
-              Stated as models, never as their dollar figures — a competitor's
+              Stated as models, never as their dollar figures. A competitor's
               price changes without telling us, and a stale one reads as a lie.
               (Same policy as the /compare pages; see compare-content.ts.)
             */}
@@ -522,7 +522,7 @@ export default function HomePage() {
                 <span className="font-medium text-foreground">
                   {tierFor(20_000).price}/mo
                 </span>
-                . Per-contact pricing bills you for all 10,000 — every month.
+                . Per-contact pricing bills you for all 10,000, every month.
               </p>
             </Reveal>
           </Container>
@@ -562,7 +562,7 @@ export default function HomePage() {
                 Send your first one for free.
               </h2>
               <p className="mx-auto mt-5 max-w-lg text-lg text-muted-foreground">
-                Domain, list, first campaign, real send to your own team — all on
+                Domain, list, first campaign, real send to your own team. All on
                 the free tier.
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
@@ -588,13 +588,13 @@ export default function HomePage() {
               </p>
               <p className="mx-auto mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground">
                 For permission-based product updates only. Cold outreach and
-                purchased lists get paused — it keeps deliverability good for
+                purchased lists get paused. It keeps deliverability good for
                 everyone.
               </p>
 
               {/*
                 Setup needs DNS access, which nobody has on a phone at 11pm. The
-                one exit for a reader who fits but can't act right now — day3's
+                one exit for a reader who fits but can't act right now. It's day3's
                 own signup form, so the ask is the thing the product does.
               */}
               <p className="mt-10 border-t border-border pt-8 text-sm text-muted-foreground">

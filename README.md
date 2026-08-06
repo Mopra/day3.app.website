@@ -1,6 +1,6 @@
-# day3.app — marketing website
+# day3.app marketing website
 
-The public marketing site for [day3.app](https://day3.app) — _email marketing
+The public marketing site for [day3.app](https://day3.app). _Email marketing
 without the bloat_. Separate from the product app (which lives at
 **go.day3.app** in its own Vercel project / repo).
 
@@ -14,15 +14,15 @@ without the bloat_. Separate from the product app (which lives at
 
 ## Design
 
-"Warm Swiss SaaS" — calm, warm, competent, trustworthy. Cream + Espresso +
+"Warm Swiss SaaS": calm, warm, competent, trustworthy. Cream + Espresso +
 Caramel palette, generous whitespace, flat surfaces, restrained accents. Tokens
 live in [`app/globals.css`](app/globals.css).
 
 ## Routes
 
-- `/` — homepage (hero, pricing, the model, product preview, features, CTA)
-- `/pricing` — pricing + FAQ
-- `/terms`, `/privacy` — lightweight legal stubs
+- `/`: homepage (hero, pricing, the model, product preview, features, CTA)
+- `/pricing`: pricing + FAQ
+- `/terms`, `/privacy`: lightweight legal stubs
 
 Shared `SiteHeader` / `SiteFooter` are reused across every page.
 
@@ -39,15 +39,15 @@ npm run build      # production build
 ## Deploy
 
 Hosted on Vercel (project `day3.app.website`, apex domain `day3.app`). Vercel
-auto-detects Next.js — no `vercel.json` needed. Push to the default branch to
+auto-detects Next.js, so no `vercel.json` is needed. Push to the default branch to
 deploy.
 
-## Before going live — fill in real values
+## Before going live: fill in real values
 
-- **Sign-up / log-in URLs** point at `go.day3.app` — confirm the real routes
+- **Sign-up / log-in URLs** point at `go.day3.app`. Confirm the real routes
   (`src/lib/site.ts`).
 - **Contact email** `hello@day3.app` must be a working inbox.
-- **Footer location** "Copenhagen, Denmark" — replace with the real registered
+- **Footer location** "Herning, Denmark". Replace with the real registered
   business name and full postal mailing address before relying on it for
   anti-spam / SES compliance.
-- The `/terms` and `/privacy` pages are stubs — replace with reviewed copy.
+- The `/terms` and `/privacy` pages are stubs. Replace with reviewed copy.

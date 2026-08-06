@@ -5,7 +5,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 type RevealProps = React.ComponentProps<"div"> & {
-  /** Delay before the transition starts, in ms — used to stagger siblings. */
+  /** Delay before the transition starts, in ms, used to stagger siblings. */
   delay?: number;
 };
 

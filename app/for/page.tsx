@@ -16,7 +16,7 @@ import { audiencePages } from "@/lib/audience-content";
 export const metadata: Metadata = buildMetadata({
   title: "Who day3 is for",
   description:
-    "day3 is built for small software teams sending product updates — startups, indie developers, and SaaS teams. Unlimited subscribers, billed by emails sent.",
+    "day3 is built for small software teams sending product updates: startups, indie developers, and SaaS teams. Unlimited subscribers, billed by emails sent.",
   path: "/for",
   keywords: [
     "email tool for startups",

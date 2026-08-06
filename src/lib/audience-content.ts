@@ -20,7 +20,7 @@ export type AudiencePage = {
   summary: string;
   /** The reader's situation, in their words. */
   painPoints: string[];
-  /** How day3 fits — benefit blocks. */
+  /** How day3 fits, as benefit blocks. */
   benefits: { title: string; description: string }[];
   faqs: { q: string; a: string }[];
 };
@@ -30,9 +30,9 @@ export const audiencePages: AudiencePage[] = [
     slug: "startups",
     navLabel: "Startups",
     icon: Rocket,
-    metaTitle: "Email marketing for startups — pay for sends, not your list",
+    metaTitle: "Email marketing for startups: pay for sends, not your list",
     metaDescription:
-      "Your list grows faster than you send. day3 keeps subscribers unlimited and bills only by emails sent — so growth never taxes your budget. Built for product updates, not marketing suites.",
+      "Your list grows faster than you send. day3 keeps subscribers unlimited and bills only by emails sent, so growth never taxes your budget. Built for product updates, not marketing suites.",
     keywords: [
       "email marketing for startups",
       "startup newsletter tool",
@@ -42,22 +42,22 @@ export const audiencePages: AudiencePage[] = [
     eyebrow: "For startups",
     title: "Your list grows fast. Your email bill shouldn't.",
     summary:
-      "You add subscribers quickly and send sparingly. day3 bills by send, not list size — so a fast-growing list never inflates the bill.",
+      "You add subscribers quickly and send sparingly. day3 bills by send, not list size, so a fast-growing list never inflates the bill.",
     painPoints: [
       "Every tool raises the price the moment your list crosses the next tier.",
-      "You need to tell users what shipped — not build funnels or lifecycle automation.",
+      "You need to tell users what shipped, not build funnels or lifecycle automation.",
       "No time to learn a marketing platform. No sales call just to send an email.",
     ],
     benefits: [
       {
         title: "Unlimited subscribers",
         description:
-          "Add users as fast as you can acquire them — sends are the only meter, so the bill holds flat.",
+          "Add users as fast as you can acquire them. Sends are the only meter, so the bill holds flat.",
       },
       {
         title: "Live in minutes",
         description:
-          "Verify a domain, import the list, write, send — a whole campaign fits on one screen.",
+          "Verify a domain, import the list, write, send. A whole campaign fits on one screen.",
       },
       {
         title: "Deliverability built in",
@@ -67,17 +67,17 @@ export const audiencePages: AudiencePage[] = [
       {
         title: "Starts at $1/mo",
         description:
-          "Priced for pre-revenue — and the list can grow as fast as you like without moving the bill.",
+          "Priced for pre-revenue, and the list can grow as fast as you like without moving the bill.",
       },
     ],
     faqs: [
       {
         q: "What's the best email tool for an early-stage startup?",
-        a: "If you mainly email users about product changes — not run automation — day3 keeps costs flat as the list grows. Subscribers are unlimited on every plan.",
+        a: "If you mainly email users about product changes rather than run automation, day3 keeps costs flat as the list grows. Subscribers are unlimited on every plan.",
       },
       {
         q: "Will day3 get more expensive as we grow?",
-        a: "Only if you send more. Adding subscribers never raises the bill — day3 prices by sends, not list size.",
+        a: "Only if you send more. Adding subscribers never raises the bill. day3 prices by sends, not list size.",
       },
     ],
   },
@@ -97,9 +97,9 @@ export const audiencePages: AudiencePage[] = [
     eyebrow: "For indie developers",
     title: "Ship the update, send the email, get back to building.",
     summary:
-      "Email your users about what's new — without paying per subscriber or learning a marketing platform. Built for a team of one.",
+      "Email your users about what's new, without paying per subscriber or learning a marketing platform. Built for a team of one.",
     painPoints: [
-      "You're a team of one — no hours to spend wiring up audiences and automations.",
+      "You're a team of one, with no hours to spend wiring up audiences and automations.",
       "The list is an asset you built by hand. Paying more just to keep it is backwards.",
       "You want a form to drop into your site and a changelog email you can send in five minutes.",
     ],
@@ -107,22 +107,22 @@ export const audiencePages: AudiencePage[] = [
       {
         title: "Forms you can embed anywhere",
         description:
-          "Hosted page, iframe, popup, or raw HTML — paste it into your site, bio, or docs, with double opt-in on by default.",
+          "Hosted page, iframe, popup, or raw HTML. Paste it into your site, bio, or docs, with double opt-in on by default.",
       },
       {
         title: "Billed on sends, not your list",
         description:
-          "The audience you built stays free to keep — you pay only when you actually send.",
+          "The audience you built stays free to keep. You pay only when you actually send.",
       },
       {
         title: "AI drafting when you're stuck",
         description:
-          "Draft a campaign or rewrite a line with Claude — included on every paid plan.",
+          "Draft a campaign or rewrite a line with Claude, included on every paid plan.",
       },
       {
         title: "No upsell path",
         description:
-          "No funnels, no automation, no sales call — just the email and who gets it.",
+          "No funnels, no automation, no sales call. Just the email and who gets it.",
       },
     ],
     faqs: [
@@ -132,7 +132,7 @@ export const audiencePages: AudiencePage[] = [
       },
       {
         q: "Can I add a signup form to my own site?",
-        a: "Yes. Use a hosted page, an auto-resizing iframe, a JS popup, or a plain HTML form that POSTs to day3 — whichever fits your stack.",
+        a: "Yes. Use a hosted page, an auto-resizing iframe, a JS popup, or a plain HTML form that POSTs to day3, whichever fits your stack.",
       },
     ],
   },
@@ -151,19 +151,19 @@ export const audiencePages: AudiencePage[] = [
       "what's new emails",
     ],
     eyebrow: "For SaaS teams",
-    title: "Tell your users what shipped — reliably, every time.",
+    title: "Tell your users what shipped. Reliably, every time.",
     summary:
-      "Changelogs and release notes are a job of their own. day3 does that one job well — deliverability and compliance built in, pricing that ignores list size.",
+      "Changelogs and release notes are a job of their own. day3 does that one job well, with deliverability and compliance built in and pricing that ignores list size.",
     painPoints: [
-      "Your marketing platform is overkill for a changelog — and it bills by contact count.",
+      "Your marketing platform is overkill for a changelog, and it bills by contact count.",
       "Updates have to land in the inbox every time, without anyone babysitting sender reputation.",
-      "Compliance — unsubscribe, suppression, consent — has to be handled right, not bolted on.",
+      "Compliance (unsubscribe, suppression, consent) has to be handled right, not bolted on.",
     ],
     benefits: [
       {
         title: "Built for the update use case",
         description:
-          "Write the release note, pick the audience, send — no campaign-builder maze in the way.",
+          "Write the release note, pick the audience, send. No campaign-builder maze in the way.",
       },
       {
         title: "Deliverability & compliance, standard",
@@ -173,12 +173,12 @@ export const audiencePages: AudiencePage[] = [
       {
         title: "Unlimited subscribers",
         description:
-          "Put your whole user base on the list — you're billed by sends, so list size never moves the price.",
+          "Put your whole user base on the list. You're billed by sends, so list size never moves the price.",
       },
       {
         title: "Sends once, never twice",
         description:
-          "A retried send never duplicates — every update goes out once, to the right people, with live delivery stats.",
+          "A retried send never duplicates. Every update goes out once, to the right people, with live delivery stats.",
       },
     ],
     faqs: [

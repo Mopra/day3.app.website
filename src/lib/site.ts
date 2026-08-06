@@ -15,13 +15,14 @@ export const siteConfig = {
   promise: "You're billed on emails sent, not on the size of your list.",
   signupUrl: "https://go.day3.app",
   loginUrl: "https://go.day3.app/login",
-  // day3's own subscribe form — we dogfood the product to capture product-update
+  // day3's own subscribe form. We dogfood the product to capture product-update
   // signups. The popup is wired up by embed.js (loaded once in the root layout)
   // wherever a `<SubscribeButton>` carries the matching data attributes.
   subscribeFormId: "frm_y2w9edh1fqcpanb48vz4",
   embedScriptUrl: "https://go.day3.app/embed.js",
   contactEmail: "hello@day3.app",
-  location: "Copenhagen, Denmark",
+  // Display string for the footer. Kept in step with `company.city` below.
+  location: "Herning, Denmark",
 };
 
 export const navLinks = [
@@ -39,12 +40,12 @@ export const navLinks = [
 export const company = {
   legalName: "Pradsgaard Labs EMV",
   // A real, registered entity is a strong trust + EEAT signal. CVR is the Danish
-  // company registration number — independently verifiable.
+  // company registration number, independently verifiable.
   cvr: "DK46156153",
   website: "https://pradsgaardlabs.com",
   founder: "Morten Pradsgaard",
   founderTitle: "Founder & engineer",
-  // Also the maker of exit1.dev — a real, verifiable track record is an EEAT win.
+  // Also the maker of exit1.dev. A real, verifiable track record is an EEAT win.
   alsoBuilds: { name: "exit1.dev", href: "https://exit1.dev" },
   foundingYear: 2026, // TODO: confirm for schema.org foundingDate
   city: "Herning",
@@ -73,7 +74,7 @@ export type Subprocessor = {
 /**
  * Third parties that may process personal data on day3's behalf. Drives
  * /legal/subprocessors and the summary on /security. Everything here is
- * EU-region — that's the whole point of day3's data story.
+ * EU-region, which is the whole point of day3's data story.
  */
 export const subprocessors: Subprocessor[] = [
   {
@@ -102,7 +103,7 @@ export type PricingTier = {
   name: string;
   /** Display price, e.g. "$5". */
   price: string;
-  /** Numeric monthly price in USD — drives the bandwidth slider math. */
+  /** Numeric monthly price in USD. Drives the bandwidth slider math. */
   priceUsd: number;
   /** Display email allowance, e.g. "10,000". */
   emails: string;
@@ -110,17 +111,17 @@ export type PricingTier = {
   emailsValue: number;
   emailsNote: string;
   blurb: string;
-  /** The "Most popular" pick — highlighted in the slider carousel. */
+  /** The "Most popular" pick, highlighted in the slider carousel. */
   popular?: boolean;
 };
 
 /**
  * The paid plan ladder, mirroring `src/lib/plans-catalog.ts` in the app. day3
  * sells sending bandwidth: every plan has unlimited subscribers and every
- * feature — including the AI writing assistant — so the only axis that changes
+ * feature, including the AI writing assistant, so the only axis that changes
  * is the monthly email allowance. (Higher tiers carry a larger AI allowance,
  * but no tier is without one.) The always-on free tier is deliberately not
- * listed here: it buys no bandwidth, so it isn't a plan you pick — it's just
+ * listed here: it buys no bandwidth, so it isn't a plan you pick. It's just
  * what an account is before it subscribes. It isn't silent, though; sandbox mode
  * sends 100 real emails a month to the org's own members.
  */
@@ -132,7 +133,7 @@ export const pricingTiers: PricingTier[] = [
     emails: "1,000",
     emailsValue: 1000,
     emailsNote: "emails / month",
-    blurb: "The lowest way in — a first list and your earliest updates.",
+    blurb: "The lowest way in. A first list and your earliest updates.",
   },
   {
     name: "5k",
@@ -187,7 +188,7 @@ export const pricingTiers: PricingTier[] = [
     emails: "250,000",
     emailsValue: 250000,
     emailsNote: "emails / month",
-    blurb: "Serious volume — a big list, mailed often.",
+    blurb: "Serious volume. A big list, mailed often.",
   },
   {
     name: "500k",
@@ -243,7 +244,7 @@ export const features: Feature[] = [
   {
     title: "Delivery & engagement stats",
     description:
-      "Sent, delivered, opened, clicked, bounced, unsubscribed — enough to tell whether an email landed and got read.",
+      "Sent, delivered, opened, clicked, bounced, unsubscribed. Enough to tell whether an email landed and got read.",
     icon: BarChart3,
   },
   {

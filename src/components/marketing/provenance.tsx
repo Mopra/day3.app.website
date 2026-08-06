@@ -8,19 +8,19 @@ import { company } from "@/lib/site";
  * The honest stand-in for social proof, at the size the doubt deserves.
  *
  * A brand-new product has no logo wall, and a low price makes that gap louder
- * rather than quieter — $1/month from an unknown name reads as "toy" until
+ * rather than quieter. $1/month from an unknown name reads as "toy" until
  * something says otherwise. Faking it is off the table, so this answers with the
  * two facts that carry furthest in the least room: a named person with a track
  * record you can go and read, and where the data lives.
  *
  * Deliberately a bar and not a section. It's a footnote to the pitch, not a
- * chapter of it — the long version, including the registered company and its CVR
+ * chapter of it. The long version, including the registered company and its CVR
  * number, is the job of /about. Same hairline-separator device as the hero's
  * price row, so the page reads as one voice.
  */
 const facts = [
   <>
-    Built by {company.founder} — also{" "}
+    Built by {company.founder}, who also builds{" "}
     <a
       href={company.alsoBuilds.href}
       className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"

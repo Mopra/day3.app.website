@@ -44,12 +44,12 @@ const practices = [
   {
     icon: Server,
     title: "Proven infrastructure",
-    body: "Your campaigns go out over Amazon SES — established, well-maintained sending infrastructure with a strong IP reputation, in an EU region.",
+    body: "Your campaigns go out over Amazon SES: established, well-maintained sending infrastructure with a strong IP reputation, in an EU region.",
   },
   {
     icon: UserCheck,
     title: "Permission-based by default",
-    body: "day3 is built for lists that opted in. Double opt-in is supported, purchased lists aren't allowed, and that keeps complaint rates — and your reputation — low.",
+    body: "day3 is built for lists that opted in. Double opt-in is supported, purchased lists aren't allowed, and that keeps complaint rates, and your reputation, low.",
   },
   {
     icon: MailMinus,
@@ -64,14 +64,14 @@ const practices = [
   {
     icon: Globe2,
     title: "Sent from the EU",
-    body: "Sending happens inside the European Union, alongside the rest of day3 — no detour outside the region to get your mail delivered.",
+    body: "Sending happens inside the European Union, alongside the rest of day3, with no detour outside the region to get your mail delivered.",
   },
 ];
 
 const faqs = [
   {
     q: "Will my emails land in the inbox or in spam?",
-    a: "No tool can promise the inbox — content and your own sending history matter — but day3 stacks the odds in your favour: authenticated domains (SPF/DKIM/DMARC), reputable sending infrastructure, permission-based lists, and automatic suppression of bounces and complaints.",
+    a: "No tool can promise the inbox, since content and your own sending history matter, but day3 stacks the odds in your favour: authenticated domains (SPF/DKIM/DMARC), reputable sending infrastructure, permission-based lists, and automatic suppression of bounces and complaints.",
   },
   {
     q: "Does day3 set up SPF, DKIM, and DMARC for me?",
@@ -79,7 +79,7 @@ const faqs = [
   },
   {
     q: "What actually sends day3's email?",
-    a: "Amazon SES, in an EU region. It's mature, well-maintained sending infrastructure with a strong shared IP reputation — so you benefit from deliverability you'd struggle to build alone.",
+    a: "Amazon SES, in an EU region. It's mature, well-maintained sending infrastructure with a strong shared IP reputation, so you benefit from deliverability you'd struggle to build alone.",
   },
   {
     q: "How does day3 handle bounces and spam complaints?",
@@ -117,7 +117,7 @@ export default function DeliverabilityPage() {
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
               Getting to the inbox is the whole job. day3 handles the
               authentication, infrastructure, and hygiene that decide whether your
-              email lands — so you can focus on what it says.
+              email lands, so you can focus on what it says.
             </p>
           </Container>
         </section>
@@ -158,7 +158,7 @@ export default function DeliverabilityPage() {
                 <p>
                   Deliverability is a shared resource. One sender blasting a
                   bought list can drag down delivery for everyone on the same
-                  infrastructure — so day3 is strict about consent on purpose.
+                  infrastructure, so day3 is strict about consent on purpose.
                 </p>
                 <p>
                   That&apos;s the job of our{" "}

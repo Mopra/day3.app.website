@@ -37,7 +37,7 @@ const buttonVariants = cva(
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
-  /** Replace the rendered element (e.g. an anchor) — Base UI render prop. */
+  /** Replace the rendered element (e.g. an anchor). Base UI render prop. */
   render?: useRender.RenderProp;
 }
 

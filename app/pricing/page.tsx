@@ -20,7 +20,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = buildMetadata({
   title: "Pricing",
   description:
-    "The most approachable email platform: plans start at $1/mo for 1,000 emails and scale to $220/mo for 1,000,000 — every plan includes unlimited subscribers and the AI writing assistant. Priced by emails sent, never by list size.",
+    "The most approachable email platform: plans start at $1/mo for 1,000 emails and scale to $220/mo for 1,000,000. Every plan includes unlimited subscribers and the AI writing assistant. Priced by emails sent, never by list size.",
   path: "/pricing",
   keywords: [
     "email marketing pricing",
@@ -37,23 +37,23 @@ const faqs = [
   },
   {
     q: "Do unused emails roll over?",
-    a: "No — your allotment resets each billing period. Pick the plan that fits your rhythm; change it whenever.",
+    a: "No. Your allotment resets each billing period. Pick the plan that fits your rhythm; change it whenever.",
   },
   {
     q: "What happens if I go over?",
-    a: "You can't. Sending pauses cleanly at your cap — no surprise charge. Need more room? Move up a plan in a couple of clicks.",
+    a: "You can't. Sending pauses cleanly at your cap, with no surprise charge. Need more room? Move up a plan in a couple of clicks.",
   },
   {
     q: "Can I try it before I pay?",
-    a: "Yes, properly. Signing up is free: connect your domain, import an audience, write a campaign — and send it for real. Sandbox mode covers up to 100 emails a month to your own team's addresses, through the same pipeline with the same tracking, so you can see the thing arrive before you pay for anything.",
+    a: "Yes, properly. Signing up is free: connect your domain, import an audience, write a campaign, and send it for real. Sandbox mode covers up to 100 emails a month to your own team's addresses, through the same pipeline with the same tracking, so you can see the thing arrive before you pay for anything.",
   },
   {
     q: "Is there a free tier?",
-    a: "Yes, and it isn't silent — it sends in sandbox mode, 100 emails a month to your own organization's members. What a paid plan unlocks is mailing everyone else, from $1/mo. You can integrate the transactional API and rehearse a whole migration without a card.",
+    a: "Yes, and it isn't silent. It sends in sandbox mode, 100 emails a month to your own organization's members. What a paid plan unlocks is mailing everyone else, from $1/mo. You can integrate the transactional API and rehearse a whole migration without a card.",
   },
   {
     q: "Is the AI writing assistant included?",
-    a: "Yes — on every paid plan, from $1/mo. Draft from a brief, get subject lines, rewrite highlighted copy. Bigger plans carry a bigger AI allowance, but none of them are without one.",
+    a: "Yes, on every paid plan, from $1/mo. Draft from a brief, get subject lines, rewrite highlighted copy. Bigger plans carry a bigger AI allowance, but none of them are without one.",
   },
   {
     q: "What if I send more than a million emails a month?",
@@ -83,7 +83,7 @@ export default function PricingPage() {
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground">
               You&apos;re billed on emails sent, not list size. Plans start at
-              $1/mo — unlimited subscribers on every one.
+              $1/mo, with unlimited subscribers on every one.
             </p>
           </Container>
         </section>
@@ -104,7 +104,7 @@ export default function PricingPage() {
               <span className="font-medium text-foreground">
                 unlimited subscribers
               </span>
-              , campaigns, audiences, signup forms, metrics, the API — and the
+              , campaigns, audiences, signup forms, metrics, the API, and the
               AI writing assistant.
             </p>
           </Container>

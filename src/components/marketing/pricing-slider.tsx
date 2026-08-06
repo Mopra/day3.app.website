@@ -16,8 +16,8 @@ import { Slider } from "@/components/ui/slider";
 import { pricingTiers, siteConfig, type PricingTier } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-// The headline facts per tier. Every day3 feature — the AI writing assistant
-// included — is on every paid plan, so the only axis that moves is the monthly
+// The headline facts per tier. Every day3 feature, the AI writing assistant
+// included, is on every paid plan, so the only axis that moves is the monthly
 // send allowance.
 function tierFeatures(tier: PricingTier): string[] {
   return [
@@ -28,7 +28,7 @@ function tierFeatures(tier: PricingTier): string[] {
   ];
 }
 
-// Fixed card width (in rem) — the scroll padding centers the active card by
+// Fixed card width (in rem). The scroll padding centers the active card by
 // reserving half the leftover track width on each side, so the first and last
 // cards can both sit dead-center with their neighbors peeking in.
 const CARD_W_REM = 18; // matches w-72
@@ -43,12 +43,12 @@ const POPULAR_INDEX = Math.max(
 /**
  * The plan picker as a focus carousel, mirroring the in-app billing slider. Day3
  * sells sending bandwidth, so the only axis that changes is the monthly email
- * allowance — the visitor slides along the ladder ("how many emails per month?",
+ * allowance. The visitor slides along the ladder ("how many emails per month?",
  * $1 → $220) and the matching tier card snaps into focus below, scaled up while
  * its neighbors dim. The slider and the horizontal scroll position are two views
  * of the same focused index: dragging the slider scrolls the track, and
  * scrolling the track moves the slider. The focused card's CTA sends visitors to
- * sign up — there's no billing here, just the marketing view of the same ladder.
+ * sign up. There's no billing here, just the marketing view of the same ladder.
  */
 export function PricingSlider() {
   const [index, setIndex] = useState(POPULAR_INDEX);
@@ -120,7 +120,7 @@ export function PricingSlider() {
     });
   }, []);
 
-  // Center the initial tier before the first paint — synchronous (no rAF) so the
+  // Center the initial tier before the first paint, synchronous (no rAF) so the
   // track never flashes at scrollLeft 0, and idempotent so React's double-invoke
   // in development is harmless. Card refs are set during commit, before layout
   // effects, so the measurement is ready here.
@@ -147,7 +147,7 @@ export function PricingSlider() {
 
   return (
     <Card className="mx-auto max-w-2xl space-y-7 p-6 sm:p-8">
-      {/* Big live readout of the focused tier — slide to change it. */}
+      {/* Big live readout of the focused tier. Slide to change it. */}
       <div className="space-y-4">
         <div className="flex items-end justify-between gap-3">
           <div className="min-w-0">

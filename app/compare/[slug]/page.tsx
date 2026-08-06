@@ -115,7 +115,7 @@ export default async function ComparePage({ params }: PageProps) {
             </div>
             <p className="mt-4 text-xs text-muted-foreground">
               Comparison reflects each product&apos;s pricing model and scope, not
-              specific prices — those change, so always check the latest on{" "}
+              specific prices, because those change, so always check the latest on{" "}
               {page.competitor}&apos;s own site.
             </p>
           </Container>

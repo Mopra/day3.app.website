@@ -5,7 +5,7 @@ import { company, pricingTiers, siteConfig, socialLinks } from "@/lib/site";
 
 /**
  * Renders a single JSON-LD <script>. Structured data is what earns rich results
- * in Google and — just as importantly for day3 — gives AI answer engines clean,
+ * in Google and, just as importantly for day3, gives AI answer engines clean,
  * machine-readable facts to quote. Pass any of the builders below as `data`.
  */
 export function JsonLd({ data }: { data: Record<string, unknown> }) {
@@ -32,7 +32,7 @@ export function organizationSchema() {
     description: siteConfig.promise,
     foundingDate: String(company.foundingYear),
     founder: { "@type": "Person", name: company.founder },
-    // The CVR registration number — a verifiable identifier that ties this brand
+    // The CVR registration number, a verifiable identifier that ties this brand
     // to a real, registered legal entity.
     identifier: {
       "@type": "PropertyValue",
@@ -53,7 +53,7 @@ export function organizationSchema() {
 
 /**
  * The founder, for the About page. A named, real human with a verifiable track
- * record is one of the clearest E-E-A-T signals — for Google and for the models
+ * record is one of the clearest E-E-A-T signals, for Google and for the models
  * that decide which tools to recommend.
  */
 export function personSchema() {
@@ -102,7 +102,7 @@ export function softwareApplicationSchema() {
   };
 }
 
-/** Turns a list of {q,a} pairs into an FAQPage — eligible for FAQ rich results. */
+/** Turns a list of {q,a} pairs into an FAQPage, eligible for FAQ rich results. */
 export function faqSchema(faqs: { q: string; a: string }[]) {
   return {
     "@context": "https://schema.org",

@@ -1,4 +1,4 @@
-// SEO data puller — Google Search Console + GA4, via a service account.
+// SEO data puller: Google Search Console + GA4, via a service account.
 //
 // Reads from both REST APIs, then surfaces *actionable* opportunities
 // (striking-distance queries, low-CTR titles, content gaps, page trends)
@@ -30,7 +30,7 @@ const DAYS = Number(process.env.SEO_DAYS || 28);
 const COUNTRY = process.env.SEO_COUNTRY?.toLowerCase();
 
 if (!KEY) fail('GOOGLE_APPLICATION_CREDENTIALS is not set (path to service-account JSON key).');
-if (!SITE && !GA4) fail('Set GSC_SITE_URL and/or GA4_PROPERTY_ID — nothing to pull.');
+if (!SITE && !GA4) fail('Set GSC_SITE_URL and/or GA4_PROPERTY_ID. Nothing to pull.');
 
 function fail(msg) {
   console.error(`\n✖ ${msg}\n`);
@@ -90,7 +90,7 @@ async function gscQuery(dimensions, { start = START, end = END, rowLimit = 1000 
   return data.rows || [];
 }
 
-// Rough "expected CTR by position" curve — flags titles that underperform
+// Rough "expected CTR by position" curve, used to flag titles that underperform
 // for where they actually rank. Industry-typical desktop+mobile blend.
 function expectedCtr(pos) {
   const table = [0, 0.28, 0.15, 0.1, 0.07, 0.05, 0.04, 0.033, 0.028, 0.024, 0.021];
@@ -133,8 +133,8 @@ async function analyzeGsc() {
     .slice(0, 25);
 
   // Content gaps: demand exists but coverage is weak. A query is a gap when it
-  // pulls real impressions yet either (a) only the homepage/root ranks for it —
-  // no dedicated page — or (b) its best page sits past position 15. These are
+  // pulls real impressions yet either (a) only the homepage/root ranks for it,
+  // with no dedicated page, or (b) its best page sits past position 15. These are
   // candidates for a *new* page or a serious strengthening of the matched one.
   const bestPageByQuery = new Map();
   for (const r of queryPages) {
@@ -231,7 +231,7 @@ function table(headers, rows) {
 
 function buildReport(gsc, ga4) {
   const lines = [];
-  lines.push(`# SEO report — ${START} → ${END} (${DAYS}d${COUNTRY ? `, ${COUNTRY.toUpperCase()}` : ''})`);
+  lines.push(`# SEO report: ${START} → ${END} (${DAYS}d${COUNTRY ? `, ${COUNTRY.toUpperCase()}` : ''})`);
   lines.push('');
 
   if (gsc) {
@@ -243,7 +243,7 @@ function buildReport(gsc, ga4) {
     );
     lines.push('');
 
-    lines.push('### 🎯 Striking distance (rank 5–20 — push these to page 1)');
+    lines.push('### 🎯 Striking distance (rank 5–20, push these to page 1)');
     lines.push('Closest wins: already visible, small ranking gains convert to real traffic.');
     lines.push('');
     lines.push(
@@ -255,7 +255,7 @@ function buildReport(gsc, ga4) {
     lines.push('');
 
     lines.push('### ✍️ Title/meta rewrites (high impressions, CTR below expected for position)');
-    lines.push('You already rank — a better title/description steals clicks without new content.');
+    lines.push('You already rank. A better title/description steals clicks without new content.');
     lines.push('');
     lines.push(
       table(
@@ -266,7 +266,7 @@ function buildReport(gsc, ga4) {
     lines.push('');
 
     lines.push('### 🧩 Content gaps (demand exists, coverage is weak)');
-    lines.push('Real impressions, but only the homepage ranks or the best page sits past #15 — candidates for a new page or a serious rewrite of the matched one.');
+    lines.push('Real impressions, but only the homepage ranks or the best page sits past #15. Candidates for a new page or a serious rewrite of the matched one.');
     lines.push('');
     lines.push(
       table(

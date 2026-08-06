@@ -16,7 +16,7 @@ import { comparePages } from "@/lib/compare-content";
 export const metadata: Metadata = buildMetadata({
   title: "day3 vs. the alternatives",
   description:
-    "How day3 compares to Mailchimp, Kit (ConvertKit), beehiiv, EmailOctopus, and Buttondown. The short version: they price by your list size, day3 prices by emails sent — with unlimited subscribers.",
+    "How day3 compares to Mailchimp, Kit (ConvertKit), beehiiv, EmailOctopus, and Buttondown. The short version: they price by your list size, day3 prices by emails sent, with unlimited subscribers.",
   path: "/compare",
   keywords: [
     "email marketing comparison",

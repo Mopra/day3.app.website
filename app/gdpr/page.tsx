@@ -45,7 +45,7 @@ export default function GdprPage() {
       }
       sections={[
         {
-          heading: "Controller and processor — who's who",
+          heading: "Controller and processor: who's who",
           body: (
             <>
               <p>
@@ -55,7 +55,7 @@ export default function GdprPage() {
               <p>
                 For the <strong>subscribers you import</strong> and the sending
                 events tied to them, <strong>you are the controller</strong> and
-                day3 is your <strong>processor</strong> — we process those
+                day3 is your <strong>processor</strong>. We process those
                 contacts only to deliver your campaigns and report on them, on
                 your instructions.
               </p>
@@ -81,15 +81,15 @@ export default function GdprPage() {
           body: (
             <ul className="list-disc space-y-1.5 pl-5">
               <li>
-                <strong>Contract</strong> — to provide the service you sign up
+                <strong>Contract</strong>, to provide the service you sign up
                 for and bill you for it.
               </li>
               <li>
-                <strong>Legitimate interests</strong> — to keep day3 secure,
+                <strong>Legitimate interests</strong>, to keep day3 secure,
                 deliverable, and free of abuse.
               </li>
               <li>
-                <strong>Your instructions</strong> — for the subscriber data you
+                <strong>Your instructions</strong>, for the subscriber data you
                 bring, which we process as your processor under the DPA.
               </li>
             </ul>
@@ -121,7 +121,7 @@ export default function GdprPage() {
           body: (
             <>
               <p>
-                Right to erasure isn&apos;t a support ticket here — it&apos;s a
+                Right to erasure isn&apos;t a support ticket here. It&apos;s a
                 button. Deleting your organisation permanently erases everything
                 it owns: subscribers, campaigns, imports, forms, domains,
                 senders, email events, and the uploaded files behind them, along
@@ -131,7 +131,7 @@ export default function GdprPage() {
               <p>
                 One thing survives on purpose: the record that someone
                 unsubscribed or reported spam. Keeping those means a deleted
-                account can never cause us to email a person who opted out — a
+                account can never cause us to email a person who opted out, a
                 duty that outlives the account.
               </p>
             </>

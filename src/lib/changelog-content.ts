@@ -1,11 +1,11 @@
 /**
  * Fallback changelog entries. The /changelog page renders published GitHub
  * Releases (see lib/changelog.ts) when any exist; until the first release is
- * cut — or if the GitHub fetch fails — it falls back to these curated entries,
+ * cut, or if the GitHub fetch fails, it falls back to these curated entries,
  * so the page is never blank. Once you're publishing Releases, these can be
  * trimmed or removed.
  *
- * Curated, user-facing "what's new" entries — product language, not raw commits.
+ * Curated, user-facing "what's new" entries in product language, not raw commits.
  * Newest first. `isoDate` drives the <time> element and ordering.
  */
 export type ChangelogEntry = {
@@ -21,10 +21,10 @@ export const changelogEntries: ChangelogEntry[] = [
     isoDate: "2026-07-29",
     title: "A public API, cheaper volume, and AI for everyone",
     items: [
-      "Manage your audiences from code: a REST API for contacts, custom fields, segments, topics, and suppressions — built so migrating a list off another provider is a short script.",
+      "Manage your audiences from code: a REST API for contacts, custom fields, segments, topics, and suppressions, built so migrating a list off another provider is a short script.",
       "The AI writing assistant is now included on every paid plan, starting at $1/mo. Higher plans carry a larger allowance.",
       "High-volume plans got cheaper, and the ladder now runs all the way to 1,000,000 emails a month at $220.",
-      "Deleting your organisation now erases everything it owns — subscribers, campaigns, files, and sending identities — for real.",
+      "Deleting your organisation now erases everything it owns, for real: subscribers, campaigns, files, and sending identities.",
     ],
   },
   {
@@ -44,7 +44,7 @@ export const changelogEntries: ChangelogEntry[] = [
     isoDate: "2026-06-22",
     title: "Signup forms",
     items: [
-      "Collect subscribers with hosted newsletter signup forms — no site required.",
+      "Collect subscribers with hosted newsletter signup forms. No site required.",
       "Drop a lightweight widget onto your own site for inline or popup forms, or take the raw HTML and style it yourself.",
     ],
   },

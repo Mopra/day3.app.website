@@ -8,7 +8,7 @@ import { LivePanel, useSequence } from "@/components/marketing/live-panel";
 const RECIPIENTS = 3180;
 const DELIVERED = 3166;
 
-/* Many small steps rather than a few big ones — this is the one panel where
+/* Many small steps rather than a few big ones. This is the one panel where
    the motion is a number climbing, and it has to climb rather than jump. */
 const STEPS = 26;
 
@@ -19,7 +19,7 @@ function PanelSending() {
 
   const progress = step / (STEPS - 1);
   const sent = Math.round(RECIPIENTS * progress);
-  /* Delivery confirmations trail the send — SES answers after we've handed the
+  /* Delivery confirmations trail the send, since SES answers after we've handed the
      message over, so the second number is always chasing the first. */
   const settled = Math.max(0, (progress - 0.12) / 0.88);
   const delivered = Math.round(DELIVERED * settled);
@@ -58,7 +58,7 @@ function PanelSending() {
         <div className="rounded-lg border border-border bg-background px-3 py-2.5">
           <p className="text-xs text-muted-foreground">Batch</p>
           <p className="mt-0.5 text-lg font-medium tabular-nums text-foreground">
-            {done ? "—" : "25 at a time"}
+            {done ? "Done" : "25 at a time"}
           </p>
         </div>
       </div>
@@ -69,7 +69,7 @@ function PanelSending() {
           done ? "bg-olive/15 text-olive" : "bg-secondary/40 text-muted-foreground",
         )}
       >
-        {done ? "Sent — nothing left to babysit" : "Sending…"}
+        {done ? "Sent. Nothing left to babysit" : "Sending…"}
       </div>
     </LivePanel>
   );

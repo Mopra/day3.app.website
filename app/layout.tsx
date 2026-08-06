@@ -25,7 +25,7 @@ const siteUrl = "https://day3.app";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "day3 — Email marketing billed by what you send",
+    default: "day3 · Email marketing billed by what you send",
     template: "%s · day3",
   },
   description:
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     "indie developers",
   ],
   openGraph: {
-    title: "day3 — Email marketing billed by what you send",
+    title: "day3 · Email marketing billed by what you send",
     description:
       "Unlimited subscribers, billed by emails sent rather than list size. Plans start at $1/mo.",
     url: siteUrl,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "day3 — Email marketing billed by what you send",
+    title: "day3 · Email marketing billed by what you send",
     description:
       "Unlimited subscribers, billed by emails sent. Plans start at $1/mo.",
   },

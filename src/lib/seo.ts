@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const siteUrl = "https://day3.app";
 
 type BuildMetadataInput = {
-  /** Page title — slotted into the "%s · day3" template from the root layout. */
+  /** Page title, slotted into the "%s · day3" template from the root layout. */
   title: string;
   description: string;
   /** Site-root-relative path, e.g. "/how-it-works". Used for the canonical URL. */
@@ -20,7 +20,7 @@ type BuildMetadataInput = {
 /**
  * Single helper every page uses to declare its metadata. Guarantees each route
  * gets a unique title/description, a self-referencing canonical, and matching
- * Open Graph / Twitter tags — the things that were previously inherited (wrongly)
+ * Open Graph / Twitter tags, the things that were previously inherited (wrongly)
  * from the homepage.
  */
 export function buildMetadata({

@@ -1,9 +1,9 @@
 import { ImageResponse } from "next/og";
 
 // File-based OG image. Applies to the home route and is inherited by every child
-// route that doesn't define its own — so the whole site gets a branded social
+// route that doesn't define its own, so the whole site gets a branded social
 // card without per-page asset work.
-export const alt = "day3 — email marketing billed by what you send";
+export const alt = "day3 · email marketing billed by what you send";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

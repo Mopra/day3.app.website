@@ -1,4 +1,4 @@
-// Index coverage — asks Search Console what it actually did with every sitemap URL.
+// Index coverage. Asks Search Console what it actually did with every sitemap URL.
 //
 // Impressions tell you what ranks; this tells you what Google even *has*. A new
 // site's real bottleneck is usually "Discovered – currently not indexed", which
@@ -27,7 +27,7 @@ const { token } = await client.getAccessToken();
 
 const sitemap = await (await fetch(`${origin}/sitemap.xml`)).text();
 const urls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
-console.log(`\n${urls.length} URLs in ${origin}/sitemap.xml — inspecting…\n`);
+console.log(`\n${urls.length} URLs in ${origin}/sitemap.xml, inspecting…\n`);
 
 async function inspect(inspectionUrl) {
   const res = await fetch('https://searchconsole.googleapis.com/v1/urlInspection/index:inspect', {

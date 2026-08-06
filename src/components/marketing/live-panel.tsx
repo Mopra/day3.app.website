@@ -21,8 +21,8 @@ function isStill() {
 }
 
 /*
-  On the server — and so in the HTML anyone reads with JS off or before
-  hydration — every panel renders finished. It's the only frame that means
+  On the server, and so in the HTML anyone reads with JS off or before
+  hydration, every panel renders finished. It's the only frame that means
   anything on its own; a half-drawn one would be a bug in a crawler's eyes.
 */
 const isStillOnServer = () => true;
@@ -40,7 +40,7 @@ type SequenceOptions = {
  * Three rules, all of them about not being annoying:
  *  - it only runs while the panel is on screen, so a page of these costs
  *    nothing while you're reading a different one;
- *  - under `prefers-reduced-motion` it pins to the last step — the finished
+ *  - under `prefers-reduced-motion` it pins to the last step. The finished
  *    state is the message, the motion is garnish;
  *  - it loops rather than playing once, because a visitor who scrolls back
  *    up should see it happen too.
@@ -88,13 +88,13 @@ function useSequence(
 }
 
 type LivePanelProps = {
-  /** Chrome label — which part of the app this is a slice of. */
+  /** Chrome label: which part of the app this is a slice of. */
   title: string;
   /** Right-hand chrome detail (a record name, a campaign name, a count). */
   meta?: React.ReactNode;
   /**
    * The text alternative. The panel is a decoration built out of live DOM, so
-   * it's `role="img"` with this as its label and its innards hidden — a screen
+   * it's `role="img"` with this as its label and its innards hidden, so a screen
    * reader gets one sentence instead of a stream of half-finished rows.
    */
   alt: string;
@@ -148,7 +148,7 @@ type StepRowProps = {
 
 /**
  * A row that fades and lifts in on cue. Space is reserved whether or not the
- * row has arrived (opacity, not display) — the panel's height is fixed from
+ * row has arrived (opacity, not display), so the panel's height is fixed from
  * the first frame.
  */
 function StepRow({ shown, className, children }: StepRowProps) {

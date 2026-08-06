@@ -13,7 +13,7 @@ import { SectionHeading } from "@/components/marketing/section-heading";
  *
  * "Email for the people who ship" is a claim until something on the page is
  * shaped for someone who writes software. Real HTTP does that better than any
- * adjective — and it filters, too: a reader who came looking for a
+ * adjective. It filters, too: a reader who came looking for a
  * drag-and-drop builder now knows this isn't for them, which is the point.
  *
  * Two calls, because they're the two different reasons a developer is here:
@@ -42,9 +42,9 @@ const contactSnippet = `curl -X POST \\
   }'`;
 
 /**
- * The DX details a developer actually decides on. One line each — every one is a
- * papercut other providers leave in, and the reader recognizes it without being
- * told that it hurts.
+ * The DX details a developer actually decides on. One line each, because every
+ * one is a papercut other providers leave in, and the reader recognizes it
+ * without being told that it hurts.
  */
 const apiFacts = [
   {
@@ -108,7 +108,7 @@ function ApiProof() {
           <CodeCard
             label="Keep a contact in step with your app"
             code={contactSnippet}
-            note="One call creates or updates — your webhook handler stays one line."
+            note="One call creates or updates, so your webhook handler stays one line."
           />
         </Reveal>
 
@@ -123,7 +123,7 @@ function ApiProof() {
           ))}
         </Reveal>
 
-        {/* Migration, kept to the shape of it — the playbook lives on /features/api. */}
+        {/* Migration, kept to the shape of it. The playbook lives on /features/api. */}
         <Reveal
           delay={220}
           className="mt-12 rounded-xl border border-border bg-oat/30 p-6 sm:p-8"
@@ -132,7 +132,7 @@ function ApiProof() {
             Moving a list in is three calls.
           </h3>
           <p className="mt-2 max-w-xl leading-relaxed text-muted-foreground">
-            We ask for your opt-outs too — re-mailing people who left elsewhere
+            We ask for your opt-outs too. Re-mailing people who left elsewhere
             is the fastest way to wreck a new domain.
           </p>
           <ol className="mt-6 space-y-4">
