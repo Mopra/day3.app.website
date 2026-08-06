@@ -46,11 +46,109 @@ const DAY3 = {
   subscribers: "Unlimited on every plan",
   freeTier:
     "Free tier sends in sandbox mode (100/mo, your own team) — paid from $1/mo to reach everyone else",
-  scope: "Product updates & newsletters, on purpose narrow",
+  scope: "Product updates and transactional email, on purpose narrow",
   startingPrice: "$1/mo for 1,000 emails",
 };
 
 export const comparePages: ComparePage[] = [
+  /*
+    Resend is the one competitor this audience is most likely already paying, and
+    the only one where day3 overlaps on the *transactional* side rather than
+    undercutting on list pricing. So this page is written to be fair rather than
+    to win: Resend's DX is genuinely good, the two tools can coexist, and the
+    honest answer to "do I have to switch" is no.
+
+    Note what this page does NOT do: enumerate what Resend's contacts API can't
+    do. The internal spec keeps that table because it drove our design, but a
+    competitor's API changes without telling us, and a public page listing their
+    gaps ages into a page listing our inaccuracies. Every row here is about what
+    each tool is built around — durable, and the actual decision anyway.
+  */
+  {
+    slug: "resend-alternative",
+    competitor: "Resend",
+    metaTitle: "A Resend alternative with the list layer built in",
+    metaDescription:
+      "Resend is a developer-first email API. day3 sends transactional the same shape — one POST, idempotent retries, per-email status — and brings the campaign side with it: audiences, segments, topics, forms, and compliance.",
+    keywords: [
+      "resend alternative",
+      "resend alternative for newsletters",
+      "resend vs day3",
+      "transactional email api alternative",
+      "resend broadcasts alternative",
+    ],
+    title: "A Resend alternative that brings the list with it.",
+    intro:
+      "Resend set the bar for what an email API should feel like, and day3 sends transactional in the same shape: one POST, an idempotency key, per-email delivery status.",
+    difference:
+      "The difference is everything around the send. day3 is built for the campaign side too — audiences with custom fields, live segments, subscription topics, hosted signup forms, double opt-in, one-click unsubscribe — so your password resets and your product updates run on one domain, one allowance, and one bill.",
+    comparison: [
+      { dimension: "Pricing model", day3: DAY3.pricing, competitor: "By monthly email volume" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered" },
+      {
+        dimension: "Built around",
+        day3: "Product updates and transactional, one setup",
+        competitor: "A developer-first email API, with broadcasts alongside it",
+      },
+      {
+        dimension: "List layer",
+        day3: "Custom fields, live segments, subscription topics, suppression list",
+        competitor: "Audiences and contacts",
+      },
+      {
+        dimension: "Growing the list",
+        day3: "Hosted pages, embeds, popups and raw HTML forms — double opt-in on by default",
+        competitor: "Bring your own form",
+      },
+      {
+        dimension: "Writing the email",
+        day3: "Visual composer, AI assistant, and an MCP server so your editor can draft it",
+        competitor: "React Email components in your own codebase",
+      },
+      {
+        dimension: "Best for",
+        day3: "Small SaaS teams who need the campaign side too",
+        competitor: "Teams who mainly need an email API",
+      },
+    ],
+    reasonsToSwitch: [
+      {
+        title: "One domain, one bill",
+        description:
+          "Password resets and launch notes leave the same verified domain, against the same monthly allowance.",
+      },
+      {
+        title: "The list layer is included",
+        description:
+          "Custom fields, live segments, topics, signup forms, double opt-in, one-click unsubscribe, automatic suppression. Nothing to build.",
+      },
+      {
+        title: "Your opt-outs come too",
+        description:
+          "Import contacts already marked unsubscribed and your whole suppression list, so a move can't re-mail someone who already left.",
+      },
+    ],
+    stayIf:
+      "Stay with Resend if transactional email is the whole job. It's an excellent API with deep infrastructure behind it, and if you don't need audiences, forms, segments or compliance handling, day3's campaign half is weight you won't use. Keeping both is also fine — neither tool asks for exclusivity.",
+    faqs: [
+      {
+        q: "Is day3 a Resend alternative?",
+        a: "For teams who need product-update emails as well as transactional, yes — day3 does both from one domain and one allowance. If you only need an email API, Resend is excellent and there's no reason to move.",
+      },
+      {
+        q: "Can day3 send transactional email like Resend?",
+        a: "Yes. POST /v1/emails takes from, to, subject and html, returns an id, and gives you a status to poll. Send an Idempotency-Key and a retry can never double-send a password reset.",
+      },
+      {
+        q: "Can I migrate my Resend audience to day3?",
+        a: "Yes. Batch up to 1,000 contacts per call, addressed by plain email rather than an id you have to look up first. Custom fields register themselves as merge tags, and you can bring your unsubscribes and suppression list so the opt-outs move with you.",
+      },
+      {
+        q: "Does day3 have React Email components?",
+        a: "No. day3's emails are built in a visual composer, or written as Markdown from your AI editor over MCP. If you want your templates living as React components in your repo, Resend fits that better.",
+      },
+    ],
+  },
   {
     slug: "mailchimp-alternative",
     competitor: "Mailchimp",

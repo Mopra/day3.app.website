@@ -61,12 +61,13 @@ const hero = {
   */
   title: ["Email for", "the people who ship"],
   /*
-    Both jobs in one line, because they're one setup: the product update and the
-    password reset leave the same verified domain. Naming transactional here is
-    what widens the audience from "teams with a newsletter" to every developer
-    already paying something to send mail.
+    "The sane way" is load-bearing: it's the anti-marketing-suite promise, and
+    the four nouns after it are what widen the audience from "teams with a
+    newsletter" to every developer already paying something to send mail. Both
+    jobs named, because they're one setup — the receipt and the changelog leave
+    the same verified domain.
   */
-  body: "Product updates and your app's transactional email, from one verified domain.",
+  body: "The sane way to send everything your product emails — updates, changelogs, receipts, resets.",
   grain: 20,
 };
 
