@@ -17,15 +17,18 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { Reveal } from "@/components/marketing/reveal";
+import { RelatedLinks } from "@/components/marketing/related-links";
 import { JsonLd, breadcrumbSchema, faqSchema } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Deliverability",
+  title: "Email deliverability: landing in the inbox",
   description:
-    "How day3 gets your email into the inbox: authenticated domains (SPF, DKIM, DMARC), proven EU sending infrastructure, permission-based lists, and automatic bounce and complaint handling.",
+    "Authenticated domains (SPF, DKIM, DMARC), EU sending infrastructure, permission-based lists, and automatic suppression of bounces and complaints. All standard.",
   path: "/deliverability",
+  ogEyebrow: "Deliverability",
+  ogTitle: "Land in the inbox, not the spam folder",
   keywords: [
     "email deliverability",
     "does day3 land in inbox",
@@ -225,6 +228,11 @@ export default function DeliverabilityPage() {
             </div>
           </Container>
         </section>
+        <RelatedLinks
+          refs={["blog:spf-dkim-dmarc-explained", "blog:one-click-unsubscribe-rfc-8058", "blog:transactional-and-marketing-one-domain", "feature:metrics", "feature:signup-forms", "page:/security"]}
+          heading={"Go deeper"}
+          className="border-t border-border"
+        />
       </main>
 
       <SiteFooter />

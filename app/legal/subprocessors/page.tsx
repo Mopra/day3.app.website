@@ -6,10 +6,12 @@ import { buildMetadata } from "@/lib/seo";
 import { siteConfig, subprocessors } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Sub-processors",
+  title: "Sub-processors: every third party, all EU",
   description:
-    "The complete list of third parties day3 uses to process personal data, every one EU-region. Vercel for hosting, Supabase for database and storage.",
+    "Every third party that can touch personal data on day3's behalf, all EU-region: Vercel for hosting, Supabase for data, Amazon SES for delivery.",
   path: "/legal/subprocessors",
+  ogEyebrow: "Legal",
+  ogTitle: "Every sub-processor, all EU-region",
   keywords: [
     "day3 subprocessors",
     "email marketing subprocessors list",

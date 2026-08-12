@@ -9,9 +9,10 @@ import { Container } from "@/components/marketing/container";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { Reveal } from "@/components/marketing/reveal";
+import { RelatedLinks } from "@/components/marketing/related-links";
 import { JsonLd, breadcrumbSchema, faqSchema } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
+import { cheapestTierFor, siteConfig } from "@/lib/site";
 import { audiencePages, getAudiencePage } from "@/lib/audience-content";
 
 type PageProps = {
@@ -31,6 +32,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: page.metaTitle,
     description: page.metaDescription,
     path: `/for/${page.slug}`,
+    ogEyebrow: page.eyebrow,
+    ogTitle: page.title,
     keywords: page.keywords,
   });
 }
@@ -41,6 +44,7 @@ export default async function AudienceDetailPage({ params }: PageProps) {
   if (!page) notFound();
 
   const Icon = page.icon;
+  const workedTier = cheapestTierFor(page.worked.monthlySends);
 
   return (
     <>
@@ -125,6 +129,74 @@ export default async function AudienceDetailPage({ params }: PageProps) {
           </Container>
         </section>
 
+        {/*
+          The pricing argument on this reader's shape of list. The price is read
+          off the live ladder, so the example can never contradict /pricing.
+        */}
+        <section className="border-b border-border">
+          <Container className="py-16 sm:py-20">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="font-display text-3xl text-foreground sm:text-4xl">
+                What that costs, concretely
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                {page.worked.scenario}
+              </p>
+              <div className="mt-8 rounded-xl border border-border bg-card p-7">
+                <p className="font-display text-4xl text-foreground">
+                  {workedTier.price}
+                  <span className="text-base font-normal text-muted-foreground">
+                    /mo
+                  </span>
+                </p>
+                <p className="mt-3 leading-relaxed text-muted-foreground">
+                  {page.worked.monthlySends.toLocaleString("en-US")} emails a
+                  month fits the {workedTier.emails} plan. The{" "}
+                  {page.worked.subscribers.toLocaleString("en-US")} subscribers
+                  are free, on this plan and every other.
+                </p>
+                <p className="mt-4 border-t border-border pt-4 text-sm leading-relaxed text-muted-foreground">
+                  {page.worked.contrast}.
+                </p>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* The prose half */}
+        <section className="border-b border-border bg-oat/30">
+          <Container className="py-16 sm:py-20">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="font-display text-3xl text-foreground sm:text-4xl">
+                {page.deepDive.heading}
+              </h2>
+              <div className="mt-6 space-y-5">
+                {page.deepDive.paragraphs.map((paragraph) => (
+                  <p
+                    key={paragraph}
+                    className="text-lg leading-relaxed text-muted-foreground"
+                  >
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+
+              {/*
+                Named as plainly as the benefits above it. A page that only lists
+                fits is a page a careful reader discounts entirely.
+              */}
+              <div className="mt-10 rounded-xl border border-border bg-card p-6">
+                <h3 className="font-medium text-foreground">
+                  When day3 is the wrong call
+                </h3>
+                <p className="mt-2 leading-relaxed text-muted-foreground">
+                  {page.wrongFit}
+                </p>
+              </div>
+            </div>
+          </Container>
+        </section>
+
         {/* FAQ */}
         <section className="border-b border-border">
           <Container className="py-16 sm:py-20">
@@ -147,7 +219,9 @@ export default async function AudienceDetailPage({ params }: PageProps) {
           </Container>
         </section>
 
-        <section className="bg-oat/30">
+        <RelatedLinks refs={page.related} heading="Keep reading" />
+
+        <section className="border-t border-border bg-oat/30">
           <Container className="py-16 text-center sm:py-20">
             <h2 className="font-display text-3xl text-foreground sm:text-4xl">
               Start free. Send from $1/month.

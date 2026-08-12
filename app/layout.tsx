@@ -54,7 +54,13 @@ export const metadata: Metadata = {
       "Unlimited subscribers, billed by emails sent. Plans start at $1/mo.",
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: "/" },
+  /*
+    Deliberately no `alternates` here. Next.js inherits metadata fields from the
+    nearest layout that sets them, so a root-level `canonical: "/"` silently made
+    every page that didn't declare its own canonical claim to be the homepage.
+    /privacy and /terms did exactly that. The homepage sets its own canonical in
+    app/page.tsx; everything else gets one from buildMetadata.
+  */
   icons: {
     icon: [
       { url: "/brand/favicon.svg", type: "image/svg+xml" },

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
+import { RelatedLinks } from "@/components/marketing/related-links";
 import { PricingSlider } from "@/components/marketing/pricing-slider";
 import {
   JsonLd,
@@ -18,15 +19,18 @@ import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Pricing",
+  title: "Email pricing by sends, from $1/mo",
   description:
-    "The most approachable email platform: plans start at $1/mo for 1,000 emails and scale to $220/mo for 1,000,000. Every plan includes unlimited subscribers and the AI writing assistant. Priced by emails sent, never by list size.",
+    "From $1/mo for 1,000 emails to $220/mo for 1,000,000. Unlimited subscribers and the AI assistant on every plan. Priced by emails sent, never by list size.",
   path: "/pricing",
+  ogEyebrow: "Pricing",
+  ogTitle: "Priced by emails sent, from $1/mo",
   keywords: [
     "email marketing pricing",
     "cheap email marketing",
     "email tool pricing by sends",
     "unlimited subscribers pricing",
+    "email marketing pricing comparison",
   ],
 });
 
@@ -156,6 +160,11 @@ export default function PricingPage() {
             </div>
           </Container>
         </section>
+        <RelatedLinks
+          refs={["page:/how-it-works", "blog:per-subscriber-vs-per-send-email-pricing", "compare:mailchimp-alternative", "feature:audiences", "for:startups", "page:/deliverability"]}
+          heading={"Before you pick a plan"}
+          className="border-t border-border"
+        />
       </main>
       <SiteFooter />
     </>

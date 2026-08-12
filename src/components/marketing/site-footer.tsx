@@ -21,6 +21,7 @@ const footerNav = [
   {
     heading: "Company",
     links: [
+      { label: "Guides", href: "/blog" },
       { label: "About", href: "/about" },
       { label: "Changelog", href: "/changelog" },
       { label: "Contact", href: `mailto:${siteConfig.contactEmail}` },
@@ -78,9 +79,15 @@ function SiteFooter() {
 
           {footerNav.map((group) => (
             <nav key={group.heading} aria-label={group.heading}>
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              {/*
+                A <p>, not an <h2>. These four labels used to add four headings to
+                the outline of every page on the site, which told a crawler the
+                footer was as structurally important as the content above it. The
+                nav's aria-label carries the same information for screen readers.
+              */}
+              <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                 {group.heading}
-              </h2>
+              </p>
               <ul className="mt-4 space-y-2.5">
                 {group.links.map((link) => (
                   <li key={link.label}>

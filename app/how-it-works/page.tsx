@@ -10,15 +10,23 @@ import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { UsageMeter } from "@/components/marketing/usage-meter";
 import { Reveal } from "@/components/marketing/reveal";
-import { JsonLd, breadcrumbSchema, faqSchema } from "@/components/seo/json-ld";
+import { RelatedLinks } from "@/components/marketing/related-links";
+import {
+  JsonLd,
+  breadcrumbSchema,
+  faqSchema,
+  howToSchema,
+} from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
+import { cheapestTierFor, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
   title: "How send-based email pricing works",
   description:
-    "day3 bills you by the emails you send, not by how many subscribers you keep. Unlimited subscribers on every plan, one monthly cap, and a price you know upfront. Here's exactly how the model works.",
+    "day3 bills by emails sent, not by subscribers kept. Unlimited subscribers on every plan, one monthly cap, and worked examples of what that actually costs.",
   path: "/how-it-works",
+  ogEyebrow: "How it works",
+  ogTitle: "Billed on emails sent, not list size",
   keywords: [
     "email marketing priced by sends not subscribers",
     "send-based email pricing",
@@ -49,6 +57,24 @@ const steps = [
   },
 ];
 
+/**
+ * Worked scenarios, priced off the live ladder rather than written down. The last
+ * row is deliberately the case where this model is the *worse* deal: a page that
+ * only shows the wins is a page a careful reader stops believing.
+ */
+const scenarios: {
+  subscribers: number;
+  cadence: string;
+  monthlySends: number;
+  verdict: "wins" | "loses";
+}[] = [
+  { subscribers: 2_000, cadence: "Once a month", monthlySends: 2_000, verdict: "wins" },
+  { subscribers: 10_000, cadence: "Twice a month", monthlySends: 20_000, verdict: "wins" },
+  { subscribers: 25_000, cadence: "Once a month", monthlySends: 25_000, verdict: "wins" },
+  { subscribers: 60_000, cadence: "Every other month", monthlySends: 30_000, verdict: "wins" },
+  { subscribers: 1_000, cadence: "Every day", monthlySends: 30_000, verdict: "loses" },
+];
+
 const faqs = [
   {
     q: "How is day3's pricing different from Mailchimp or ConvertKit?",
@@ -56,7 +82,7 @@ const faqs = [
   },
   {
     q: "What counts as one send?",
-    a: "One email to one subscriber. A campaign to 1,000 subscribers is 1,000 sends against your monthly allotment.",
+    a: "One email to one subscriber. A campaign to 1,000 subscribers is 1,000 sends against your monthly allotment. Transactional email through the API counts the same way, out of the same allowance.",
   },
   {
     q: "What happens if I hit my monthly limit?",
@@ -70,6 +96,18 @@ const faqs = [
     q: "Why is this cheaper for most teams?",
     a: "List size and sending frequency are different things. A founder with 50,000 subscribers who emails monthly pays far less than on a per-subscriber plan priced for that list.",
   },
+  {
+    q: "When is send-based pricing the worse deal?",
+    a: "When you mail a small list very often. Divide your monthly sends by your subscriber count: below about one, send-based pricing is working in your favour. Well above one, meaning a daily or weekly letter to a modest list, a per-subscriber plan can cost less. We'd rather you did that arithmetic than discovered it later.",
+  },
+  {
+    q: "Does a test send count against my allowance?",
+    a: "Yes, because it's a real email through the real pipeline. Test sends only reach addresses you name, so the cost is a handful of emails rather than a campaign.",
+  },
+  {
+    q: "Can I change plans mid-month?",
+    a: "Yes, up or down, and changes apply from the next billing period. Since allowances don't roll over, the usual pattern is moving up for the month you make a big send and back down afterwards.",
+  },
 ];
 
 export default function HowItWorksPage() {
@@ -80,6 +118,14 @@ export default function HowItWorksPage() {
         { name: "How it works", path: "/how-it-works" },
       ])} />
       <JsonLd data={faqSchema(faqs)} />
+      <JsonLd
+        data={howToSchema({
+          name: "How send-based email pricing works",
+          description:
+            "How to run an email list billed by emails sent rather than by subscriber count.",
+          steps,
+        })}
+      />
 
       <SiteHeader />
 
@@ -93,9 +139,9 @@ export default function HowItWorksPage() {
               You&apos;re billed on emails sent, not on the size of your list.
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Most tools turn a growing list into a growing bill. day3 doesn&apos;t.
-              Keep as many subscribers as you like, and pay only for the emails
-              you send.
+              Most email marketing tools turn a growing list into a growing bill.
+              day3 doesn&apos;t. Keep as many subscribers as you like, and pay only
+              for the emails you send.
             </p>
           </Container>
         </section>
@@ -125,6 +171,132 @@ export default function HowItWorksPage() {
                   </Reveal>
                 );
               })}
+            </div>
+          </Container>
+        </section>
+
+        {/* The two curves */}
+        <section className="border-b border-border bg-oat/30">
+          <Container className="py-20 sm:py-24">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="font-display text-3xl text-foreground sm:text-4xl">
+                Why the two models diverge
+              </h2>
+              <div className="mt-6 space-y-5 text-lg leading-relaxed text-muted-foreground">
+                <p>
+                  A list and a sending schedule grow at different rates. The list
+                  compounds: every launch, every mention, every month of organic
+                  signups adds to it, and nothing takes people off it except
+                  unsubscribes. Sending stays roughly flat, because it&apos;s
+                  governed by how often you ship something worth announcing, which
+                  is a function of engineering time rather than of audience size.
+                </p>
+                <p>
+                  Per-subscriber pricing meters the first curve. Send-based pricing
+                  meters the second. For a software team those two numbers drift
+                  apart month after month, and the gap between them is most of what
+                  you&apos;d otherwise be paying.
+                </p>
+                <p>
+                  There&apos;s a second effect that matters more than it sounds.
+                  When contacts cost money, every list decision is quietly a
+                  billing decision: prune the inactive, don&apos;t add the trial
+                  signups, delete the churned accounts. That&apos;s optimising your
+                  list for your invoice rather than for your business. When
+                  subscribers are free, the right list is simply the accurate one.
+                </p>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Worked scenarios */}
+        <section className="border-b border-border">
+          <Container className="py-20 sm:py-24">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="font-display text-3xl text-foreground sm:text-4xl">
+                The arithmetic, on real numbers
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                Every price below is read straight off the current plan ladder, so
+                this table can never disagree with{" "}
+                <Link
+                  href="/pricing"
+                  className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                >
+                  the pricing page
+                </Link>
+                .
+              </p>
+
+              <div className="mt-8 overflow-x-auto rounded-xl border border-border">
+                <table className="w-full min-w-[36rem] text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-border bg-secondary/30">
+                      <th className="p-4 font-medium text-muted-foreground">
+                        Subscribers
+                      </th>
+                      <th className="p-4 font-medium text-muted-foreground">
+                        You email them
+                      </th>
+                      <th className="p-4 font-medium text-muted-foreground">
+                        Emails / month
+                      </th>
+                      <th className="p-4 font-medium text-muted-foreground">
+                        Your plan
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {scenarios.map((row) => {
+                      const tier = cheapestTierFor(row.monthlySends);
+                      return (
+                        <tr
+                          key={`${row.subscribers}-${row.cadence}`}
+                          className="border-b border-border last:border-0"
+                        >
+                          <td className="p-4 tabular-nums text-foreground">
+                            {row.subscribers.toLocaleString("en-US")}
+                          </td>
+                          <td className="p-4 text-muted-foreground">
+                            {row.cadence}
+                          </td>
+                          <td className="p-4 tabular-nums text-muted-foreground">
+                            {row.monthlySends.toLocaleString("en-US")}
+                          </td>
+                          <td className="p-4 font-medium text-foreground">
+                            {tier.price}/mo
+                            {row.verdict === "loses" ? (
+                              <span className="mt-1 block text-xs font-normal text-muted-foreground">
+                                Here a per-subscriber plan may be cheaper
+                              </span>
+                            ) : null}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+
+              {/*
+                The honest bound. Naming the case where our own model loses costs
+                one row and buys the reader's trust in the other four.
+              */}
+              <div className="mt-8 rounded-xl border border-border bg-secondary/20 p-6">
+                <h3 className="font-medium text-foreground">
+                  Where send-based pricing loses
+                </h3>
+                <p className="mt-2 leading-relaxed text-muted-foreground">
+                  Divide your monthly sends by your subscriber count. Below about
+                  one, meaning you don&apos;t email everyone every month, this
+                  model is working for you and the gap widens as the list grows.
+                  Well above one, meaning a daily or weekly letter to a modest
+                  list, a per-subscriber plan can genuinely cost less. That last
+                  row is the shape: 1,000 people emailed every day is 30,000 sends
+                  against a list most tools would charge very little to hold.
+                </p>
+              </div>
             </div>
           </Container>
         </section>
@@ -177,6 +349,19 @@ export default function HowItWorksPage() {
             </div>
           </Container>
         </section>
+
+        <RelatedLinks
+          refs={[
+            "page:/pricing",
+            "compare:mailchimp-alternative",
+            "compare:convertkit-alternative",
+            "for:startups",
+            "feature:audiences",
+            "page:/blog",
+          ]}
+          heading="Related reading"
+          className="border-b border-border"
+        />
 
         {/* CTA */}
         <section className="bg-oat/30">

@@ -2,19 +2,25 @@ import * as React from "react";
 import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/marketing/legal-page";
+import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
+export const metadata: Metadata = buildMetadata({
+  title: "Privacy Policy: what day3 collects and why",
   description:
-    "How day3 handles your data and your subscribers' data, plainly stated.",
-};
+    "What day3 collects, how your subscribers' data is used, and how to export or delete it. Your contacts are yours: never sold, rented, or marketed to.",
+  path: "/privacy",
+  ogEyebrow: "Legal",
+  ogTitle: "Privacy Policy",
+  keywords: ["day3 privacy policy", "email marketing privacy", "subscriber data privacy"],
+});
 
 export default function PrivacyPage() {
   return (
     <LegalPage
       title="Privacy Policy"
       updated="June 2026"
+      path="/privacy"
       intro="How we handle your data and your subscribers' data. This is a lightweight stub for the marketing site. The full policy presented at signup takes precedence."
       sections={[
         {

@@ -25,12 +25,12 @@ export const siteConfig = {
   location: "Herning, Denmark",
 };
 
-export const navLinks = [
-  { label: "How it works", href: "/how-it-works" },
-  { label: "Features", href: "/features" },
-  { label: "Compare", href: "/compare" },
-  { label: "Pricing", href: "/pricing" },
-];
+/*
+  There was a `navLinks` array here. Nothing imported it: the real navigation is
+  `primaryNav` in site-header.tsx, built from the content modules so it cannot
+  drift from the pages that exist. A second, stale copy of the nav was worse than
+  no copy, so it is gone.
+*/
 
 /**
  * Company + founder facts. The single source of truth for both the JSON-LD
@@ -209,6 +209,20 @@ export const pricingTiers: PricingTier[] = [
     blurb: "A million emails a month, self-serve. Need more? Just ask.",
   },
 ];
+
+/**
+ * The cheapest plan that covers a given monthly send volume.
+ *
+ * Every worked pricing example on the site reads its price through this rather
+ * than writing a figure into copy, so moving the ladder can never leave a stale
+ * number sitting in a sentence.
+ */
+export function cheapestTierFor(monthlyEmails: number): PricingTier {
+  return (
+    pricingTiers.find((tier) => tier.emailsValue >= monthlyEmails) ??
+    pricingTiers[pricingTiers.length - 1]
+  );
+}
 
 export type Feature = {
   title: string;

@@ -3,7 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>day3 — logo exports</title>
+<!--
+  Internal reference sheet for the logo files in this directory. It lives under
+  public/ so the image previews resolve, which also makes it publicly reachable at
+  /brand/index.html. It is not linked from anywhere, but "not linked" is not the
+  same as "not indexed", so it says so explicitly.
+
+  Deliberately noindex rather than a robots.txt Disallow: a disallowed page cannot
+  be crawled, so a crawler never sees the instruction not to index it, and a URL
+  someone links to can still end up in results with no content. Allowing the fetch
+  and serving noindex is the combination that actually works.
+-->
+<meta name="robots" content="noindex, nofollow">
+<title>day3 logo exports (internal)</title>
 <style>
   :root { --esp:#2B2019; --car:#C28A4D; --cream:#F6F0E3; --board:#E7E1D4; --stone:#6F6555; }
   * { box-sizing: border-box; }

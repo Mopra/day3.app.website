@@ -7,10 +7,12 @@ import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Acceptable Use Policy",
+  title: "Acceptable Use and anti-spam policy",
   description:
-    "day3's acceptable use and anti-spam policy. Permission-based sending only, no purchased lists, and the standards that keep delivery healthy for everyone on the platform.",
+    "Permission-based sending only: no purchased lists, no cold outreach, and the sending standards that keep delivery healthy for everyone on the platform.",
   path: "/legal/acceptable-use",
+  ogEyebrow: "Legal",
+  ogTitle: "Acceptable Use Policy",
   keywords: [
     "day3 acceptable use policy",
     "anti-spam policy email marketing",

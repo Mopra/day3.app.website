@@ -7,10 +7,12 @@ import { buildMetadata } from "@/lib/seo";
 import { company, siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Data Processing Agreement",
+  title: "Data Processing Agreement (GDPR)",
   description:
-    "day3's Data Processing Agreement: the terms under which we process the subscriber data you bring, as your GDPR processor, entirely within the EU.",
+    "The terms under which day3 processes the subscriber data you bring, as your GDPR processor, entirely within the EU, with every sub-processor named.",
   path: "/legal/dpa",
+  ogEyebrow: "Legal",
+  ogTitle: "Data Processing Agreement",
   keywords: [
     "day3 DPA",
     "data processing agreement email marketing",

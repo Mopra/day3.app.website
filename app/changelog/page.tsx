@@ -1,5 +1,6 @@
 import * as React from "react";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { Container } from "@/components/marketing/container";
 import { SiteHeader } from "@/components/marketing/site-header";
@@ -12,11 +13,18 @@ import { getReleases } from "@/lib/changelog";
 import { changelogEntries } from "@/lib/changelog-content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Changelog",
+  title: "Changelog: what's new in day3",
   description:
-    "What's new in day3: the running log of features and improvements we ship.",
+    "The running log of what day3 has shipped: the public API, AI drafting on every paid plan, scheduling, signup forms, and automatic domain authentication.",
   path: "/changelog",
-  keywords: ["day3 changelog", "day3 updates", "day3 what's new"],
+  ogEyebrow: "Changelog",
+  ogTitle: "What's new in day3",
+  keywords: [
+    "day3 changelog",
+    "day3 updates",
+    "day3 what's new",
+    "day3 release notes",
+  ],
 });
 
 // Rebuild hourly so newly published GitHub Releases appear without a redeploy.
@@ -104,7 +112,7 @@ export default async function ChangelogPage() {
             ) : (
               <ol className="mx-auto max-w-3xl">
                 {changelogEntries.map((entry) => (
-                  <li key={entry.isoDate + entry.title} className={rowClass}>
+                  <li key={entry.slug} className={rowClass}>
                     <Reveal>
                       <time
                         dateTime={entry.isoDate}
@@ -115,9 +123,22 @@ export default async function ChangelogPage() {
                     </Reveal>
                     <Reveal delay={80}>
                       <div>
+                        {/*
+                          The title is the permalink. Each curated entry has its
+                          own indexable page at /changelog/<slug>, which is what
+                          turns the changelog from one URL into a growing archive.
+                        */}
                         <h2 className="font-display text-2xl text-foreground">
-                          {entry.title}
+                          <Link
+                            href={`/changelog/${entry.slug}`}
+                            className="rounded transition-colors hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          >
+                            {entry.title}
+                          </Link>
                         </h2>
+                        <p className="mt-3 leading-relaxed text-muted-foreground">
+                          {entry.summary}
+                        </p>
                         <ul className="mt-4 space-y-2.5">
                           {entry.items.map((item) => (
                             <li
@@ -132,6 +153,12 @@ export default async function ChangelogPage() {
                             </li>
                           ))}
                         </ul>
+                        <Link
+                          href={`/changelog/${entry.slug}`}
+                          className="mt-4 inline-block rounded text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        >
+                          Permalink
+                        </Link>
                       </div>
                     </Reveal>
                   </li>

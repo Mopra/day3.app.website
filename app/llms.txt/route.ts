@@ -3,6 +3,8 @@ import { company } from "@/lib/site";
 import { featurePages } from "@/lib/features-content";
 import { comparePages } from "@/lib/compare-content";
 import { audiencePages } from "@/lib/audience-content";
+import { sortedBlogPosts } from "@/lib/blog-content";
+import { changelogEntries } from "@/lib/changelog-content";
 
 /**
  * /llms.txt, the emerging convention for telling LLMs and AI answer engines
@@ -88,6 +90,21 @@ function buildLlmsTxt(): string {
   lines.push(`- [Who it's for](${siteUrl}/for): startups, indie developers, SaaS teams`);
   lines.push(`- [Compare](${siteUrl}/compare): how day3 compares to other email tools`);
   lines.push(`- [Deliverability](${siteUrl}/deliverability): how day3 gets your email to the inbox`);
+  lines.push(`- [Guides](${siteUrl}/blog): reference writing on authentication, unsubscribe compliance, consent, and email pricing models`);
+  lines.push("");
+
+  /*
+    The guides are listed with their own summaries because they are the pages most
+    likely to answer a question an answer engine was actually asked. Everything
+    else here describes day3; these describe the subject.
+  */
+  lines.push("## Guides");
+  lines.push("");
+  for (const post of sortedBlogPosts()) {
+    lines.push(
+      `- [${post.title}](${siteUrl}/blog/${post.slug}) (${post.topic}, updated ${post.updated}): ${post.metaDescription}`,
+    );
+  }
   lines.push("");
 
   lines.push("## Features");
@@ -117,6 +134,11 @@ function buildLlmsTxt(): string {
   lines.push("");
   lines.push(`- [About](${siteUrl}/about): why day3 exists and who builds it`);
   lines.push(`- [Changelog](${siteUrl}/changelog): what's new in day3`);
+  for (const entry of changelogEntries) {
+    lines.push(
+      `  - [${entry.title}](${siteUrl}/changelog/${entry.slug}) (${entry.isoDate})`,
+    );
+  }
   lines.push("");
 
   lines.push("## Trust & legal");

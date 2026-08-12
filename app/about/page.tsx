@@ -27,10 +27,14 @@ import { buildMetadata } from "@/lib/seo";
 import { company, siteConfig, socialLinks } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About day3",
+  // Not "About day3": the title template appends "· day3", and "About day3 · day3"
+  // spent a third of the SERP line saying the brand name twice.
+  title: "Why we built an email tool priced by sends",
   description:
-    "day3 is a small, EU-built email marketing tool with one opinion: you pay for the emails you send, never for the size of your list. Built in Denmark by the maker of exit1.dev.",
+    "day3 is a small, EU-built email tool with one opinion: you pay for the emails you send, never for your list size. Made in Denmark by the maker of exit1.dev.",
   path: "/about",
+  ogEyebrow: "About",
+  ogTitle: "A small EU email tool with one opinion",
   keywords: [
     "about day3",
     "EU email marketing tool",

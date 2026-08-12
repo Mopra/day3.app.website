@@ -8,16 +8,19 @@ import { Container } from "@/components/marketing/container";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { Reveal } from "@/components/marketing/reveal";
+import { RelatedLinks } from "@/components/marketing/related-links";
 import { JsonLd, breadcrumbSchema } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import { featurePages } from "@/lib/features-content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Features: everything you need to send a good product email",
+  title: "Features: campaigns, audiences, forms, API",
   description:
-    "Campaigns, audiences, signup forms, deliverability, metrics, an AI writing assistant, and an API. The parts you need to email your users, not the parts that come with a manual.",
+    "Campaigns, unlimited audiences, signup forms, deliverability, metrics, an AI writing assistant, and a REST API with MCP. Not the parts you'll avoid.",
   path: "/features",
+  ogEyebrow: "Features",
+  ogTitle: "Everything day3 does, and what it doesn't",
   keywords: [
     "email marketing features",
     "newsletter tool features",
@@ -26,6 +29,38 @@ export const metadata: Metadata = buildMetadata({
     "email marketing api",
   ],
 });
+
+/**
+ * The deliberate gaps. Kept next to the feature list rather than buried, because
+ * "what it doesn't do" is a real question people search and a page that only
+ * lists capabilities is a page a careful reader discounts.
+ */
+const omissions = [
+  {
+    title: "No automation flows",
+    body: "No onboarding drips, trial nurture, or win-back sequences. Triggers, waits and branches are designed but not shipped, so don't pick day3 on the strength of them.",
+  },
+  {
+    title: "No A/B testing",
+    body: "No split tests on subject lines or send times. For a changelog going to your whole user base there isn't much to split.",
+  },
+  {
+    title: "No drag-and-drop template builder",
+    body: "The composer produces clean, inbox-safe formatting from what you type. There is no canvas to arrange blocks on.",
+  },
+  {
+    title: "No landing pages or CRM",
+    body: "Signup form pages, yes. A website builder, a sales pipeline, or contact scoring, no.",
+  },
+  {
+    title: "No monetisation layer",
+    body: "No paid subscriptions, ad network, referral programme, or public archive. day3 is not a platform for running a newsletter as a media business.",
+  },
+  {
+    title: "No agency or multi-account layer",
+    body: "One organisation per account, no client sub-accounts and no white labelling.",
+  },
+];
 
 export default function FeaturesPage() {
   return (
@@ -83,7 +118,48 @@ export default function FeaturesPage() {
           </Container>
         </section>
 
+        {/*
+          The omissions, stated as a list rather than gestured at in the hero. This
+          is the half of "what does it do" that the card grid can't carry, and
+          saying it plainly is what stops the wrong people signing up and the right
+          people wondering what the catch is.
+        */}
         <section className="border-t border-border bg-oat/30">
+          <Container className="py-16 sm:py-20">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="font-display text-3xl text-foreground sm:text-4xl">
+                What day3 deliberately does not do
+              </h2>
+              <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
+                These are omissions, not a roadmap. If one of them is what you came
+                for, a marketing platform will serve you better and we would rather
+                you knew now.
+              </p>
+              <ul className="mt-8 space-y-4">
+                {omissions.map((item) => (
+                  <li key={item.title} className="flex gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="mt-2.5 size-1.5 shrink-0 rounded-full bg-caramel"
+                    />
+                    <span className="leading-relaxed text-muted-foreground">
+                      <span className="font-medium text-foreground">
+                        {item.title}.
+                      </span>{" "}
+                      {item.body}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-8 text-sm leading-relaxed text-muted-foreground">
+                Automations, meaning triggers, waits and branches, are designed but
+                not shipped. Everything on the cards above works today.
+              </p>
+            </div>
+          </Container>
+        </section>
+
+        <section className="border-t border-border">
           <Container className="py-16 text-center sm:py-20">
             <h2 className="font-display text-3xl text-foreground sm:text-4xl">
               See it before you commit.
@@ -112,6 +188,11 @@ export default function FeaturesPage() {
             </div>
           </Container>
         </section>
+        <RelatedLinks
+          refs={["page:/how-it-works", "page:/pricing", "page:/deliverability", "for:saas", "page:/compare", "page:/blog"]}
+          heading={"Where to go next"}
+          className="border-t border-border"
+        />
       </main>
 
       <SiteFooter />

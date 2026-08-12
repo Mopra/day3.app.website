@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -34,14 +35,20 @@ import {
   faqSchema,
   organizationSchema,
   softwareApplicationSchema,
+  websiteSchema,
 } from "@/components/seo/json-ld";
-import { pricingTiers, siteConfig } from "@/lib/site";
+import { cheapestTierFor, pricingTiers, siteConfig } from "@/lib/site";
+import { audiencePages } from "@/lib/audience-content";
 
 /*
-  Title, description, and canonical come from the root layout's defaults. The
-  homepage is the one route that owns them, so it deliberately exports no
-  metadata of its own.
+  Title and description come from the root layout's defaults, which the homepage
+  owns. Only the canonical is declared here: the root layout deliberately no
+  longer sets `alternates`, because a canonical on a layout is inherited by every
+  descendant that doesn't override it.
 */
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 /**
  * The hero loop. Pale watercolour study, high-key on purpose so ~58% of the
@@ -128,18 +135,6 @@ const painBlocks = [
 ];
 
 /**
- * The cheapest tier that covers a given monthly volume. Worked examples read
- * their prices through this so a change to the ladder can never leave a stale
- * number sitting in the copy.
- */
-function tierFor(emails: number) {
-  return (
-    pricingTiers.find((tier) => tier.emailsValue >= emails) ??
-    pricingTiers[pricingTiers.length - 1]
-  );
-}
-
-/**
  * What the price means next to the tools a reader already knows.
  *
  * Model-level only, never a competitor's dollar figure. Their prices change
@@ -147,16 +142,24 @@ function tierFor(emails: number) {
  * the comparison earns. The pricing *model* is durable, verifiable, and happens
  * to be the whole argument anyway.
  */
-const priceComparisons = [
+const priceComparisons: {
+  name: string;
+  model: string;
+  body: string;
+  /** The comparison page for this row, where one exists. */
+  href?: string;
+}[] = [
   {
     name: "Mailchimp, Kit, beehiiv",
     model: "Priced by contacts",
     body: "The bill climbs as you grow, and arrives in the months you send nothing.",
+    href: "/compare/mailchimp-alternative",
   },
   {
     name: "Resend",
     model: "Priced by sends, dev-first",
     body: "Closest to day3 on the meter. day3 adds the campaign side: audiences, forms, topics, compliance.",
+    href: "/compare/resend-alternative",
   },
   {
     name: "day3",
@@ -245,6 +248,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={organizationSchema()} />
+      <JsonLd data={websiteSchema()} />
       <JsonLd data={softwareApplicationSchema()} />
       <JsonLd data={faqSchema(faqs)} />
 
@@ -441,6 +445,55 @@ export default function HomePage() {
           </Container>
         </section>
 
+        {/*
+          ------------------------------------------------------------- Fit
+          The one section on this page that says what day3 *is* in the words a
+          reader would search for. The hero deliberately doesn't: "Email for the
+          people who ship" is doing conversion work and naming a category would
+          blunt it. But the page had zero visible instances of "email marketing"
+          or "transactional email", while the title tag bid on both, so the terms
+          had to appear in the body somewhere. Here, where they're also true.
+
+          It doubles as the homepage's only link into /for, which was reachable
+          from the nav and footer and nothing else.
+        */}
+        <section id="fit" className="scroll-mt-20 border-t border-border">
+          <Container className="py-20 sm:py-24">
+            <Reveal>
+              <SectionHeading
+                align="center"
+                title="Email marketing and transactional email, in one tool."
+                description="Product updates, changelogs, receipts, password resets. One verified domain, one monthly allowance, unlimited subscribers on every plan."
+              />
+            </Reveal>
+
+            <Reveal delay={120} className="mt-12 grid gap-5 md:grid-cols-3">
+              {audiencePages.map((page) => {
+                const Icon = page.icon;
+                return (
+                  <Link
+                    key={page.slug}
+                    href={`/for/${page.slug}`}
+                    className="group flex flex-col rounded-xl border border-border bg-card p-6 transition-colors duration-200 hover:border-caramel/40 hover:bg-secondary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <Icon className="size-5 text-caramel transition-transform duration-200 group-hover:scale-110" />
+                    <h3 className="mt-4 font-medium text-foreground">
+                      {page.navLabel}
+                    </h3>
+                    <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                      {page.summary}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-caramel">
+                      See the fit
+                      <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
+                );
+              })}
+            </Reveal>
+          </Container>
+        </section>
+
         {/* ----------------------------------------------------- API and MCP */}
         <ApiProof />
         <McpProof />
@@ -511,16 +564,31 @@ export default function HomePage() {
                     <p className="mt-1 text-sm font-medium text-caramel">
                       {item.model}
                     </p>
-                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">
                       {item.body}
                     </p>
+                    {/*
+                      The comparison pages were reachable only from the nav and
+                      footer, which is a poor way to tell a crawler that the
+                      homepage vouches for them. Here the link is also just useful:
+                      the reader is looking at the model they're on.
+                    */}
+                    {item.href ? (
+                      <Link
+                        href={item.href}
+                        className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                      >
+                        The full comparison
+                        <ArrowRight className="size-3.5" />
+                      </Link>
+                    ) : null}
                   </div>
                 ))}
               </div>
               <p className="mx-auto mt-6 max-w-xl text-center text-sm leading-relaxed text-muted-foreground">
                 10,000 users, emailed twice a month, is{" "}
                 <span className="font-medium text-foreground">
-                  {tierFor(20_000).price}/mo
+                  {cheapestTierFor(20_000).price}/mo
                 </span>
                 . Per-contact pricing bills you for all 10,000, every month.
               </p>
@@ -549,6 +617,24 @@ export default function HomePage() {
                     </div>
                   ))}
                 </dl>
+              </Reveal>
+              {/*
+                The one exit from this page toward the guides. Deliverability and
+                authentication are the questions that come after the pricing
+                ones, and they have real pages now.
+              */}
+              <Reveal delay={180}>
+                <p className="mt-10 border-t border-border pt-8 text-sm leading-relaxed text-muted-foreground">
+                  Working out authentication, unsubscribe compliance, or whether
+                  to move a list?{" "}
+                  <Link
+                    href="/blog"
+                    className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                  >
+                    We write about all of it
+                  </Link>
+                  .
+                </p>
               </Reveal>
             </div>
           </Container>

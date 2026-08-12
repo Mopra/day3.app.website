@@ -9,6 +9,7 @@ import { Container } from "@/components/marketing/container";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { Reveal } from "@/components/marketing/reveal";
+import { RelatedLinks } from "@/components/marketing/related-links";
 import { JsonLd, breadcrumbSchema, faqSchema } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
@@ -35,6 +36,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     title: feature.metaTitle,
     description: feature.metaDescription,
     path: `/features/${feature.slug}`,
+    ogEyebrow: feature.eyebrow,
+    ogTitle: feature.title,
     keywords: feature.keywords,
   });
 }
@@ -107,8 +110,35 @@ export default async function FeatureDetailPage({ params }: PageProps) {
           </Container>
         </section>
 
+        {/*
+          The prose half. The grid above answers "does it do the thing"; this
+          answers "how does it behave", which is what a careful reader is here
+          for and what an answer engine can actually quote.
+        */}
+        {feature.deepDive ? (
+          <section className="border-b border-border bg-oat/30">
+            <Container className="py-16 sm:py-20">
+              <div className="mx-auto max-w-3xl">
+                <h2 className="font-display text-3xl text-foreground sm:text-4xl">
+                  {feature.deepDive.heading}
+                </h2>
+                <div className="mt-6 space-y-5">
+                  {feature.deepDive.paragraphs.map((paragraph) => (
+                    <p
+                      key={paragraph}
+                      className="text-lg leading-relaxed text-muted-foreground"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </Container>
+          </section>
+        ) : null}
+
         {/* FAQ */}
-        <section className="border-b border-border bg-oat/30">
+        <section className="border-b border-border">
           <Container className="py-16 sm:py-20">
             <div className="mx-auto max-w-3xl">
               <h2 className="font-display text-3xl text-foreground sm:text-4xl">
@@ -128,6 +158,12 @@ export default async function FeatureDetailPage({ params }: PageProps) {
             </div>
           </Container>
         </section>
+
+        <RelatedLinks
+          refs={feature.related ?? []}
+          heading="Related"
+          className="border-b border-border bg-oat/30"
+        />
 
         <section>
           <Container className="py-16 text-center sm:py-20">

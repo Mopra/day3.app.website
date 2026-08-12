@@ -12,6 +12,7 @@ import { Logo } from "@/components/marketing/logo";
 import { siteConfig } from "@/lib/site";
 import { featurePages } from "@/lib/features-content";
 import { comparePages } from "@/lib/compare-content";
+import { audiencePages } from "@/lib/audience-content";
 import { cn } from "@/lib/utils";
 
 type NavChild = {
@@ -28,9 +29,13 @@ type NavItem = {
 };
 
 /**
- * Primary navigation. Features and Compare are dropdowns whose children are
- * derived from the same content arrays that power their hub and detail pages,
- * so the menu can never drift out of sync with the pages that actually exist.
+ * Primary navigation. The dropdowns' children are derived from the same content
+ * arrays that power their hub and detail pages, so the menu can never drift out of
+ * sync with the pages that actually exist.
+ *
+ * "Who it's for" and "Guides" are here rather than footer-only because the /for
+ * pages had no nav presence at all and the guides are the whole top of the funnel.
+ * Deliverability already appears inside Features, as a link-out to its own page.
  */
 const primaryNav: NavItem[] = [
   { label: "How it works", href: "/how-it-works" },
@@ -45,6 +50,16 @@ const primaryNav: NavItem[] = [
     })),
   },
   {
+    label: "Who it's for",
+    href: "/for",
+    children: audiencePages.map((page) => ({
+      label: page.navLabel,
+      href: `/for/${page.slug}`,
+      description: page.summary,
+      icon: page.icon,
+    })),
+  },
+  {
     label: "Compare",
     href: "/compare",
     children: comparePages.map((page) => ({
@@ -52,6 +67,7 @@ const primaryNav: NavItem[] = [
       href: `/compare/${page.slug}`,
     })),
   },
+  { label: "Guides", href: "/blog" },
   { label: "Pricing", href: "/pricing" },
 ];
 

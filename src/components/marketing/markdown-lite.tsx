@@ -121,6 +121,15 @@ function parseBlocks(markdown: string): Block[] {
   return blocks;
 }
 
+/**
+ * Just the inline layer: bold, `code`, links, bare URLs. The blog's own block
+ * structure is typed rather than parsed from Markdown, but its prose still wants
+ * inline code and emphasis, so it borrows this half.
+ */
+export function Inline({ children }: { children: string }) {
+  return <>{renderInline(children)}</>;
+}
+
 export function MarkdownLite({ children }: { children: string }) {
   const blocks = parseBlocks(children);
 

@@ -2,19 +2,25 @@ import * as React from "react";
 import type { Metadata } from "next";
 
 import { LegalPage } from "@/components/marketing/legal-page";
+import { buildMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
-export const metadata: Metadata = {
-  title: "Terms of Service",
+export const metadata: Metadata = buildMetadata({
+  title: "Terms of Service, in plain language",
   description:
-    "The terms that govern your use of day3: plain-language, fair, and short.",
-};
+    "The terms covering your day3 account, acceptable use, and billing. Short, readable, and permission-based: no purchased lists, no cold outreach.",
+  path: "/terms",
+  ogEyebrow: "Legal",
+  ogTitle: "Terms of Service",
+  keywords: ["day3 terms of service", "email sending terms", "acceptable use email"],
+});
 
 export default function TermsPage() {
   return (
     <LegalPage
       title="Terms of Service"
       updated="June 2026"
+      path="/terms"
       intro="These terms cover your use of day3. They're written to be readable. This is a lightweight stub for the marketing site. The binding terms presented at signup take precedence."
       sections={[
         {

@@ -25,11 +25,38 @@ export function organizationSchema() {
     "@type": "Organization",
     "@id": `${siteUrl}/#organization`,
     name: "day3",
-    legalName: company.legalName,
+    /*
+      Brand disambiguation. Every query Search Console has recorded for this site
+      is a numeral near-miss ("day 3", "days3", "dia3") ranking in the 20s to 90s,
+      because "day3" reads as a date to a search engine that has no other signal.
+      Spelling out the variants people actually type is the cheapest way to say
+      "these all mean the software company".
+    */
+    alternateName: ["day3.app", "day 3", "day3 email"],
     url: siteUrl,
     email: siteConfig.contactEmail,
     logo: `${siteUrl}/brand/day3-lockup.png`,
     description: siteConfig.promise,
+    slogan: siteConfig.promise,
+    /*
+      The topics day3 is a credible source on. Narrow on purpose: claiming
+      expertise in "marketing" would be both false and useless, while these are
+      the subjects the site actually publishes substantive pages about.
+    */
+    knowsAbout: [
+      "Email marketing",
+      "Transactional email",
+      "Email deliverability",
+      "SPF, DKIM and DMARC authentication",
+      "One-click unsubscribe (RFC 8058)",
+      "GDPR compliance for email",
+    ],
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "customer support",
+      email: siteConfig.contactEmail,
+      availableLanguage: ["en", "da"],
+    },
     foundingDate: String(company.foundingYear),
     founder: { "@type": "Person", name: company.founder },
     // The CVR registration number, a verifiable identifier that ties this brand
@@ -111,6 +138,127 @@ export function faqSchema(faqs: { q: string; a: string }[]) {
       "@type": "Question",
       name: faq.q,
       acceptedAnswer: { "@type": "Answer", text: faq.a },
+    })),
+  };
+}
+
+/**
+ * The site as an entity, distinct from the company that publishes it.
+ *
+ * Emitted on the homepage only. Search engines use WebSite to tie a domain to a
+ * named thing, which is the piece day3 was missing: without it, "day3" has no
+ * declared identity beyond an Organization, and a brand that is also a numeral
+ * needs every disambiguation signal it can get.
+ */
+export function websiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${siteUrl}/#website`,
+    name: "day3",
+    alternateName: ["day3.app", "day 3"],
+    url: siteUrl,
+    description: siteConfig.promise,
+    inLanguage: "en",
+    publisher: { "@id": `${siteUrl}/#organization` },
+  };
+}
+
+/**
+ * A step-by-step process. Used on /how-it-works, where the three steps of the
+ * send-based model are a genuine sequence rather than a list dressed as one.
+ */
+export function howToSchema({
+  name,
+  description,
+  steps,
+}: {
+  name: string;
+  description: string;
+  steps: { title: string; description: string }[];
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    publisher: { "@id": `${siteUrl}/#organization` },
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.title,
+      text: step.description,
+    })),
+  };
+}
+
+/**
+ * An editorial page: a guide under /blog or a changelog entry. `path` is
+ * root-relative and becomes both the mainEntityOfPage and the @id.
+ */
+export function articleSchema({
+  headline,
+  description,
+  path,
+  datePublished,
+  dateModified,
+  image,
+  section,
+}: {
+  headline: string;
+  description: string;
+  path: string;
+  datePublished: string;
+  dateModified?: string;
+  image?: string;
+  section?: string;
+}) {
+  const url = new URL(path, siteUrl).toString();
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline,
+    description,
+    url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    datePublished,
+    dateModified: dateModified ?? datePublished,
+    inLanguage: "en",
+    ...(section ? { articleSection: section } : {}),
+    ...(image ? { image } : {}),
+    // A named human with a verifiable track record, not a faceless "Team".
+    author: {
+      "@type": "Person",
+      name: company.founder,
+      url: `${siteUrl}/about`,
+    },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    isPartOf: { "@id": `${siteUrl}/#website` },
+  };
+}
+
+/** The guide index at /blog, as a Blog entity listing its posts. */
+export function blogSchema(
+  posts: { title: string; path: string; date: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${siteUrl}/blog#blog`,
+    name: "day3 guides",
+    description:
+      "Practical writing on email deliverability, authentication, compliance, and how email pricing models actually work.",
+    url: `${siteUrl}/blog`,
+    inLanguage: "en",
+    publisher: { "@id": `${siteUrl}/#organization` },
+    blogPost: posts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      url: new URL(post.path, siteUrl).toString(),
+      datePublished: post.date,
+      author: { "@type": "Person", name: company.founder },
     })),
   };
 }

@@ -17,15 +17,18 @@ import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { Reveal } from "@/components/marketing/reveal";
+import { RelatedLinks } from "@/components/marketing/related-links";
 import { JsonLd, breadcrumbSchema, faqSchema } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
 import { siteConfig, subprocessors } from "@/lib/site";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Security",
+  title: "Security and EU data residency",
   description:
-    "How day3 protects your data: EU-only hosting on Vercel and Supabase, encryption in transit and at rest, and an honest account of where we stand on SOC 2 and compliance.",
+    "EU-only hosting on Vercel and Supabase, encryption in transit and at rest, every sub-processor named, and an honest account of where day3 stands on SOC 2.",
   path: "/security",
+  ogEyebrow: "Security",
+  ogTitle: "EU-only hosting, and an honest compliance posture",
   keywords: [
     "day3 security",
     "EU email marketing security",
@@ -312,6 +315,11 @@ export default function SecurityPage() {
             </div>
           </Container>
         </section>
+        <RelatedLinks
+          refs={["page:/gdpr", "page:/legal/subprocessors", "page:/legal/dpa", "blog:gdpr-double-opt-in", "page:/deliverability", "feature:api"]}
+          heading={"Related"}
+          className="border-t border-border"
+        />
       </main>
 
       <SiteFooter />
