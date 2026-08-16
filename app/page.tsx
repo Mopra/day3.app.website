@@ -508,7 +508,14 @@ export default function HomePage() {
                 description="No contact tax. Just pick how many emails you send each month."
               />
             </Reveal>
-            <div className="mt-12 grid gap-6 lg:grid-cols-[280px_1fr] lg:items-start">
+            {/*
+              `min-w-0` on the items is load-bearing, not tidiness. A grid item's
+              automatic minimum size is its min-content width, and the pricing
+              carousel's min-content is the whole track of fixed-width cards,
+              clamped by the card's own max-w-2xl. Without this the column
+              measured 672px inside a 390px phone and dragged the page sideways.
+            */}
+            <div className="mt-12 grid gap-6 [&>*]:min-w-0 lg:grid-cols-[280px_1fr] lg:items-start">
               <Reveal>
                 <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
                   <p className="text-sm font-medium text-muted-foreground">
