@@ -61,20 +61,20 @@ const hero = {
   scene:
     "The aqueduct still stands and the water still runs over the weir beneath it, unattended.",
   /*
-    Two lines on purpose: the break falls after "for", so the audience lands
-    alone on line two and carries the weight. Defined by the act rather than
-    the job title. This segment ships software and stores, but doesn't write
-    code for a living, so "developers" would send the wrong people away.
+    Category first, because a promise nobody can place is a promise nobody
+    reads. Two lines on purpose: the break falls between the two jobs, so both
+    are named before anything else, and "email" sits at the end where it can
+    serve both halves instead of being said twice.
   */
-  title: ["Email for", "the people who ship"],
+  title: ["Marketing and", "transactional email"],
   /*
-    "The sane way" is load-bearing: it's the anti-marketing-suite promise, and
-    the four nouns after it are what widen the audience from "teams with a
-    newsletter" to every developer already paying something to send mail. Both
-    jobs named, because they're one setup: the receipt and the changelog leave
-    the same verified domain.
+    The one thing that makes the pair worth having: a single allowance across
+    both jobs, and a bill that tracks sends rather than list size. No dollar
+    figure here on purpose. The fact row below reads its numbers straight off
+    the pricing ladder, and a second copy would only be a second thing to go
+    stale.
   */
-  body: "The sane way to send everything your product emails: updates, changelogs, receipts, resets.",
+  body: "One monthly send allowance covers both, so you pay for the emails you send, not the size of your list.",
   grain: 20,
 };
 

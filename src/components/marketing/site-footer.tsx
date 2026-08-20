@@ -55,9 +55,15 @@ function SiteFooter() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div className="max-w-xs">
             <Logo />
+            {/*
+              The canonical one-liner, rendered from `siteConfig` rather than
+              typed out here, so the boilerplate under the wordmark is character
+              for character the line that appears on every external profile. The
+              blurb this replaced ("No marketing suite") also argued the opposite
+              of the current positioning, which now leads with marketing email.
+            */}
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Simple product update emails for small SaaS teams. No marketing
-              suite. No contact tax.
+              {siteConfig.oneLiner}
             </p>
             {socialLinks.length ? (
               <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-2">

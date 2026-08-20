@@ -13,6 +13,17 @@ import {
 export const siteConfig = {
   name: "day3",
   promise: "You're billed on emails sent, not on the size of your list.",
+  /*
+    The canonical one-liner. This exact string is what goes in every external
+    bio, directory listing, app store blurb, launch post and social profile, so
+    treat it as a fixed asset rather than copy: do not reword it, re-punctuate
+    it, or expand the "+" when reusing it here. Two hard rules follow from that.
+    One, anywhere on this site that wants the boilerplate reads it from here, so
+    the site and the profiles can never disagree. Two, it quotes the entry price
+    as a literal (a line pasted into someone else's text box cannot read the
+    pricing ladder), which is why the drift guard further down this file exists.
+  */
+  oneLiner: "Marketing + transactional email, billed by sends. $1/mo",
   signupUrl: "https://go.day3.app",
   loginUrl: "https://go.day3.app/login",
   // day3's own subscribe form. We dogfood the product to capture product-update
@@ -221,6 +232,22 @@ export function cheapestTierFor(monthlyEmails: number): PricingTier {
   return (
     pricingTiers.find((tier) => tier.emailsValue >= monthlyEmails) ??
     pricingTiers[pricingTiers.length - 1]
+  );
+}
+
+/*
+  `siteConfig.oneLiner` hardcodes the entry price, and the copies of it living on
+  other platforms are beyond this repo's reach. So the moment the ladder moves,
+  fail loudly here: both values are literals in this file, so this either always
+  throws or never does, which makes it a build-time error rather than a runtime
+  surprise. If it fires, fix the line here and then go update every profile that
+  carries it.
+*/
+const entryPriceInOneLiner = `${pricingTiers[0].price}/mo`;
+
+if (!siteConfig.oneLiner.includes(entryPriceInOneLiner)) {
+  throw new Error(
+    `siteConfig.oneLiner quotes a price the pricing ladder no longer has. The entry tier is now ${entryPriceInOneLiner}. Update the one-liner here, then update it on every external profile that carries it.`,
   );
 }
 

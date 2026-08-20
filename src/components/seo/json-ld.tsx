@@ -37,7 +37,14 @@ export function organizationSchema() {
     email: siteConfig.contactEmail,
     logo: `${siteUrl}/brand/day3-lockup.png`,
     description: siteConfig.promise,
-    slogan: siteConfig.promise,
+    /*
+      The one-liner, not the promise. `slogan` is the one schema field whose job
+      is to carry the tagline verbatim, and that string is the same one on every
+      external profile day3 owns. Matching them is a free entity signal: an
+      answer engine that meets the same sentence on the site, in the structured
+      data and in every bio has far less room to doubt they are one company.
+    */
+    slogan: siteConfig.oneLiner,
     /*
       The topics day3 is a credible source on. Narrow on purpose: claiming
       expertise in "marketing" would be both false and useless, while these are
