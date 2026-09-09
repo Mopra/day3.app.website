@@ -15,6 +15,10 @@
 // Optional env:
 //   SEO_DAYS        lookback window in days (default 28)
 //   SEO_COUNTRY     ISO-3 filter for GSC, e.g. "usa" (default: all)
+//   SEO_HOST        hostname to report on (default "day3.app"). The GSC property
+//                   is `sc-domain:day3.app`, which covers every subdomain, so the
+//                   app (go.day3.app) lands in the same dataset as the marketing
+//                   site. Set to "all" to disable the filter.
 
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -28,6 +32,41 @@ const GA4 = process.env.GA4_PROPERTY_ID;
 const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS;
 const DAYS = Number(process.env.SEO_DAYS || 28);
 const COUNTRY = process.env.SEO_COUNTRY?.toLowerCase();
+const HOST = (process.env.SEO_HOST || 'day3.app').toLowerCase();
+
+/*
+  Brand-collision queries.
+
+  "day3" reads as a date, and there is an unrelated BPO called Daythree, so the
+  bulk of what this property records is other people's brand. Over a recent 90d
+  window that was 859 of 912 impressions, which is enough to swamp every average
+  in the report: it is why site CTR reads ~0.7% while the pages that rank for
+  real questions sit in a normal range.
+
+  These are separated rather than deleted. Knowing the split is the point, and
+  the raw totals stay visible directly above it.
+*/
+const BRAND_NOISE = new RegExp(
+  [
+    // "day3", "day 3", "day-3", "days3", "days 3", "day30", "dayc-3", "d3day"
+    String.raw`day\w{0,2}\s*-?\s*\d`,
+    String.raw`d\d\s*day`,
+    String.raw`daydream`,
+    // Spelled-out and misspelled forms of the colliding company name
+    String.raw`day\s*-?\s*(three|iii|tre|tree|tronic)`,
+    String.raw`daythree`,
+    // Other brands whose logins land on this property
+    String.raw`day(la|mark)`,
+    // Transliterations and typos that only ever mean one of the above
+    String.raw`dia\s*3`,
+    String.raw`daiya`,
+    String.raw`daycheek`,
+    String.raw`daye3`,
+  ].join('|'),
+  'i',
+);
+
+const isBrandNoise = (q) => BRAND_NOISE.test(q);
 
 if (!KEY) fail('GOOGLE_APPLICATION_CREDENTIALS is not set (path to service-account JSON key).');
 if (!SITE && !GA4) fail('Set GSC_SITE_URL and/or GA4_PROPERTY_ID. Nothing to pull.');
@@ -87,7 +126,23 @@ async function gscQuery(dimensions, { start = START, end = END, rowLimit = 1000 
   const body = { startDate: start, endDate: end, dimensions, rowLimit };
   if (COUNTRY) body.dimensionFilterGroups = [{ filters: [{ dimension: 'country', expression: COUNTRY }] }];
   const data = await api(url, body);
-  return data.rows || [];
+  const rows = data.rows || [];
+  if (HOST === 'all') return rows;
+  /*
+    Filter by hostname where the response carries a page dimension. Doing it here
+    rather than in each analysis means the totals, the top-query tables and the
+    opportunity lists all describe the same site. Query-only queries have no page
+    to filter on and are left alone; the host split is reported separately.
+  */
+  const pageIndex = dimensions.indexOf('page');
+  if (pageIndex === -1) return rows;
+  return rows.filter((r) => {
+    try {
+      return new URL(r.keys[pageIndex]).host === HOST;
+    } catch {
+      return true;
+    }
+  });
 }
 
 // Rough "expected CTR by position" curve, used to flag titles that underperform
@@ -109,15 +164,27 @@ async function analyzeGsc() {
 
   const prevByQuery = new Map(prevQueries.map((r) => [r.keys[0], r]));
 
-  // Striking distance: ranking 5–20 with real impressions → small push = page 1.
-  const striking = queries
-    .filter((r) => r.position >= 4.5 && r.position <= 20 && r.impressions >= 30)
+  /*
+    The three opportunity lists below all exclude brand-collision queries, and
+    their impression thresholds are set for the volume this site actually has.
+
+    The old thresholds (30 and 100 impressions) were calibrated for a site with
+    traffic. Here only the collision queries ever cleared them, so "striking
+    distance" reported the single row "day3" and the CTR list came back empty
+    every run, while the genuine category queries the guides are earning sat one
+    or two orders of magnitude below the cut and never appeared at all.
+  */
+  const category = queries.filter((r) => !isBrandNoise(r.keys[0]));
+
+  // Striking distance: ranking 5 to 20 with real impressions → small push = page 1.
+  const striking = category
+    .filter((r) => r.position >= 4.5 && r.position <= 20 && r.impressions >= 2)
     .sort((a, b) => b.impressions - a.impressions)
     .slice(0, 40);
 
   // Title/meta opportunities: enough impressions, CTR well below expected for position.
-  const lowCtr = queries
-    .filter((r) => r.impressions >= 100 && r.position <= 15 && r.ctr < expectedCtr(r.position) * 0.6)
+  const lowCtr = category
+    .filter((r) => r.impressions >= 10 && r.position <= 15 && r.ctr < expectedCtr(r.position) * 0.6)
     .map((r) => ({ ...r, gap: expectedCtr(r.position) - r.ctr }))
     .sort((a, b) => b.impressions * b.gap - a.impressions * a.gap)
     .slice(0, 30);
@@ -145,7 +212,13 @@ async function analyzeGsc() {
   const path = (u) => u.replace(/^https?:\/\/[^/]+/, '') || '/';
   const isRoot = (u) => path(u) === '/' || /^\/\?/.test(path(u));
   const gaps = [...bestPageByQuery.values()]
-    .filter((r) => r.impressions >= 50 && (isRoot(r.page) || r.position > 15) && r.clicks <= 2)
+    /*
+      Brand queries are excluded. The homepage ranking for the company's own name
+      is correct, not a missing page, and this rule used to report "day3" as the
+      single largest content gap on the site every run.
+    */
+    .filter((r) => !isBrandNoise(r.keys[0]))
+    .filter((r) => r.impressions >= 3 && (isRoot(r.page) || r.position > 15) && r.clicks <= 2)
     .map((r) => ({
       query: r.keys[0],
       impressions: r.impressions,
@@ -156,11 +229,17 @@ async function analyzeGsc() {
     .sort((a, b) => b.impressions - a.impressions)
     .slice(0, 30);
 
-  return {
-    totals: queries.reduce(
+  const sum = (rows) =>
+    rows.reduce(
       (t, r) => ({ clicks: t.clicks + r.clicks, impressions: t.impressions + r.impressions }),
       { clicks: 0, impressions: 0 },
-    ),
+    );
+
+  return {
+    totals: sum(queries),
+    // The split that decides how to read every other number in the report.
+    brandSplit: { brand: sum(queries.filter((r) => isBrandNoise(r.keys[0]))), category: sum(category) },
+    topCategoryQueries: category.sort((a, b) => b.impressions - a.impressions).slice(0, 30),
     topQueries: queries.sort((a, b) => b.clicks - a.clicks).slice(0, 25),
     topPages: pages.sort((a, b) => b.clicks - a.clicks).slice(0, 25),
     striking,
@@ -233,6 +312,12 @@ function buildReport(gsc, ga4) {
   const lines = [];
   lines.push(`# SEO report: ${START} → ${END} (${DAYS}d${COUNTRY ? `, ${COUNTRY.toUpperCase()}` : ''})`);
   lines.push('');
+  lines.push(
+    HOST === 'all'
+      ? '_All hostnames in the property, including the app subdomain._'
+      : `_Page-level data filtered to \`${HOST}\`. The GSC property covers every subdomain, so the app would otherwise be mixed in; set SEO_HOST=all to see everything._`,
+  );
+  lines.push('');
 
   if (gsc) {
     lines.push('## Search Console');
@@ -243,7 +328,43 @@ function buildReport(gsc, ga4) {
     );
     lines.push('');
 
-    lines.push('### 🎯 Striking distance (rank 5–20, push these to page 1)');
+    /*
+      Reported before anything else, because the site-wide CTR above is close to
+      meaningless on its own: it is an average over queries meant for a different
+      company. The category row is the one to track over time.
+    */
+    const { brand, category } = gsc.brandSplit;
+    const brandShare = brand.impressions / Math.max(1, gsc.totals.impressions);
+    lines.push('### Brand collision vs real category demand');
+    lines.push('');
+    lines.push(
+      `"day3" reads as a date and collides with an unrelated company (Daythree). ` +
+        `Queries matching that pattern are split out here; **${pct(brandShare)} of impressions** are collision traffic.`,
+    );
+    lines.push('');
+    lines.push(
+      table(
+        ['Segment', 'Clicks', 'Impr', 'CTR'],
+        [
+          ['Brand collision', num(brand.clicks), num(brand.impressions), pct(brand.clicks / Math.max(1, brand.impressions))],
+          ['Real category demand', num(category.clicks), num(category.impressions), pct(category.clicks / Math.max(1, category.impressions))],
+        ],
+      ),
+    );
+    lines.push('');
+
+    lines.push('### Category queries (the real signal)');
+    lines.push('Brand collisions removed. This is the list that should grow.');
+    lines.push('');
+    lines.push(
+      table(
+        ['Query', 'Impr', 'Clicks', 'Pos'],
+        gsc.topCategoryQueries.map((r) => [r.keys[0], num(r.impressions), num(r.clicks), pos(r.position)]),
+      ),
+    );
+    lines.push('');
+
+    lines.push('### 🎯 Striking distance (rank 5 to 20, push these to page 1)');
     lines.push('Closest wins: already visible, small ranking gains convert to real traffic.');
     lines.push('');
     lines.push(

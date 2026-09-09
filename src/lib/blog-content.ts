@@ -250,7 +250,7 @@ export const blogPosts: BlogPost[] = [
           },
           {
             kind: "p",
-            text: "The DMARC record day3 publishes starts at p=none deliberately, for the reason above. Tightening it is your call and your timing, because we cannot see what else sends as your domain and you can.",
+            text: "The DMARC record day3 publishes starts at p=none deliberately, for the reason above. Tightening it is your call and your timing, because we cannot see what else sends as your domain and you can. [How day3 approaches deliverability](/deliverability) covers the rest of what sits alongside authentication: suppression, unsubscribe handling and reputation.",
           },
         ],
       },
@@ -573,11 +573,11 @@ export const blogPosts: BlogPost[] = [
         blocks: [
           {
             kind: "p",
-            text: "day3 meters sends only. Subscribers are unlimited on every paid plan, transactional email through the API draws on the same monthly allowance as campaigns, and there is no overage: sending pauses at the cap rather than billing past it. Plans run from $1/mo for 1,000 emails up to $220/mo for 1,000,000, and you can move between them as your sending changes.",
+            text: "day3 meters sends only. Subscribers are unlimited on every paid plan, transactional email through the API draws on the same monthly allowance as campaigns, and there is no overage: sending pauses at the cap rather than billing past it. [The full plan ladder](/pricing) runs from $1/mo for 1,000 emails up to $220/mo for 1,000,000, and you can move between them as your sending changes.",
           },
           {
             kind: "p",
-            text: "Which means the honest summary of who should pick it: if your intensity is comfortably below 1 and your list is growing, this model is built for you. If you send a daily letter to a few thousand people, it is not, and a per-subscriber tool will serve you better.",
+            text: "Which means the honest summary of who should pick it: if your intensity is comfortably below 1 and your list is growing, this model is built for you. If you send a daily letter to a few thousand people, it is not, and a per-subscriber tool will serve you better. [The comparisons](/compare) run the same arithmetic against specific tools if you want to check it against the one you use.",
           },
         ],
       },
@@ -680,6 +680,10 @@ export const blogPosts: BlogPost[] = [
           {
             kind: "p",
             text: "Double opt-in closes the gap with one step. The address receives a confirmation email and nothing is sent to it until someone clicks the link inside. Now your record says \"the person who controls this mailbox took an affirmative action\", which is much closer to what Article 4(11) describes.",
+          },
+          {
+            kind: "p",
+            text: "Worth separating two questions that get run together here: whether single opt-in is **lawful** and whether it is **provable**. This section is about the second. [Opt-in, opt-out and the GDPR](/blog/gdpr-opt-in-vs-opt-out) takes the first, along with where the rules change by country.",
           },
         ],
       },
@@ -797,12 +801,12 @@ export const blogPosts: BlogPost[] = [
       },
     ],
     related: [
+      "blog:gdpr-opt-in-vs-opt-out",
       "page:/gdpr",
       "feature:signup-forms",
       "blog:one-click-unsubscribe-rfc-8058",
       "page:/legal/dpa",
       "page:/security",
-      "page:/legal/subprocessors",
     ],
   },
 
@@ -1152,6 +1156,258 @@ export const blogPosts: BlogPost[] = [
       "feature:audiences",
       "page:/deliverability",
       "compare:resend-alternative",
+    ],
+  },
+
+  // ------------------------------------------- 7. opt-in vs opt-out (consent)
+  /*
+    Written against measured demand rather than a guess. Search Console shows the
+    double opt-in guide picking up impressions for sixteen distinct queries, and
+    roughly a third of them are a different question than the one that post
+    answers: whether opt-out is ever allowed, whether single opt-in is legal, and
+    what changes in Germany. Those were landing on a page about evidence and
+    ranking in the 20s to 90s. This one takes that half of the cluster so each
+    page has a single job.
+  */
+  {
+    slug: "gdpr-opt-in-vs-opt-out",
+    title: "Opt-in, opt-out and the GDPR: which one email marketing actually needs",
+    published: "2026-09-09",
+    updated: "2026-09-09",
+    readMinutes: 8,
+    topic: "Compliance",
+    metaTitle: "Opt-in vs opt-out under the GDPR: what email needs",
+    metaDescription:
+      "Opt-out is not consent under the GDPR, and two separate laws govern marketing email. What single opt-in does and does not satisfy, plus where Germany differs.",
+    keywords: [
+      "gdpr opt in or opt out",
+      "opt in vs opt out gdpr",
+      "single opt in gdpr",
+      "gdpr newsletter opt in",
+      "double opt in germany",
+      "soft opt in existing customers",
+      "eprivacy article 13 consent",
+    ],
+    summary:
+      "Marketing email in the EU is governed by two laws at once: the GDPR sets what consent has to look like, and the ePrivacy Directive sets when you need it. Opt-out fails the first. Single opt-in can satisfy both on paper, and still leave you unable to prove it.",
+    keyTakeaways: [
+      "Opt-out is not consent. Recital 32 of the GDPR rules out silence, pre-ticked boxes and inactivity explicitly.",
+      "Two laws apply, not one. The GDPR defines consent (Article 4(11)); the ePrivacy Directive Article 13 decides when marketing email needs it.",
+      "The soft opt-in in Article 13(2) is the one narrow exception: existing customers, similar products, an opt-out offered every time.",
+      "Single opt-in can be lawful consent. It is just weak evidence of it, which is a separate problem from legality.",
+      "Germany is the strictest common case. Courts there put the burden of proof on the sender, and double opt-in is the accepted way to carry it.",
+      "ePrivacy is a directive, so it is implemented country by country. The GDPR is a regulation and applies directly.",
+      "This is a description of the rules, not legal advice. Get advice for your own situation.",
+    ],
+    sections: [
+      {
+        heading: "Why two laws govern one email",
+        blocks: [
+          {
+            kind: "p",
+            text: "Most confusion about email consent comes from treating the GDPR as the only rule in play. It is not, and the two laws that apply answer different questions.",
+          },
+          {
+            kind: "p",
+            text: "The GDPR tells you what consent has to look like when you rely on it. The ePrivacy Directive (2002/58/EC), as amended, tells you when unsolicited marketing by electronic mail needs consent at all. Article 13(1) sets the default: prior consent. So the GDPR supplies the definition and ePrivacy supplies the trigger.",
+          },
+          {
+            kind: "p",
+            text: "The practical consequence is that a lawful basis you might reach for elsewhere in the GDPR does not automatically release you from Article 13. Legitimate interest under Article 6(1)(f) is a real basis for plenty of processing, but it does not substitute for the consent Article 13 asks for before you send marketing email to someone who never asked for it. Whether it ever can is genuinely contested and varies by member state; treat anyone who states it flatly either way with suspicion.",
+          },
+          {
+            kind: "note",
+            title: "Not legal advice",
+            text: "This is a plain-language description of what the rules say and how it maps onto a signup form. Your obligations depend on where you and your subscribers are, what you send, and how you got the addresses. Ask a lawyer about your specific case.",
+          },
+        ],
+      },
+      {
+        heading: "Opt-out is not consent, and the text says so",
+        blocks: [
+          {
+            kind: "p",
+            text: "Article 4(11) requires a \"clear affirmative action\". Recital 32 then removes any remaining ambiguity by naming what does not count: \"Silence, pre-ticked boxes or inactivity should not therefore constitute consent.\"",
+          },
+          {
+            kind: "p",
+            text: "This is why an opt-out model fails. A checkbox already ticked when the page loads, a line of small print saying you will be added unless you object, an unticked box that adds you anyway: none of these produce an affirmative action, so none of them produce consent. The Court of Justice settled the pre-ticked case directly in Planet49 (C-673/17).",
+          },
+          {
+            kind: "p",
+            text: "The same recital rules out bundling. Consent has to be specific, so a single box covering account terms and marketing at once does not give you consent to market. Separate the two and you have a defensible record; combine them and you have neither.",
+          },
+          {
+            kind: "table",
+            caption: "What a signup pattern actually gets you",
+            head: ["Pattern", "Valid consent?"],
+            rows: [
+              [
+                "Unticked box the person ticks themselves",
+                "Yes. This is the affirmative action Article 4(11) describes",
+              ],
+              [
+                "Pre-ticked marketing box",
+                "No. Recital 32 and Planet49 (C-673/17) both rule it out",
+              ],
+              [
+                "No box, small print saying you may object later",
+                "No. Inactivity is named in Recital 32 as insufficient",
+              ],
+              [
+                "One box covering terms and marketing together",
+                "No. Consent must be specific, so bundling defeats it",
+              ],
+              [
+                "Existing customer, similar product, opt-out in every send",
+                "Consent not required. This is the ePrivacy Article 13(2) soft opt-in",
+              ],
+            ],
+          },
+        ],
+      },
+      {
+        heading: "The soft opt-in, and its real limits",
+        blocks: [
+          {
+            kind: "p",
+            text: "Article 13(2) of the ePrivacy Directive carves out one exception. Where you obtained the address in the context of a sale, you may market your own similar products and services to that customer without fresh consent, provided you gave them a clear chance to object when you collected it and in every message since.",
+          },
+          {
+            kind: "p",
+            text: "Every clause in that sentence does work, and the exception is narrower than most people using it assume:",
+          },
+          {
+            kind: "list",
+            items: [
+              "\"In the context of a sale\" means a customer, or at minimum someone who began a purchase. A newsletter signup is not a sale, and neither is a free trial in most readings.",
+              "\"Similar products\" means adjacent to what they bought, not everything you sell. A new product line in a different category is a stretch.",
+              "\"Own\" excludes marketing on behalf of anyone else. You cannot lend the exception to a partner.",
+              "The opt-out has to be offered at collection and in every single message, which in email means the unsubscribe mechanics you would need anyway.",
+              "It is an ePrivacy exception, not a GDPR one. You still need a lawful basis, a retention position, and the ability to honour the rest of the regulation.",
+            ],
+          },
+          {
+            kind: "p",
+            text: "Because ePrivacy is a directive rather than a regulation, each member state implemented it in its own law, and the soft opt-in is one of the places they diverge. Some restrict it to natural persons, others extend the logic to B2B differently. If you are relying on it across the EU, it is worth knowing which implementations you are relying on.",
+          },
+        ],
+      },
+      {
+        heading: "Single opt-in: lawful, and hard to prove",
+        blocks: [
+          {
+            kind: "p",
+            text: "Nothing in either law names double opt-in, so single opt-in is not automatically unlawful. Someone typing their address into an unticked, unbundled form and submitting it has taken a clear affirmative action. On the face of it, that is consent.",
+          },
+          {
+            kind: "p",
+            text: "The problem arrives with Article 7(1), which requires that you be able to demonstrate consent. A single opt-in record shows that somebody using some browser submitted this address. It does not show that the person who submitted it controls the mailbox, and that gap is exactly what a complaint puts pressure on. [What you actually have to record](/blog/gdpr-double-opt-in) covers the fields that close it.",
+          },
+          {
+            kind: "p",
+            text: "So the honest framing is that single opt-in is a legality question you probably pass and an evidence question you probably fail. Double opt-in is not a stricter reading of the law; it is the cheapest way to make the evidence question go away, and it removes the typos, malicious signups and spam traps that damage your sending reputation regardless of which law applies.",
+          },
+        ],
+      },
+      {
+        heading: "Where Germany differs",
+        blocks: [
+          {
+            kind: "p",
+            text: "\"Double opt-in Germany\" is a common search for a reason. German law on unsolicited advertising sits in the Act Against Unfair Competition (UWG), where section 7 treats marketing email without express prior consent as an unreasonable nuisance, actionable by competitors and consumer associations rather than only by a regulator.",
+          },
+          {
+            kind: "p",
+            text: "That enforcement route is what changes the calculation. German courts have consistently placed the burden of proving consent on the sender, and double opt-in is the method they accept as discharging it. The Federal Court of Justice addressed the mechanism directly in a 2011 decision (I ZR 164/09). No statute writes the phrase \"double opt-in\" into German law; the case law simply makes it the practical standard for anyone who might have to prove consent in a German court.",
+          },
+          {
+            kind: "p",
+            text: "Austria takes a comparably strict line through its telecommunications law, and several other member states sit somewhere between the German position and the directive's baseline. If any meaningful share of your list is German, double opt-in is the sensible default, and it is why day3 does it by default everywhere rather than making it a per-country setting.",
+          },
+          {
+            kind: "note",
+            title: "\"RGPD\" is the same law",
+            text: "RGPD is simply the GDPR's name in French, Spanish and Portuguese (Règlement général sur la protection des données, and so on). There is no separate French or Spanish consent regulation to comply with; the divergence between countries comes from their ePrivacy implementations, not from the GDPR itself.",
+          },
+        ],
+      },
+      {
+        heading: "What this means for a signup form",
+        blocks: [
+          {
+            kind: "p",
+            text: "Translated into decisions you actually make when building the form:",
+          },
+          {
+            kind: "steps",
+            items: [
+              "Never pre-tick. If there is a marketing checkbox, it loads empty.",
+              "Keep marketing separate from terms. One box, one purpose.",
+              "Say what they are subscribing to, in words next to the button, and store that wording rather than a version number that will outlive its meaning.",
+              "Confirm the address before you send anything else to it, so your record covers the mailbox owner and not just the browser.",
+              "Store the timestamp, the wording shown, and the source. These are what Article 7(1) turns into a question later.",
+              "Put withdrawal in every message. Article 7(3) requires it to be as easy as giving consent, which is a direct argument for one-click unsubscribe.",
+              "Keep the consent record after an unsubscribe. Deleting it destroys your evidence that the earlier sending was lawful.",
+            ],
+          },
+          {
+            kind: "p",
+            text: "The last one catches people out, because it looks like the opposite of a deletion right. An unsubscribe withdraws consent to send; it is not automatically an erasure request, and honouring it by deleting the record leaves you unable to account for what you sent before. Suppression rather than deletion is the usual answer.",
+          },
+        ],
+      },
+      {
+        heading: "How day3 handles it",
+        blocks: [
+          {
+            kind: "p",
+            text: "day3's signup forms are double opt-in by default, and the confirmation is not optional plumbing you can switch off to grow a list faster. The consent record stores the timestamp, the exact wording shown at signup, and the source, which are the three fields an Article 7(1) question comes down to.",
+          },
+          {
+            kind: "p",
+            text: "Unsubscribing is one click and honours RFC 8058, so the mailbox provider's own unsubscribe button works rather than routing someone through a preferences page designed to talk them out of it. Withdrawal lands in suppression, not deletion, so the address stops receiving mail while the record of what it once agreed to stays intact.",
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Does the GDPR allow opt-out for email marketing?",
+        a: "No. Recital 32 explicitly rules out silence, pre-ticked boxes and inactivity, so an opt-out model does not produce the clear affirmative action Article 4(11) requires. Separately, Article 13 of the ePrivacy Directive requires prior consent for unsolicited marketing email in the first place.",
+      },
+      {
+        q: "Is single opt-in legal under the GDPR?",
+        a: "It can be. An unticked, unbundled form that someone submits themselves is an affirmative action. The difficulty is Article 7(1), which requires you to be able to demonstrate consent, and a single opt-in record cannot show that the person who typed the address controls the mailbox.",
+      },
+      {
+        q: "Is double opt-in legally required in Germany?",
+        a: "No statute names it, but German courts place the burden of proving consent on the sender and accept double opt-in as the way to discharge it, with the Federal Court of Justice addressing the mechanism in I ZR 164/09 (2011). Because section 7 UWG lets competitors and consumer associations bring claims, the practical standard is stricter than the directive's baseline.",
+      },
+      {
+        q: "Can I email existing customers without consent?",
+        a: "Sometimes, under the ePrivacy Article 13(2) soft opt-in: your own similar products, to someone whose address you got in the context of a sale, with a clear chance to object at collection and in every message. Each of those conditions is narrow, and member states implemented the exception differently.",
+      },
+      {
+        q: "Can legitimate interest replace consent for marketing email?",
+        a: "Not straightforwardly. Legitimate interest under Article 6(1)(f) is a GDPR lawful basis, but the consent requirement for unsolicited marketing email comes from Article 13 of the ePrivacy Directive, which the GDPR does not displace. How much room this leaves, particularly for B2B, is contested and varies by member state.",
+      },
+      {
+        q: "Is RGPD a different law from the GDPR?",
+        a: "No. RGPD is the same regulation under its French, Spanish and Portuguese name. Differences between countries come from their national implementations of the ePrivacy Directive, not from the GDPR, which applies directly across the EU.",
+      },
+      {
+        q: "Should I delete the consent record when someone unsubscribes?",
+        a: "Generally no. An unsubscribe withdraws consent to receive further email; it is not automatically an erasure request. Deleting the record removes your evidence that the earlier sending was lawful, so suppression rather than deletion is the usual approach.",
+      },
+    ],
+    related: [
+      "blog:gdpr-double-opt-in",
+      "page:/gdpr",
+      "feature:signup-forms",
+      "blog:one-click-unsubscribe-rfc-8058",
+      "page:/legal/dpa",
+      "page:/security",
     ],
   },
 ];

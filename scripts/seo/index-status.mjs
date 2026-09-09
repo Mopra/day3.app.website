@@ -1,12 +1,17 @@
 // Index coverage. Asks Search Console what it actually did with every sitemap URL.
 //
 // Impressions tell you what ranks; this tells you what Google even *has*. A new
-// site's real bottleneck is usually "Discovered – currently not indexed", which
+// site's real bottleneck is usually "Discovered - currently not indexed", which
 // no amount of content work fixes.
 //
 // Run: npm run seo:index
 
+import { writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import { GoogleAuth } from 'google-auth-library';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const SITE = process.env.GSC_SITE_URL;
 const KEY = process.env.GOOGLE_APPLICATION_CREDENTIALS;
@@ -40,18 +45,42 @@ async function inspect(inspectionUrl) {
 }
 
 const buckets = new Map();
-for (const url of urls) {
+for (const [i, url] of urls.entries()) {
   // Serial + spaced: the inspection endpoint is heavily rate-limited (~600/min).
   const r = await inspect(url).catch((e) => ({ verdict: 'ERROR', coverageState: e.message }));
   const state = r.coverageState || r.verdict || 'UNKNOWN';
   buckets.set(state, [...(buckets.get(state) || []), url.replace(origin, '') || '/']);
-  process.stdout.write('.');
+  /*
+    A whole-line progress counter rather than a bare dot per URL. The dots were
+    written without a newline, so when this script's output was piped or
+    redirected the largest bucket's heading ended up appended to the dot line and
+    was lost, which made the report unreadable exactly when it was being captured.
+  */
+  console.log(`[${String(i + 1).padStart(3)}/${urls.length}] ${state}  ${url.replace(origin, '') || '/'}`);
   await new Promise((r) => setTimeout(r, 120));
 }
 
-console.log('\n');
-for (const [state, list] of [...buckets].sort((a, b) => b[1].length - a[1].length)) {
-  console.log(`${list.length.toString().padStart(3)}  ${state}`);
-  for (const u of list) console.log(`     ${u}`);
-  console.log('');
+const ordered = [...buckets].sort((a, b) => b[1].length - a[1].length);
+
+const lines = [];
+lines.push(`# Index coverage: ${origin}`);
+lines.push('');
+lines.push(`_${urls.length} sitemap URLs, inspected ${new Date().toISOString().slice(0, 10)}._`);
+lines.push('');
+lines.push('Impressions tell you what ranks; this tells you what Google even has.');
+lines.push('');
+for (const [state, list] of ordered) {
+  lines.push(`## ${state} (${list.length})`);
+  lines.push('');
+  for (const u of list) lines.push(`- ${u}`);
+  lines.push('');
 }
+
+const out = join(__dirname, 'output', `index-${new Date().toISOString().slice(0, 10)}.md`);
+writeFileSync(out, lines.join('\n'), 'utf8');
+
+console.log('');
+for (const [state, list] of ordered) {
+  console.log(`${list.length.toString().padStart(3)}  ${state}`);
+}
+console.log(`\n✔ Full report written to ${out}`);

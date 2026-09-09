@@ -4,6 +4,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import "./globals.css";
 
+import { CtaTracking } from "@/components/analytics/cta-tracking";
 import { siteConfig } from "@/lib/site";
 
 const geist = Geist({
@@ -84,6 +85,8 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        {/* Fires signup_click / login_click and tags every outbound app link. */}
+        <CtaTracking />
         {/* Opens the subscribe popup once when a visitor moves to leave, site-wide. */}
         <div
           hidden

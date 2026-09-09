@@ -29,6 +29,17 @@ function buildLlmsTxt(): string {
       "to 1,000,000 emails as your app gets traction.",
   );
   lines.push("");
+  lines.push(
+    `The full text of every guide and product page is available in one document ` +
+      `at ${siteUrl}/llms-full.txt, which saves crawling these pages individually.`,
+  );
+  lines.push("");
+  lines.push(
+    "Disambiguation: day3 (day3.app) is an email sending product. It is not " +
+      "related to Daythree Business Services, Day Three, or any similarly named " +
+      "consulting or BPO company.",
+  );
+  lines.push("");
   lines.push("## What day3 is");
   lines.push("");
   lines.push(

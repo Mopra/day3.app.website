@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 
 /**
  * A deliberately small Markdown renderer for the subset that shows up in GitHub
@@ -15,6 +16,11 @@ const INLINE =
 const linkClass =
   "font-medium text-foreground underline underline-offset-4 hover:text-caramel";
 
+/** Same-site links, written as a path or an absolute day3.app URL. */
+function isInternal(href: string): boolean {
+  return href.startsWith("/") || href.startsWith("https://day3.app/");
+}
+
 function renderInline(text: string): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
   let lastIndex = 0;
@@ -28,10 +34,24 @@ function renderInline(text: string): React.ReactNode[] {
     }
     const [, linkText, linkUrl, bold, code, bareUrl] = match;
     if (linkUrl) {
+      /*
+        Internal links are routed through next/link and stay in the tab. This
+        used to send every link to a new tab, which was right for the release
+        notes this renderer was written for and wrong everywhere else it is now
+        used: the guides render their body text through here, and an in-content
+        link to another guide is both better navigation and a stronger internal
+        linking signal than a related-links block at the foot of the page.
+      */
       nodes.push(
-        <a key={key++} href={linkUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
-          {linkText}
-        </a>,
+        isInternal(linkUrl) ? (
+          <Link key={key++} href={linkUrl} className={linkClass}>
+            {linkText}
+          </Link>
+        ) : (
+          <a key={key++} href={linkUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+            {linkText}
+          </a>
+        ),
       );
     } else if (bold) {
       nodes.push(

@@ -5,11 +5,30 @@ an opportunities report to `scripts/seo/output/` (gitignored).
 
 The report is built around *what to do*, not raw rows:
 
-- **Striking distance**: queries ranking 5–20 with real impressions (push to page 1)
+- **Brand collision vs category demand**: the split to read first, see below
+- **Category queries**: the real signal, with brand collisions removed
+- **Striking distance**: queries ranking 5 to 20 with real impressions (push to page 1)
 - **Title/meta rewrites**: high impressions but CTR below what the position should earn
 - **Content gaps**: demand exists but only the homepage ranks, or the best page sits past #15 (build/strengthen a page)
 - **Movers**: biggest click swings vs the previous equal window
 - **Top queries / pages** and **GA4 channels / landing pages** for context
+
+## Two things that will mislead you if you forget them
+
+**1. Most impressions are not ours.** "day3" reads as a date, and there is an unrelated
+BPO called Daythree. Over a recent 90-day window, 859 of 912 impressions were queries
+meant for something else, which drags site-wide CTR to ~0.7% while the pages ranking for
+real questions sit in a normal range. The report splits this out and lists the category
+queries separately; **track the category row, not the total.** The pattern lives in
+`BRAND_NOISE` in `pull-seo.mjs`, and the opportunity lists all exclude it. Their
+impression thresholds are deliberately low (2 to 10) because real category demand here is
+single-digit impressions per query.
+
+**2. The GSC property covers every subdomain.** `sc-domain:day3.app` includes the app at
+`go.day3.app`, whose auth pages were ~27% of all impressions and showed up in "top pages"
+as `/login` and `/sign-up` once the origin was stripped. Page-level data is filtered to
+`day3.app` by default; set `SEO_HOST=all` to see everything, or `SEO_HOST=go.day3.app` to
+look at the app on its own.
 
 ## Setup
 
@@ -50,6 +69,7 @@ GA4_PROPERTY_ID=123456789
 # optional
 SEO_DAYS=28
 SEO_COUNTRY=usa
+SEO_HOST=day3.app
 ```
 
 > `GSC_SITE_URL` is `sc-domain:day3.app` for a Domain property, or the exact URL-prefix
@@ -63,6 +83,38 @@ npm run seo
 
 Writes `scripts/seo/output/seo-YYYY-MM-DD.md` and prints a summary. Either source is optional;
 set only `GSC_SITE_URL` or only `GA4_PROPERTY_ID` to pull just one.
+
+### Index coverage
+
+```
+npm run seo:index
+```
+
+Asks Search Console what it actually did with every sitemap URL and writes
+`output/index-YYYY-MM-DD.md`. This is the one that catches the problems no amount of
+content work fixes. As of 2026-09-09: 39 indexed, `/pricing` and `/compare` **unknown to
+Google**, `/deliverability` discovered but not indexed. Two of the three commercial hubs
+have never been crawled while every leaf page beneath them is indexed, which is a
+crawl-budget symptom on a low-authority domain, not a config bug: all three are in the
+nav, in the sitemap, return 200, and carry correct canonicals.
+
+Takes a few minutes; the inspection endpoint is rate-limited and this calls it serially.
+
+### IndexNow (Bing, Yandex, Seznam, Naver)
+
+```
+npm run seo:indexnow                        # everything in the sitemap
+npm run seo:indexnow -- /pricing /compare   # just the paths you changed
+```
+
+Pushes URLs instead of waiting to be crawled. Google ignores IndexNow, so this is not a
+fix for the pages above, but it is free everywhere else, and Bing is what several AI
+answer engines index from, a channel that already shows day3's best engagement rate.
+
+The key lives in `src/lib/indexnow.ts` and must be served as `public/<key>.txt` containing
+exactly the key. The script verifies that file is live before submitting, because
+otherwise IndexNow rejects the whole batch with a bare 403. Prefer passing the specific
+paths you touched: re-submitting unchanged URLs at volume is discouraged.
 
 ## Note on the shared key
 
