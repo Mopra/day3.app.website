@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 import { Container } from "@/components/marketing/container";
 import { SiteHeader } from "@/components/marketing/site-header";
@@ -74,9 +75,9 @@ export default function ChangelogPage() {
                   <Reveal delay={80}>
                     <div>
                       {/*
-                        The title is the permalink. Each entry has its own
-                        indexable page at /changelog/<slug>, which is what turns
-                        the changelog from one URL into a growing archive.
+                        The title links to the entry's own page. Each entry has
+                        an indexable page at /changelog/<slug>, which is what
+                        turns the changelog from one URL into a growing archive.
                       */}
                       <h2 className="font-display text-2xl text-foreground">
                         <Link
@@ -105,9 +106,11 @@ export default function ChangelogPage() {
                       </ul>
                       <Link
                         href={`/changelog/${entry.slug}`}
-                        className="mt-4 inline-block rounded text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        className="mt-4 inline-flex items-center gap-1.5 rounded text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       >
-                        Permalink
+                        Read the full update
+                        <ArrowRight aria-hidden="true" className="size-3.5" />
+                        <span className="sr-only">: {entry.title}</span>
                       </Link>
                     </div>
                   </Reveal>
