@@ -6,16 +6,14 @@ import { Container } from "@/components/marketing/container";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
 import { Reveal } from "@/components/marketing/reveal";
-import { MarkdownLite } from "@/components/marketing/markdown-lite";
 import { JsonLd, breadcrumbSchema } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
-import { getReleases } from "@/lib/changelog";
 import { changelogEntries } from "@/lib/changelog-content";
 
 export const metadata: Metadata = buildMetadata({
   title: "Changelog: what's new in day3",
   description:
-    "The running log of what day3 has shipped: the public API, AI drafting on every paid plan, scheduling, signup forms, and automatic domain authentication.",
+    "The running log of what day3 has shipped: automations in preview, webhooks, a transactional email API, an MCP server, the public API, and automatic domain authentication.",
   path: "/changelog",
   ogEyebrow: "Changelog",
   ogTitle: "What's new in day3",
@@ -27,15 +25,10 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-// Rebuild hourly so newly published GitHub Releases appear without a redeploy.
-export const revalidate = 3600;
-
 const rowClass =
   "grid gap-2 border-b border-border py-10 first:pt-0 last:border-b-0 sm:grid-cols-[10rem_1fr] sm:gap-8";
 
-export default async function ChangelogPage() {
-  const releases = await getReleases();
-
+export default function ChangelogPage() {
   return (
     <>
       <JsonLd
@@ -67,104 +60,60 @@ export default async function ChangelogPage() {
         {/* ----------------------------------------------------- Entries */}
         <section>
           <Container className="py-16 sm:py-20">
-            {releases.length > 0 ? (
-              <ol className="mx-auto max-w-3xl">
-                {releases.map((release) => (
-                  <li key={release.version || release.isoDate} className={rowClass}>
-                    <Reveal>
-                      <time
-                        dateTime={release.isoDate}
-                        className="text-sm font-medium text-muted-foreground sm:pt-1"
-                      >
-                        {release.date}
-                      </time>
-                    </Reveal>
-                    <Reveal delay={80}>
-                      <div>
-                        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                          <h2 className="font-display text-2xl text-foreground">
-                            {release.title}
-                          </h2>
-                          {release.version && release.version !== release.title ? (
-                            <span className="text-sm text-muted-foreground">
-                              {release.version}
-                            </span>
-                          ) : null}
-                        </div>
-                        {release.body ? (
-                          <div className="mt-4">
-                            <MarkdownLite>{release.body}</MarkdownLite>
-                          </div>
-                        ) : null}
-                        <a
-                          href={release.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-4 inline-block rounded text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                        >
-                          View release on GitHub →
-                        </a>
-                      </div>
-                    </Reveal>
-                  </li>
-                ))}
-              </ol>
-            ) : (
-              <ol className="mx-auto max-w-3xl">
-                {changelogEntries.map((entry) => (
-                  <li key={entry.slug} className={rowClass}>
-                    <Reveal>
-                      <time
-                        dateTime={entry.isoDate}
-                        className="text-sm font-medium text-muted-foreground sm:pt-1"
-                      >
-                        {entry.date}
-                      </time>
-                    </Reveal>
-                    <Reveal delay={80}>
-                      <div>
-                        {/*
-                          The title is the permalink. Each curated entry has its
-                          own indexable page at /changelog/<slug>, which is what
-                          turns the changelog from one URL into a growing archive.
-                        */}
-                        <h2 className="font-display text-2xl text-foreground">
-                          <Link
-                            href={`/changelog/${entry.slug}`}
-                            className="rounded transition-colors hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                          >
-                            {entry.title}
-                          </Link>
-                        </h2>
-                        <p className="mt-3 leading-relaxed text-muted-foreground">
-                          {entry.summary}
-                        </p>
-                        <ul className="mt-4 space-y-2.5">
-                          {entry.items.map((item) => (
-                            <li
-                              key={item}
-                              className="flex gap-3 leading-relaxed text-muted-foreground"
-                            >
-                              <span
-                                aria-hidden="true"
-                                className="mt-2.5 size-1.5 shrink-0 rounded-full bg-caramel"
-                              />
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+            <ol className="mx-auto max-w-3xl">
+              {changelogEntries.map((entry) => (
+                <li key={entry.slug} className={rowClass}>
+                  <Reveal>
+                    <time
+                      dateTime={entry.isoDate}
+                      className="text-sm font-medium text-muted-foreground sm:pt-1"
+                    >
+                      {entry.date}
+                    </time>
+                  </Reveal>
+                  <Reveal delay={80}>
+                    <div>
+                      {/*
+                        The title is the permalink. Each entry has its own
+                        indexable page at /changelog/<slug>, which is what turns
+                        the changelog from one URL into a growing archive.
+                      */}
+                      <h2 className="font-display text-2xl text-foreground">
                         <Link
                           href={`/changelog/${entry.slug}`}
-                          className="mt-4 inline-block rounded text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                          className="rounded transition-colors hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                         >
-                          Permalink
+                          {entry.title}
                         </Link>
-                      </div>
-                    </Reveal>
-                  </li>
-                ))}
-              </ol>
-            )}
+                      </h2>
+                      <p className="mt-3 leading-relaxed text-muted-foreground">
+                        {entry.summary}
+                      </p>
+                      <ul className="mt-4 space-y-2.5">
+                        {entry.items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex gap-3 leading-relaxed text-muted-foreground"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="mt-2.5 size-1.5 shrink-0 rounded-full bg-caramel"
+                            />
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Link
+                        href={`/changelog/${entry.slug}`}
+                        className="mt-4 inline-block rounded text-sm font-medium text-foreground underline underline-offset-4 hover:text-caramel focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      >
+                        Permalink
+                      </Link>
+                    </div>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
           </Container>
         </section>
       </main>

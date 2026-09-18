@@ -1,5 +1,6 @@
 import {
   Send,
+  Workflow,
   Users,
   MousePointerClick,
   ShieldCheck,
@@ -143,12 +144,119 @@ export const featurePages: FeaturePage[] = [
       },
     ],
     related: [
+      "feature:automations",
       "feature:audiences",
       "feature:ai-assist",
       "feature:metrics",
       "page:/deliverability",
-      "page:/how-it-works",
       "for:saas",
+    ],
+  },
+  {
+    slug: "automations",
+    navLabel: "Automations",
+    icon: Workflow,
+    updated: "2026-09-18",
+    metaTitle: "Email automations: welcome series and onboarding flows",
+    metaDescription:
+      "Welcome emails, onboarding series and win-back flows drawn on a canvas: triggers, sends, waits and branches. Unlimited automations on every plan. You pay for the emails, nothing else.",
+    keywords: [
+      "email automation for saas",
+      "welcome email automation",
+      "onboarding email sequence",
+      "drip email tool",
+      "lifecycle email api",
+      "trial onboarding emails",
+      "win-back email flow",
+    ],
+    eyebrow: "Automations",
+    title: "Welcome emails and onboarding flows that run themselves.",
+    summary:
+      "Draw the flow on a canvas: a trigger, the emails, the waits between them, a branch or two. Publish it, and each person who enters walks through it on their own. The newest part of day3, and labelled an early preview in the app.",
+    points: [
+      {
+        title: "Four starters, one click",
+        description:
+          "Welcome email, Welcome series, Trial onboarding, and Win back, each with draft copy already laid out. Placeholders, never borrowed content, and they cost nothing.",
+      },
+      {
+        title: "Triggered by a signup or by your code",
+        description:
+          "Start when someone joins an audience through a form, an import, a manual add or the API, optionally narrowed to one form. Or call POST /v1/automations/{id}/enroll from your app the moment a trial starts.",
+      },
+      {
+        title: "Waits that respect working hours",
+        description:
+          "Pause for minutes, hours or days, up to a year. Set a timezone and a send window on the automation, and waits clamp into it so nothing fires at 3 a.m.",
+      },
+      {
+        title: "Branches on fields or on engagement",
+        description:
+          "Route on a custom field with the same condition builder as segments, or on whether the person opened or clicked an earlier email in this flow.",
+      },
+      {
+        title: "Exit conditions that stop the nudges",
+        description:
+          "\"Stop when plan is pro\" is checked before every step, so a customer who just paid never gets three more upgrade emails. Unsubscribing or landing on the suppression list exits them instantly.",
+      },
+      {
+        title: "Unlimited flows, unlimited runs",
+        description:
+          "Every plan, including free, can build as many automations as it needs and run them for as many people as it likes. An automation email costs one email from your monthly allowance. Nothing else is metered.",
+      },
+    ],
+    deepDive: {
+      heading: "How a flow behaves once it is live",
+      paragraphs: [
+        "A campaign is one email to many people. An automation is many emails to one person at a time. Each contact who enters sits on exactly one node of the graph, and a branch sends them down exactly one exit, so there is never a \"wait for both paths\" state to reason about. Two people in the same flow can be on different steps, days apart, and neither affects the other.",
+        "Editing the canvas edits a draft. Nobody is affected until you press Publish, which validates the flow and refuses to go live with no trigger, an empty send, a branch that asks about an email no longer in the flow, or a loop with no wait of at least an hour in it. A successful publish snapshots the graph as an immutable version. People already in the flow finish on the version they entered, and new entrants take the new one, so editing a live automation can never strand someone halfway through.",
+        "Re-entry defaults to once, and the database enforces it. A contact who has been through your welcome series once will not go through it again because a CSV re-import happened to touch their row. Once-at-a-time and always are there for API events that legitimately recur. Every send node also delivers each email at most once per person unless you deliberately mark it re-sendable, because mailing someone the same thing twice by accident is the commoner bug.",
+        "When an email cannot go out, because the monthly allowance is spent or the account is paused, the person is held rather than skipped. The flow retries hourly and the People tab says why they are waiting. A step held for more than seven days is skipped as too stale and the person moves on, so an account that upgrades three weeks later does not blast a month of backed-up onboarding at once. A late welcome email is recoverable. A month-old one is spam.",
+        "An automation email is a campaign email in every respect that matters: the same footer and mailing address, one-click unsubscribe, suppression re-checked at send time, and the same open and click tracking. Each send appears in Activity under its own source filter, fires the same outbound webhooks, and counts toward the account's bounce and complaint rates like any other mail.",
+        "Early preview means this is the newest part of day3 and the edges are still being found. It is not gated and it is not a beta you opt into: what you build runs for real and sends real email, the badge in the app says so, and anything that looks wrong should go through Help. What is planned but not yet shipped: waiting for an event such as a click before branching, percentage A/B splits, writing a custom field from inside the flow, segment and topic triggers, and moving people already in flight onto a new version.",
+      ],
+    },
+    faqs: [
+      {
+        q: "What can I build with day3 automations?",
+        a: "A welcome email the moment someone confirms a signup, a multi-part onboarding series, a trial sequence that stops the day they upgrade, or a win-back nudge for people who stopped opening. Five node types cover it: trigger, send, wait, branch, and end. Loops are allowed as long as every loop passes through a wait of at least an hour.",
+      },
+      {
+        q: "What triggers an automation?",
+        a: "Two things today. A contact joining the automation's audience by any door day3 has, meaning a signup form, a manual add, a CSV import, or the contacts API, optionally narrowed to one form. Or your own code calling POST /v1/automations/{id}/enroll with an email address. Segment and topic triggers are planned.",
+      },
+      {
+        q: "Can my app start an automation when a trial begins?",
+        a: "Yes. That's what the enroll endpoint is for: your code knows when a trial started or a project was never created, and one call puts that person into the matching flow. It creates the contact if the address is new, is idempotent under an Idempotency-Key, and needs an API key minted with the automations:enroll scope, because it starts real mail to a real address.",
+      },
+      {
+        q: "Do automations cost extra?",
+        a: "No. Automations and automation runs are unlimited on every plan, including free. The only metered thing is the emails they send, which draw on the same monthly allowance as campaigns and the transactional API. There are sanity ceilings of 50 automations per account and 100 nodes per automation, the same on every tier.",
+      },
+      {
+        q: "Can an automation email someone twice by mistake?",
+        a: "Not without you asking it to. Re-entry defaults to once per person, enforced by the database, so a re-import can't restart a welcome series. Each send node delivers to a person at most once unless marked re-sendable. And every enrollment carries hard caps of 200 steps and 50 emails, after which the person is exited with the reason recorded.",
+      },
+      {
+        q: "What happens when I edit a live automation?",
+        a: "Nothing, until you publish. Edits go to a draft. Publishing creates a new immutable version: people already in the flow finish on the version they entered, and new people take the new one. You can also pause an automation, so nobody new enters, and resume it later.",
+      },
+      {
+        q: "Does the free tier include automations?",
+        a: "Yes, in sandbox mode, like everything else on the free tier. You can build and publish any flow, and it runs for real, but only your own organisation's members are enrolled and their emails count against the sandbox's 100 a month. A paid plan lifts both limits with no change to the flow.",
+      },
+      {
+        q: "What does early preview mean?",
+        a: "That automations are the newest part of day3 and have been through fewer real accounts than the rest of it. The label is an honesty notice, not a gate: nothing is limited by it, and what you build sends real email. Report anything odd through Help. Compared with a mature automation suite, the gaps are wait-for-event nodes, A/B splits, set-field steps, and segment or topic triggers, all planned but not shipped.",
+      },
+    ],
+    related: [
+      "feature:signup-forms",
+      "feature:api",
+      "feature:campaigns",
+      "for:saas",
+      "page:/how-it-works",
+      "page:/pricing",
     ],
   },
   {
@@ -305,11 +413,11 @@ export const featurePages: FeaturePage[] = [
     ],
     related: [
       "feature:audiences",
+      "feature:automations",
       "page:/gdpr",
       "page:/deliverability",
       "for:indie-developers",
       "compare:buttondown-alternative",
-      "page:/how-it-works",
     ],
   },
   {
@@ -566,6 +674,10 @@ export const featurePages: FeaturePage[] = [
         q: "Is the API on every plan?",
         a: "Yes, including free. The free tier's 500-subscriber cap applies to API writes too, so an import that would cross it is rejected whole rather than half-applied. Its sandbox sending means you can integrate the transactional API end to end before paying.",
       },
+      {
+        q: "Can my code start an email flow for one user?",
+        a: "Yes. POST /v1/automations/{id}/enroll puts one address into a published automation, creating the contact if it's new. Your app decides when a trial started or a project was never created; day3 runs the emails, the waits and the branches. It's idempotent under an Idempotency-Key and needs a key minted with the automations:enroll scope, because it starts real mail.",
+      },
     ],
     deepDive: {
       heading: "One allowance for both jobs",
@@ -578,10 +690,10 @@ export const featurePages: FeaturePage[] = [
     },
     related: [
       "compare:resend-alternative",
+      "feature:automations",
       "feature:audiences",
       "page:/deliverability",
       "for:saas",
-      "page:/security",
       "page:/pricing",
     ],
   },

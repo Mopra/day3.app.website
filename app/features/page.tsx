@@ -15,9 +15,9 @@ import { siteConfig } from "@/lib/site";
 import { featurePages } from "@/lib/features-content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Features: campaigns, audiences, forms, API",
+  title: "Features: campaigns, automations, forms, API",
   description:
-    "Campaigns, unlimited audiences, signup forms, deliverability, metrics, an AI writing assistant, and a REST API with MCP. Not the parts you'll avoid.",
+    "Campaigns, automations, unlimited audiences, signup forms, deliverability, metrics, an AI writing assistant, and a REST API with MCP. Not the parts you'll avoid.",
   path: "/features",
   ogEyebrow: "Features",
   ogTitle: "Everything day3 does, and what it doesn't",
@@ -37,12 +37,8 @@ export const metadata: Metadata = buildMetadata({
  */
 const omissions = [
   {
-    title: "No automation flows",
-    body: "No onboarding drips, trial nurture, or win-back sequences. Triggers, waits and branches are designed but not shipped, so don't pick day3 on the strength of them.",
-  },
-  {
     title: "No A/B testing",
-    body: "No split tests on subject lines or send times. For a changelog going to your whole user base there isn't much to split.",
+    body: "No split tests on subject lines, send times, or automation paths. For a changelog going to your whole user base there isn't much to split.",
   },
   {
     title: "No drag-and-drop template builder",
@@ -152,8 +148,10 @@ export default function FeaturesPage() {
                 ))}
               </ul>
               <p className="mt-8 text-sm leading-relaxed text-muted-foreground">
-                Automations, meaning triggers, waits and branches, are designed but
-                not shipped. Everything on the cards above works today.
+                Everything on the cards above works today. Automations are the
+                newest of them and carry an early preview label in the app: they
+                run for real and send real email, and the rough edges are still
+                being found.
               </p>
             </div>
           </Container>

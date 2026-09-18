@@ -38,3 +38,6 @@ scripts/seo/output/
 
 # typescript
 *.tsbuildinfo
+
+# claude code — personal, machine-local permissions
+.claude/settings.local.json

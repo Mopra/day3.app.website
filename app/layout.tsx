@@ -87,13 +87,6 @@ export default function RootLayout({
         {children}
         {/* Fires signup_click / login_click and tags every outbound app link. */}
         <CtaTracking />
-        {/* Opens the subscribe popup once when a visitor moves to leave, site-wide. */}
-        <div
-          hidden
-          data-day3-form={siteConfig.subscribeFormId}
-          data-day3-mode="popup"
-          data-day3-trigger="exit-intent"
-        />
       </body>
       {/* Powers the day3 subscribe popup wherever a SubscribeButton appears. */}
       <Script src={siteConfig.embedScriptUrl} strategy="afterInteractive" />

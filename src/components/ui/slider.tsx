@@ -11,6 +11,8 @@ import { cn } from "@/lib/utils";
 // through.
 function Slider<Value extends number | readonly number[]>({
   className,
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
   ...props
 }: SliderPrimitive.Root.Props<Value>) {
   return (
@@ -25,7 +27,14 @@ function Slider<Value extends number | readonly number[]>({
               the short ease also smooths the discrete step-to-step jumps while
               dragging. */}
           <SliderPrimitive.Indicator className="rounded-full bg-caramel transition-[width] duration-300 ease-out" />
-          <SliderPrimitive.Thumb className="size-5 rounded-full border-2 border-caramel bg-card shadow-sm outline-none transition-[inset-inline-start,scale,box-shadow] duration-300 ease-out focus-visible:ring-3 focus-visible:ring-ring/50 data-dragging:scale-110" />
+          {/* The label belongs on the thumb, not the root: Base UI renders the
+              real <input type="range"> inside the thumb, so a name on the root
+              div never reaches the control a screen reader announces. */}
+          <SliderPrimitive.Thumb
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            className="size-5 rounded-full border-2 border-caramel bg-card shadow-sm outline-none transition-[inset-inline-start,scale,box-shadow] duration-300 ease-out focus-visible:ring-3 focus-visible:ring-ring/50 data-dragging:scale-110"
+          />
         </SliderPrimitive.Track>
       </SliderPrimitive.Control>
     </SliderPrimitive.Root>

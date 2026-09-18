@@ -82,7 +82,7 @@ const faqs = [
   },
   {
     q: "What counts as one send?",
-    a: "One email to one subscriber. A campaign to 1,000 subscribers is 1,000 sends against your monthly allotment. Transactional email through the API counts the same way, out of the same allowance.",
+    a: "One email to one subscriber. A campaign to 1,000 subscribers is 1,000 sends against your monthly allotment. Transactional email through the API and emails sent by an automation count the same way, out of the same allowance. The automation itself, its steps and the people in it cost nothing.",
   },
   {
     q: "What happens if I hit my monthly limit?",

@@ -222,7 +222,7 @@ const coreFeatures = [
   },
   {
     title: "The campaign side too",
-    description: "Audiences, forms, topics, and a composer for the changelog.",
+    description: "Audiences, forms, topics, automations, and a composer for the changelog.",
     icon: PenLine,
   },
 ];
@@ -260,7 +260,7 @@ const faqs = [
   },
   {
     q: "Who is day3 the wrong tool for?",
-    a: "Anyone who needs lifecycle automation today: triggers, waits and branches are designed but not shipped. Teams whose templates live as React Email components in the repo, since those get rebuilt in the composer rather than imported. And marketing teams wanting A/B tests, funnels or landing pages. If you need a marketing platform, buy a marketing platform.",
+    a: "Teams whose templates live as React Email components in the repo, since those get rebuilt in the composer rather than imported. Marketing teams wanting A/B tests, funnels or landing pages. And anyone who needs a mature automation suite today: day3's automations ship, with triggers, waits and branches and an enroll endpoint for your own events, but they're an early preview without A/B splits or wait-for-event steps. If you need a marketing platform, buy a marketing platform.",
   },
 ];
 
@@ -445,14 +445,16 @@ export default function EmailApiLandingPage() {
             </Reveal>
 
             {/*
-              Labelled, not teased. Saying "in development" costs nothing and
-              buys the reader's trust in every other claim on the page.
+              Labelled, not hidden. Automations ship, with an early preview badge
+              in the app, and the enroll endpoint is the part a developer on this
+              page cares about: their code fires the event, day3 runs the emails.
             */}
             <Reveal delay={200}>
               <p className="mt-6 text-sm text-muted-foreground">
                 <span className="font-medium text-foreground">Automations</span>{" "}
-                are in development: triggers, waits, and branches. Everything
-                else on this page ships today.
+                are an early preview: POST /v1/automations/&#123;id&#125;/enroll
+                puts one user into a published flow when your app says a trial
+                started. Everything else on this page has shipped for a while.
               </p>
             </Reveal>
           </Container>

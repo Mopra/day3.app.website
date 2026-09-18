@@ -9,7 +9,9 @@ import {
   PenLine,
   Send,
   ShieldCheck,
+  Sparkles,
   Users,
+  Workflow,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -30,6 +32,7 @@ import { PanelBuildMode } from "@/components/marketing/panel-build-mode";
 import { PanelDnsSync } from "@/components/marketing/panel-dns-sync";
 import { PanelSending } from "@/components/marketing/panel-sending";
 import { PanelActivity } from "@/components/marketing/panel-activity";
+import { PanelAutomation } from "@/components/marketing/panel-automation";
 import {
   JsonLd,
   faqSchema,
@@ -132,6 +135,12 @@ const painBlocks = [
     body: "Delivered, opened, clicked, bounced, all searchable per person. Bad addresses suppress themselves, so one dead list doesn't cost you the inbox.",
     Panel: PanelActivity,
   },
+  {
+    pain: "New signups should get a welcome email. I keep forgetting to send it.",
+    title: "Welcome emails that send themselves.",
+    body: "Draw a trigger, an email, a wait and a branch on a canvas. Publish, and each new signup walks through it on their own. Unlimited flows on every plan. You pay for the emails.",
+    Panel: PanelAutomation,
+  },
 ];
 
 /**
@@ -206,10 +215,11 @@ const faqs = [
 ];
 
 /**
- * Six, not four. Transactional email and the API earned cards of their own the
- * moment they became things day3 leads with, and a reader scanning this grid
- * should not have to reach the hero's fine print to find them. One line each: a
- * grid people scan is a grid that answers "is my job in here", nothing more.
+ * Eight, in two rows of four. Transactional email and the API earned cards of
+ * their own the moment they became things day3 leads with, and automations and
+ * the AI assistant joined them once they shipped: a reader scanning this grid
+ * should not have to reach a footnote to find them. One line each: a grid
+ * people scan is a grid that answers "is my job in here", nothing more.
  */
 const coreFeatures = [
   {
@@ -221,6 +231,11 @@ const coreFeatures = [
     title: "Grow your audience",
     description: "Import contacts; publish forms as pages, embeds, or popups.",
     icon: Users,
+  },
+  {
+    title: "Automations",
+    description: "Welcome series and onboarding flows that run themselves.",
+    icon: Workflow,
   },
   {
     title: "Transactional email",
@@ -241,6 +256,11 @@ const coreFeatures = [
     title: "API and MCP",
     description: "Manage lists from code. Draft campaigns in your editor.",
     icon: Code2,
+  },
+  {
+    title: "AI assist",
+    description: "Drafts, subject lines, rewrites. On every paid plan.",
+    icon: Sparkles,
   },
 ];
 
@@ -409,7 +429,7 @@ export default function HomePage() {
             <Reveal>
               <SectionHeading title="The parts you need. Not the parts you'll avoid." />
             </Reveal>
-            <Reveal delay={120} className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+            <Reveal delay={120} className="mt-12 grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
               {coreFeatures.map((feature) => {
                 const Icon = feature.icon;
                 return (
@@ -430,16 +450,23 @@ export default function HomePage() {
             </Reveal>
 
             {/*
-              Labelled, not teased. Saying "in development" costs nothing and
-              buys the reader's trust in every other claim on the page. And the
-              people who need automation now can go and buy it elsewhere instead
-              of signing up and discovering the gap.
+              Labelled, not hidden. This line used to say automations were in
+              development. Now they ship, but with an early preview badge in
+              the app, and saying so here costs nothing and buys the reader's
+              trust in every other claim on the page.
             */}
             <Reveal delay={200}>
               <p className="mt-6 text-sm text-muted-foreground">
                 <span className="font-medium text-foreground">Automations</span>{" "}
-                are in development: triggers, waits, and branches. Everything
-                else on this page ships today.
+                are the newest part of day3 and carry an early preview label in
+                the app. They run for real and send real email.{" "}
+                <Link
+                  href="/features/automations"
+                  className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                >
+                  How they work
+                </Link>
+                .
               </p>
             </Reveal>
           </Container>

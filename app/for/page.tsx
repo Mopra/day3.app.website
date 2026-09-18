@@ -62,7 +62,7 @@ const faqs = [
   },
   {
     q: "Who is day3 not for?",
-    a: "Marketing teams running funnels, and agencies managing client accounts. There's no A/B testing, no CRM, no landing pages, no multi-account layer, and automations are designed but not shipped. If you need a marketing platform, buy a marketing platform.",
+    a: "Marketing teams running funnels, and agencies managing client accounts. There's no A/B testing, no CRM, no landing pages, and no multi-account layer. Automations exist, for welcome series and onboarding, but they're an early preview rather than a full lifecycle suite. If you need a marketing platform, buy a marketing platform.",
   },
   {
     q: "Do I need to be a developer to use day3?",

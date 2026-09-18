@@ -2,6 +2,7 @@ import { siteUrl } from "@/lib/seo";
 import { company } from "@/lib/site";
 import { featurePages } from "@/lib/features-content";
 import { comparePages } from "@/lib/compare-content";
+import { pricingForPages } from "@/lib/pricing-for-content";
 import { audiencePages } from "@/lib/audience-content";
 import { sortedBlogPosts } from "@/lib/blog-content";
 import { changelogEntries } from "@/lib/changelog-content";
@@ -64,9 +65,18 @@ function buildLlmsTxt(): string {
       "one-click unsubscribe (RFC 8058), and automatic suppression of bounces and complaints.",
   );
   lines.push(
-    "- Deliberately excluded by design: marketing automation flows, A/B testing, " +
-      "drag-and-drop template builders, landing pages, and a CRM. (Saved segments " +
-      "and subscription topics are supported; automation is designed but not shipped.)",
+    "- Automations (early preview since 2026-09-08): welcome emails, onboarding " +
+      "series and win-back flows drawn on a node canvas with trigger, send, wait, " +
+      "branch and end nodes. Triggered when a contact joins an audience or by " +
+      "POST /api/v1/automations/{id}/enroll from the customer's own code. " +
+      "Automations and runs are unlimited on every plan; the emails they send " +
+      "draw on the same monthly allowance as campaigns.",
+  );
+  lines.push(
+    "- Deliberately excluded by design: A/B testing, drag-and-drop template " +
+      "builders, landing pages, and a CRM. Saved segments and subscription topics " +
+      "are supported. Automations are not a full marketing-automation suite: no " +
+      "A/B splits, wait-for-event steps, or segment and topic triggers yet.",
   );
   lines.push(
     "- Transactional email is a first-class surface: an app's password resets, " +
@@ -97,9 +107,11 @@ function buildLlmsTxt(): string {
   lines.push(`- [Home](${siteUrl}/): positioning and overview`);
   lines.push(`- [How it works](${siteUrl}/how-it-works): the send-based pricing model explained`);
   lines.push(`- [Pricing](${siteUrl}/pricing): plans and pricing FAQ`);
+  lines.push(`- [Pricing by list size](${siteUrl}/pricing/for): what 1,000 to 250,000 subscribers cost to email at each cadence`);
   lines.push(`- [Features](${siteUrl}/features): everything day3 does`);
   lines.push(`- [Who it's for](${siteUrl}/for): startups, indie developers, SaaS teams`);
   lines.push(`- [Compare](${siteUrl}/compare): how day3 compares to other email tools`);
+  lines.push(`- [Resend vs day3 pricing calculator](${siteUrl}/resend-pricing-calculator): an interactive cost comparison against Resend's published prices, including the cases where Resend is cheaper`);
   lines.push(`- [Deliverability](${siteUrl}/deliverability): how day3 gets your email to the inbox`);
   lines.push(`- [Guides](${siteUrl}/blog): reference writing on authentication, unsubscribe compliance, consent, and email pricing models`);
   lines.push("");
@@ -138,6 +150,13 @@ function buildLlmsTxt(): string {
   lines.push("");
   for (const c of comparePages) {
     lines.push(`- [day3 vs. ${c.competitor}](${siteUrl}/compare/${c.slug}): ${c.metaDescription}`);
+  }
+  lines.push("");
+
+  lines.push("## Pricing by list size");
+  lines.push("");
+  for (const p of pricingForPages) {
+    lines.push(`- [${p.metaTitle}](${siteUrl}/pricing/for/${p.slug}): ${p.metaDescription}`);
   }
   lines.push("");
 

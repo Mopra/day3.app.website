@@ -43,6 +43,12 @@ const standalonePages: Record<string, InternalLink> = {
     description:
       "Nine plans from $1/mo for 1,000 emails to $220/mo for 1,000,000. Unlimited subscribers on all of them.",
   },
+  "/pricing/for": {
+    label: "Pricing by list size",
+    href: "/pricing/for",
+    description:
+      "What 1,000 to 250,000 subscribers cost to email each month, at monthly, weekly and twice-weekly cadence.",
+  },
   "/security": {
     label: "Security",
     href: "/security",
@@ -54,6 +60,12 @@ const standalonePages: Record<string, InternalLink> = {
     href: "/gdpr",
     description:
       "How day3 acts as your processor, the rights it upholds, and the agreements on offer.",
+  },
+  "/resend-pricing-calculator": {
+    label: "Resend vs day3 calculator",
+    href: "/resend-pricing-calculator",
+    description:
+      "Move three sliders and see which is cheaper, including the cases where Resend wins.",
   },
   "/compare": {
     label: "All comparisons",

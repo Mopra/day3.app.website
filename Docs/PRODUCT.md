@@ -68,10 +68,12 @@ default path is the deliverable one.
   people who left elsewhere is the fastest way to wreck a new domain's reputation.
   The same doors open outward: everything you put in comes back out as CSV or JSON,
   so there is no lock-in. See **§10 Migrating to Day3**.
-- **Planned (designed, not yet shipped): Automations** — a node canvas with
-  triggers, branches, waits, and sends for onboarding and lifecycle email.
-  Automations and automation runs will be **unlimited on every paid tier** —
-  emails stay the only metered resource. Design: `docs/automations-design.md`.
+- **Automations: onboarding and lifecycle email on a node canvas.** A welcome
+  email, a welcome series, trial onboarding, a win-back flow: triggers, sends,
+  waits and branches drawn as a graph, published as an immutable version, run for
+  one person at a time. Shipped 2026-09-08 as an early preview. Automations and
+  automation runs are unlimited on every tier; emails stay the only metered
+  resource. See the app repo PRODUCT.md §6.19.
 
 ## 3. Who it's for
 
@@ -1051,7 +1053,7 @@ data is worse than one that says what it dropped.
 | Per-contact engagement history (opens/clicks) | ❌ | Starts fresh. Metrics (§6.10) measures Day3 sends only |
 | Past campaign archives & their stats | ❌ | Stay with the old provider; export anything you want to keep before closing that account |
 | Email templates / HTML | ⚠️ Manual | Rebuild from Day3's five built-in templates (§6.1), or paste HTML into a `:::html` block over the API / MCP (§6.16) — Day3's builder is section-based, so a foreign HTML template imported wholesale would not stay editable |
-| Automations / drip flows | ❌ | Not shipped yet (§2, designed) |
+| Automations / drip flows | ⚠️ Rebuilt | Flows do not import. Rebuild them on the automations canvas (trigger, send, wait, branch), then publish |
 | **Domain sending reputation** | ⚠️ Partly | Domain-level reputation and recipient engagement history follow the **subdomain** — reuse it and it comes with you. IP reputation does not: Day3 sends on AWS SES shared IPs (§10.6) |
 
 ### 10.2 Route A — CSV export/import (no code)

@@ -3,6 +3,8 @@ import type { MetadataRoute } from "next";
 import { siteUrl } from "@/lib/seo";
 import { featurePages } from "@/lib/features-content";
 import { comparePages } from "@/lib/compare-content";
+import { PRICING_FOR_UPDATED, pricingForPages } from "@/lib/pricing-for-content";
+import { RESEND_VERIFIED_ON } from "@/lib/resend-comparison";
 import { audiencePages } from "@/lib/audience-content";
 import { sortedBlogPosts } from "@/lib/blog-content";
 import { changelogEntries } from "@/lib/changelog-content";
@@ -41,10 +43,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const blogPosts = sortedBlogPosts();
 
   const staticRoutes: StaticRoute[] = [
-    { path: "/", lastModified: "2026-08-12", priority: 1, changeFrequency: "weekly" },
+    { path: "/", lastModified: "2026-09-18", priority: 1, changeFrequency: "weekly" },
     { path: "/pricing", lastModified: "2026-08-12", priority: 0.9, changeFrequency: "weekly" },
+    { path: "/pricing/for", lastModified: PRICING_FOR_UPDATED, priority: 0.8, changeFrequency: "monthly" },
+    { path: "/resend-pricing-calculator", lastModified: RESEND_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
     { path: "/how-it-works", lastModified: "2026-08-12", priority: 0.9, changeFrequency: "monthly" },
-    { path: "/features", lastModified: "2026-08-12", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/features", lastModified: "2026-09-18", priority: 0.8, changeFrequency: "monthly" },
     { path: "/compare", lastModified: "2026-08-12", priority: 0.8, changeFrequency: "monthly" },
     {
       path: "/blog",
@@ -93,6 +97,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
   }));
 
+  const pricingForRoutes: StaticRoute[] = pricingForPages.map((page) => ({
+    path: `/pricing/for/${page.slug}`,
+    lastModified: page.updated,
+    priority: 0.7,
+    changeFrequency: "monthly" as const,
+  }));
+
   const audienceRoutes: StaticRoute[] = audiencePages.map((page) => ({
     path: `/for/${page.slug}`,
     lastModified: page.updated,
@@ -107,10 +118,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
   }));
 
-  /*
-    Only the curated entries. A GitHub release fetched hourly has no build-time
-    URL, so it cannot be listed here; it stays on the index with its link out.
-  */
   const changelogRoutes: StaticRoute[] = changelogEntries.map((entry) => ({
     path: `/changelog/${entry.slug}`,
     lastModified: entry.isoDate,
@@ -122,6 +129,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticRoutes,
     ...featureRoutes,
     ...compareRoutes,
+    ...pricingForRoutes,
     ...audienceRoutes,
     ...blogRoutes,
     ...changelogRoutes,

@@ -303,7 +303,7 @@ export const features: Feature[] = [
   {
     title: "No upsell path",
     description:
-      "No funnels, no lifecycle automation, no sales call before you can send.",
+      "No funnels, no feature gates, no sales call before you can send.",
     icon: Feather,
   },
 ];

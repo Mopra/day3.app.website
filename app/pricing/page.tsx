@@ -60,6 +60,10 @@ const faqs = [
     a: "Yes, on every paid plan, from $1/mo. Draft from a brief, get subject lines, rewrite highlighted copy. Bigger plans carry a bigger AI allowance, but none of them are without one.",
   },
   {
+    q: "Do automations cost extra?",
+    a: "No. Build as many automations as you like and run them for as many people as you like, on every plan including free. The only thing metered is the emails they send, which come out of the same monthly allowance as campaigns.",
+  },
+  {
     q: "What if I send more than a million emails a month?",
     a: "Get in touch. The self-serve ladder tops out at 1,000,000 emails for $220/mo; above that we set the plan up with you directly.",
   },
@@ -161,7 +165,7 @@ export default function PricingPage() {
           </Container>
         </section>
         <RelatedLinks
-          refs={["page:/how-it-works", "blog:per-subscriber-vs-per-send-email-pricing", "compare:mailchimp-alternative", "feature:audiences", "for:startups", "page:/deliverability"]}
+          refs={["page:/pricing/for", "page:/resend-pricing-calculator", "page:/how-it-works", "blog:per-subscriber-vs-per-send-email-pricing", "compare:mailchimp-alternative", "feature:audiences", "for:startups", "page:/deliverability"]}
           heading={"Before you pick a plan"}
           className="border-t border-border"
         />

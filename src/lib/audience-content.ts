@@ -53,7 +53,7 @@ export const audiencePages: AudiencePage[] = [
     slug: "startups",
     navLabel: "Startups",
     icon: Rocket,
-    updated: "2026-08-12",
+    updated: "2026-09-18",
     metaTitle: "Email marketing for startups, priced by sends",
     metaDescription:
       "Your list grows faster than you send. day3 keeps subscribers unlimited and bills only by emails sent, so growth never taxes the budget. From $1/mo.",
@@ -69,7 +69,7 @@ export const audiencePages: AudiencePage[] = [
       "You add subscribers quickly and send sparingly. day3 bills by send, not list size, so a fast-growing list never inflates the bill.",
     painPoints: [
       "Every tool raises the price the moment your list crosses the next tier.",
-      "You need to tell users what shipped, not build funnels or lifecycle automation.",
+      "You need to tell users what shipped, and greet new signups, without building funnels.",
       "No time to learn a marketing platform. No sales call just to send an email.",
       "Signups arrive in bursts after a launch, and most of them won't hear from you for weeks.",
     ],
@@ -113,11 +113,11 @@ export const audiencePages: AudiencePage[] = [
       ],
     },
     wrongFit:
-      "If your growth plan runs on lifecycle email, onboarding drips, trial-nurture sequences or win-back flows, day3 is the wrong tool today. Automations are designed but not shipped, so you'd be buying a promise. Pick a marketing platform, or plan to run one alongside day3 rather than instead of it.",
+      "If your growth plan runs on a full lifecycle suite, with A/B tests on every path, behavioural triggers from a dozen sources and a marketing team tuning it, day3 will feel thin. Its automations cover a welcome series, trial onboarding and a win-back flow, triggered by a signup or by your own code, and they're an early preview. If that is the whole of what you need, it's enough. If it isn't, pick a marketing platform, or plan to run one alongside day3 rather than instead of it.",
     faqs: [
       {
         q: "What's the best email tool for an early-stage startup?",
-        a: "If you mainly email users about product changes rather than run automation, day3 keeps costs flat as the list grows. Subscribers are unlimited on every plan.",
+        a: "If you mainly email users about product changes, with a welcome or onboarding flow for new signups, day3 keeps costs flat as the list grows. Subscribers and automations are unlimited on every plan.",
       },
       {
         q: "Will day3 get more expensive as we grow?",
@@ -149,7 +149,7 @@ export const audiencePages: AudiencePage[] = [
     slug: "indie-developers",
     navLabel: "Indie developers",
     icon: Code2,
-    updated: "2026-08-12",
+    updated: "2026-09-18",
     metaTitle: "Email for indie developers & solo founders",
     metaDescription:
       "A no-nonsense email tool for indie hackers shipping product updates. Unlimited subscribers, billed by sends, embeddable forms, and an MCP server for your editor.",
@@ -188,7 +188,7 @@ export const audiencePages: AudiencePage[] = [
       {
         title: "No upsell path",
         description:
-          "No funnels, no automation, no sales call. Just the email and who gets it.",
+          "No funnels, no sales call, no plan that unlocks features. A welcome automation is one template away, and it's included.",
       },
     ],
     worked: {
@@ -245,7 +245,7 @@ export const audiencePages: AudiencePage[] = [
     slug: "saas",
     navLabel: "SaaS teams",
     icon: Building2,
-    updated: "2026-08-12",
+    updated: "2026-09-18",
     metaTitle: "Product update emails for SaaS teams",
     metaDescription:
       "Send changelogs and release notes with a tool built for that one job. Unlimited subscribers, send-based pricing, and deliverability and compliance as standard.",
@@ -328,14 +328,18 @@ export const audiencePages: AudiencePage[] = [
         q: "What happens if our sending reputation degrades?",
         a: "Bounce and complaint gauges are scaled to your provider's own thresholds, and sending pauses automatically if reputation crosses into risky territory rather than continuing until someone else stops you. That's a guard, not a penalty: it protects the domain your transactional mail also depends on.",
       },
+      {
+        q: "Can day3 run our trial onboarding emails?",
+        a: "Yes. Build the flow on the automations canvas, with an exit condition such as 'plan is pro' so paying customers stop getting nudges, and have your app call POST /v1/automations/{id}/enroll when a trial starts. day3 runs the emails, the waits and the branches. Automations are unlimited on every plan and currently an early preview.",
+      },
     ],
     related: [
       "feature:api",
+      "feature:automations",
       "page:/deliverability",
       "feature:metrics",
       "page:/security",
       "compare:resend-alternative",
-      "page:/gdpr",
     ],
   },
 ];

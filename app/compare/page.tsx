@@ -138,8 +138,8 @@ export default function CompareHubPage() {
                   <p>
                     Each page also carries a section saying when to stay where you
                     are. Those are written to be used, not as a rhetorical move: if
-                    you need automation flows, a markdown-first writing surface, or
-                    a newsletter you can monetise, day3 does not have those and the
+                    you need A/B testing, a markdown-first writing surface, or a
+                    newsletter you can monetise, day3 does not have those and the
                     page will tell you so.
                   </p>
                 </div>

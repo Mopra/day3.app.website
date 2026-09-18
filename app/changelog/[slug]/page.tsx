@@ -45,11 +45,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 /**
- * A single changelog entry, with its own URL and Article markup.
- *
- * Only the curated entries get pages: a GitHub release fetched hourly cannot be
- * prerendered or sitemapped, so it stays on the index with its link out to
- * GitHub. See changelog-content.ts.
+ * A single changelog entry, with its own URL and Article markup. See
+ * changelog-content.ts.
  */
 export default async function ChangelogEntryPage({ params }: PageProps) {
   const { slug } = await params;

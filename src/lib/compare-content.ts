@@ -237,6 +237,8 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/resend-pricing-calculator",
+      "page:/pricing/for",
       "feature:api",
       "page:/deliverability",
       "page:/how-it-works",
@@ -248,7 +250,7 @@ export const comparePages: ComparePage[] = [
   {
     slug: "mailchimp-alternative",
     competitor: "Mailchimp",
-    updated: "2026-08-12",
+    updated: "2026-09-18",
     metaTitle: "A simpler, send-priced Mailchimp alternative",
     metaDescription:
       "Mailchimp bills by audience size and bundles a full marketing suite. day3 bills by sends, keeps subscribers unlimited, and does one thing: product emails.",
@@ -285,7 +287,7 @@ export const comparePages: ComparePage[] = [
       "Export your Mailchimp audience to CSV and upload it with email, first_name and last_name columns. day3 dedupes, skips anyone already suppressed, and lets you retry just the failed rows instead of restarting the batch. Or script it against the API in batches of 1,000 if you'd rather not touch a spreadsheet.",
     ),
     migrationCaveat:
-      "Automation journeys, landing pages, ad audiences and the CRM don't come across, because day3 has none of them. Neither do drag-and-drop template designs: your emails get rebuilt in day3's composer. Tags become custom fields and saved segments, which usually maps cleanly, but a Mailchimp account leaning hard on journeys is not a Mailchimp account day3 can replace.",
+      "Landing pages, ad audiences and the CRM don't come across, because day3 has none of them. Customer journeys don't import either: day3 has automations with triggers, waits and branches, but you rebuild a journey on its canvas rather than move it, and day3's version is an early preview without A/B splits. Drag-and-drop template designs get rebuilt in day3's composer. Tags become custom fields and saved segments, which usually maps cleanly.",
     reasonsToSwitch: [
       {
         title: "No contact tax",
@@ -304,7 +306,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     stayIf:
-      "Stay with Mailchimp if you need automation flows, landing pages, ads, or a CRM in one place. day3 does none of that, and automations are still in development rather than shipped. Stay too if a marketing team rather than a founder owns your email, because the collaboration, approval and reporting depth Mailchimp has built for that job is real and day3 has not tried to match it. day3 just emails your users about product changes.",
+      "Stay with Mailchimp if you need landing pages, ads, or a CRM in one place, or if your customer journeys lean on A/B splits and behavioural triggers beyond signups and your own API events. day3's automations cover welcome series, onboarding and win-back, and they're an early preview. Stay too if a marketing team rather than a founder owns your email, because the collaboration, approval and reporting depth Mailchimp has built for that job is real and day3 has not tried to match it. day3 just emails your users about product changes.",
     faqs: [
       {
         q: "Is day3 cheaper than Mailchimp?",
@@ -316,7 +318,7 @@ export const comparePages: ComparePage[] = [
       },
       {
         q: "What does day3 not do that Mailchimp does?",
-        a: "By design: no automation flows, A/B testing, drag-and-drop template builders, landing pages, or ads. Just reliable product emails, with saved segments and subscription topics where they earn their keep.",
+        a: "By design: no A/B testing, drag-and-drop template builders, landing pages, or ads. Automations exist for welcome series, onboarding and win-back flows, but not Mailchimp's full journey builder. Just reliable product emails, with saved segments and subscription topics where they earn their keep.",
       },
       {
         q: "Do my Mailchimp tags and segments survive the move?",
@@ -328,6 +330,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/pricing/for",
       "page:/how-it-works",
       "page:/deliverability",
       "for:startups",
@@ -339,7 +342,7 @@ export const comparePages: ComparePage[] = [
   {
     slug: "convertkit-alternative",
     competitor: "Kit (ConvertKit)",
-    updated: "2026-08-12",
+    updated: "2026-09-18",
     metaTitle: "A send-priced Kit / ConvertKit alternative",
     metaDescription:
       "Kit (formerly ConvertKit) prices by subscriber count and targets creator funnels. day3 bills by sends and focuses on product updates for software teams.",
@@ -375,7 +378,7 @@ export const comparePages: ComparePage[] = [
       "Export your Kit subscribers to CSV and upload with email, first_name and last_name. day3 dedupes and skips anyone suppressed. If you'd rather script it, the API takes 1,000 contacts per call and upserts by email, so re-running is safe.",
     ),
     migrationCaveat:
-      "Sequences and visual automations don't come across, because day3 doesn't have them: automations are designed but not shipped. Neither do paid subscriptions, commerce, or Kit's creator network. If a running sequence is doing real work for you, that work stops at the move rather than transferring.",
+      "Sequences and visual automations don't import. day3 has automations of its own, with triggers, waits and branches on a canvas, so a welcome or onboarding sequence can be rebuilt there, but it is an early preview and the rebuild is by hand. Paid subscriptions, commerce, and Kit's creator network don't come across at all. If a running sequence is doing real work for you, plan the rebuild before the move rather than after.",
     reasonsToSwitch: [
       {
         title: "Flat price as your list grows",
@@ -394,7 +397,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     stayIf:
-      "Stay with Kit if you're a creator who leans on automated sequences, paid subscriptions, commerce, or visual funnels. day3 isn't a creator platform and isn't trying to become one. Stay too if your email *is* the product rather than an announcement channel for it, because Kit has built a decade of tooling for that and day3 has deliberately built none of it.",
+      "Stay with Kit if you're a creator who leans on paid subscriptions, commerce, visual sales funnels, or automations more elaborate than a welcome or onboarding series. day3 isn't a creator platform and isn't trying to become one. Stay too if your email *is* the product rather than an announcement channel for it, because Kit has built a decade of tooling for that and day3 has deliberately built none of it.",
     faqs: [
       {
         q: "Why switch from ConvertKit/Kit to day3?",
@@ -402,7 +405,7 @@ export const comparePages: ComparePage[] = [
       },
       {
         q: "Does day3 have automated sequences like Kit?",
-        a: "No. day3 leaves out automation and sequences. It sends one-off campaigns: product updates, changelogs, announcements. Automations with triggers, waits and branches are designed but not shipped, so don't pick day3 on the strength of them.",
+        a: "Partly. day3 has automations: a trigger, emails, waits and branches drawn on a canvas, with four starter templates for welcome, onboarding and win-back flows. They're an early preview, so no A/B splits or wait-for-event steps yet, and nothing like Kit's creator funnels. Campaigns, meaning one-off product updates and changelogs, remain the main job.",
       },
       {
         q: "Can I move my Kit subscribers without losing opt-outs?",
@@ -414,6 +417,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/pricing/for",
       "page:/how-it-works",
       "for:indie-developers",
       "feature:signup-forms",
@@ -496,6 +500,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/pricing/for",
       "page:/how-it-works",
       "for:saas",
       "feature:campaigns",
@@ -507,7 +512,7 @@ export const comparePages: ComparePage[] = [
   {
     slug: "emailoctopus-alternative",
     competitor: "EmailOctopus",
-    updated: "2026-08-12",
+    updated: "2026-09-18",
     metaTitle: "An EmailOctopus alternative priced by sends",
     metaDescription:
       "EmailOctopus prices by subscribers. day3 keeps subscribers unlimited and prices by sends, which wins for a big list you mail occasionally.",
@@ -542,7 +547,7 @@ export const comparePages: ComparePage[] = [
       "Export to CSV and import with email, first_name and last_name columns. day3 dedupes, skips suppressed addresses, and reports per-row results so a handful of malformed rows doesn't cost you the batch.",
     ),
     migrationCaveat:
-      "EmailOctopus automations and its landing pages don't come across. day3 has neither, and automations are designed but not shipped. Your email designs get rebuilt in day3's composer rather than imported.",
+      "EmailOctopus landing pages don't come across, because day3 has none. Its automations don't import either: day3 has its own, with triggers, waits and branches on a canvas, but you rebuild a flow there by hand and day3's version is an early preview. Your email designs get rebuilt in day3's composer rather than imported.",
     reasonsToSwitch: [
       {
         title: "List size doesn't touch the bill",
@@ -561,7 +566,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     stayIf:
-      "Stay with EmailOctopus if you have a small, stable list and want a generalist tool. Send-based pricing mainly pays off for large or fast-growing lists mailed occasionally, and at a few thousand contacts the two models land close enough that switching isn't worth the afternoon. Stay too if you need its automations or landing pages, since day3 has neither.",
+      "Stay with EmailOctopus if you have a small, stable list and want a generalist tool. Send-based pricing mainly pays off for large or fast-growing lists mailed occasionally, and at a few thousand contacts the two models land close enough that switching isn't worth the afternoon. Stay too if you need its landing pages, since day3 has none, or if its automations do more for you than a welcome or onboarding series would.",
     faqs: [
       {
         q: "How does day3's pricing compare to EmailOctopus?",
@@ -573,10 +578,11 @@ export const comparePages: ComparePage[] = [
       },
       {
         q: "Does day3 have automations?",
-        a: "Not yet. Triggers, waits and branches are designed but not shipped. If you're relying on EmailOctopus automations today, that's a reason to stay rather than a gap to work around.",
+        a: "Yes, as an early preview. A trigger, emails, waits and branches on a canvas, unlimited on every plan, with the emails they send drawn from your monthly allowance. Welcome series, onboarding and win-back flows are the intended shape. If you rely on something more elaborate in EmailOctopus, check the gaps before you move.",
       },
     ],
     related: [
+      "page:/pricing/for",
       "page:/how-it-works",
       "page:/pricing",
       "for:indie-developers",
@@ -659,6 +665,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/pricing/for",
       "page:/how-it-works",
       "for:indie-developers",
       "feature:signup-forms",
