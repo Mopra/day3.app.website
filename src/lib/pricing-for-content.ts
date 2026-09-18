@@ -159,7 +159,7 @@ export function buildPricingForPage(subscribers: ListSize): PricingForPage {
       "page:/how-it-works",
       "blog:per-subscriber-vs-per-send-email-pricing",
       "compare:mailchimp-alternative",
-      "compare:convertkit-alternative",
+      "compare:kit-alternative",
       "compare:beehiiv-alternative",
     ],
   };

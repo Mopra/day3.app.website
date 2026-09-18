@@ -55,6 +55,24 @@ const standalonePages: Record<string, InternalLink> = {
     description:
       "EU-only hosting and data residency, an honest compliance posture, and every sub-processor named.",
   },
+  "/legal/dpa": {
+    label: "Data processing agreement",
+    href: "/legal/dpa",
+    description:
+      "The processor terms, published rather than gated: what day3 does with your data and on whose instructions.",
+  },
+  "/legal/acceptable-use": {
+    label: "Acceptable use",
+    href: "/legal/acceptable-use",
+    description:
+      "What day3 will not carry, and the consent standard every list sent through it has to meet.",
+  },
+  "/legal/subprocessors": {
+    label: "Sub-processors",
+    href: "/legal/subprocessors",
+    description:
+      "Every third party that touches your data, named, with what it does and which region it runs in.",
+  },
   "/gdpr": {
     label: "GDPR",
     href: "/gdpr",

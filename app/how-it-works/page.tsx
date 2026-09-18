@@ -354,7 +354,7 @@ export default function HowItWorksPage() {
           refs={[
             "page:/pricing",
             "compare:mailchimp-alternative",
-            "compare:convertkit-alternative",
+            "compare:kit-alternative",
             "for:startups",
             "feature:audiences",
             "page:/blog",

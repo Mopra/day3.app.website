@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
         destination: "/deliverability",
         permanent: true,
       },
+      // ConvertKit renamed itself Kit, and search is following. The page moved to
+      // /compare/kit-alternative; this keeps the old URL's links and rankings.
+      {
+        source: "/compare/convertkit-alternative",
+        destination: "/compare/kit-alternative",
+        permanent: true,
+      },
     ];
   },
 };

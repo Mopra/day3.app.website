@@ -1,4 +1,10 @@
-import { Rocket, Code2, Building2, type LucideIcon } from "lucide-react";
+import {
+  Rocket,
+  Code2,
+  Building2,
+  ShieldCheck,
+  type LucideIcon,
+} from "lucide-react";
 
 /**
  * One scenario, priced off the live ladder by the template rather than written
@@ -340,6 +346,116 @@ export const audiencePages: AudiencePage[] = [
       "feature:metrics",
       "page:/security",
       "compare:resend-alternative",
+    ],
+  },
+  /*
+    The EU page exists because "where does the data sit" is a real buying
+    question in Europe and most answers to it are vague. So this page is
+    specific: it names the three sub-processors and their regions, names the
+    company and its registration number, and states plainly what day3 is not
+    audited for. The compliance discipline from /security applies here too, and
+    it applies harder, because this is the page that will be quoted back at us.
+  */
+  {
+    slug: "eu-companies",
+    navLabel: "EU companies",
+    icon: ShieldCheck,
+    updated: "2026-09-18",
+    metaTitle: "EU-hosted email marketing, GDPR by default",
+    metaDescription:
+      "Every day3 sub-processor runs in the EU: Vercel, Supabase and Amazon SES in Stockholm. A Danish company, a DPA on offer, and no transatlantic transfer to justify.",
+    keywords: [
+      "gdpr compliant newsletter tool",
+      "eu hosted email marketing",
+      "european alternative to mailchimp",
+      "newsletter tool data stored in eu",
+      "email marketing without us data transfer",
+      "gdpr email api",
+    ],
+    eyebrow: "For EU companies",
+    title: "Your subscribers' data never leaves the EU.",
+    summary:
+      "Every sub-processor day3 uses runs in the European Union, the company behind it is Danish and registered, and the DPA is on the site rather than behind a sales call.",
+    painPoints: [
+      "Your DPO asks where subscriber data is stored and the honest answer involves a US provider and a transfer mechanism.",
+      "The sub-processor list is either missing, out of date, or a PDF you have to ask for.",
+      "Getting a data processing agreement means talking to sales and waiting a week.",
+      "You want one clear answer for the record of processing activities, not a compliance page full of logos.",
+    ],
+    benefits: [
+      {
+        title: "EU-only, named openly",
+        description:
+          "Vercel for hosting, Supabase for the database, Amazon SES in Stockholm for delivery. All EU regions, all listed by name with what each one does.",
+      },
+      {
+        title: "A DPA you can just read",
+        description:
+          "The data processing agreement is published on the site. No form, no call, no waiting on legal to send it over.",
+      },
+      {
+        title: "Consent kept as evidence",
+        description:
+          "Opt-in source and timestamp stored per contact, one-click unsubscribe on every campaign, and opt-outs honoured across marketing and transactional mail.",
+      },
+      {
+        title: "A real, registered company",
+        description:
+          "Pradsgaard Labs EMV, CVR DK46156153, registered in Denmark. You can look it up rather than take our word for it.",
+      },
+    ],
+    worked: {
+      scenario:
+        "A European SaaS with 25,000 registered users, emailed twice a month with product news.",
+      subscribers: 25_000,
+      monthlySends: 50_000,
+      contrast:
+        "A per-subscriber plan meters all 25,000 contacts every month regardless of whether you write to them",
+    },
+    deepDive: {
+      heading: "What GDPR actually asks of you here",
+      paragraphs: [
+        "In GDPR terms you are the controller and day3 is a processor. You decide who is on the list and why; day3 stores and sends on your instructions. That split is what the data processing agreement records, and it is the document your auditor will ask for.",
+        "Because every sub-processor sits in the EU, there is no third-country transfer to justify: no standard contractual clauses to attach, no transfer impact assessment to write, no Data Privacy Framework certification to keep checking. That is the practical difference between an EU-hosted tool and a US one with an EU region, and it is most of why this page exists.",
+        "For your record of processing activities, the facts are short. Categories of data: email address, any custom fields you choose to store, and engagement events such as opens, clicks, bounces and unsubscribes. Purpose: sending the email you asked to be sent. Location: the European Union. Sub-processors: three, listed by name with their regions on the sub-processors page.",
+        "One thing day3 is not: independently audited. day3 holds no SOC 2 or ISO 27001 certification of its own. It runs on infrastructure whose providers hold SOC 2 Type II audits, which is a different and weaker claim, and saying so plainly is more useful to you than a badge would be. If your procurement process requires a certified processor, day3 will not pass it yet.",
+      ],
+    },
+    wrongFit:
+      "day3 is the wrong call if your procurement requires a processor with its own SOC 2 or ISO 27001 certificate, because day3 does not have one and will not pretend to. It is also wrong if you need data residency in a specific member state rather than the EU generally, if you need a signed DPA with negotiated terms rather than the published one, or if you need an on-premises or self-hosted deployment. Those are real requirements for larger enterprises and day3 does not meet them.",
+    faqs: [
+      {
+        q: "Where is day3's subscriber data stored?",
+        a: "In the European Union. The database and file storage run on Supabase in an EU region, the application and edge network on Vercel in the EU, and outbound email goes through Amazon SES in Stockholm. Those three are the complete sub-processor list and each is named with its region on the sub-processors page.",
+      },
+      {
+        q: "Is day3 GDPR compliant?",
+        a: "day3 is built to be used compliantly: EU-only processing, a published DPA, consent records with source and timestamp, one-click unsubscribe, and deletion on request. Compliance is a property of how you use it as controller, not something a tool can grant you on its own, so the honest answer is that day3 gives you the processor half and the DPA that records it.",
+      },
+      {
+        q: "Do I need standard contractual clauses to use day3?",
+        a: "No. SCCs cover transfers of personal data outside the EEA, and day3 does not make one. Every sub-processor is in the EU, so there is no third-country transfer, no transfer impact assessment and no adequacy decision to rely on.",
+      },
+      {
+        q: "Is day3 SOC 2 certified?",
+        a: "No. day3 holds no SOC 2 or ISO 27001 certification. It runs on infrastructure from providers who are SOC 2 Type II audited, which is worth knowing but is not the same thing, and we will not describe it as though it were.",
+      },
+      {
+        q: "How do I get a data processing agreement?",
+        a: "Read it on the site and accept it. It is published rather than gated, so there is no form to fill in and nobody to email. If your legal team needs changes to the terms, day3 is probably too small a vendor for that process today.",
+      },
+      {
+        q: "Can subscribers get their data deleted?",
+        a: "Yes. A contact can be deleted outright, which removes their record and their engagement history, or suppressed, which keeps the address on a do-not-mail list so a future import cannot re-add them. Which one you want depends on whether you also need to prove you honoured an unsubscribe.",
+      },
+    ],
+    related: [
+      "page:/gdpr",
+      "page:/security",
+      "page:/legal/subprocessors",
+      "blog:gdpr-double-opt-in",
+      "blog:gdpr-opt-in-vs-opt-out",
+      "page:/pricing/for",
     ],
   },
 ];

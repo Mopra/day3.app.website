@@ -15,16 +15,19 @@ import { siteConfig } from "@/lib/site";
 import { comparePages } from "@/lib/compare-content";
 
 export const metadata: Metadata = buildMetadata({
-  title: "day3 vs Mailchimp, Kit, Resend & beehiiv",
+  title: "day3 vs Mailchimp, Kit, Resend, Substack & more",
   description:
-    "Model-level comparisons against six email tools, with migration steps and an honest note on when to stay put. They meter your list size; day3 meters emails sent.",
+    "Model-level comparisons against twelve email tools, with migration steps and an honest note on when to stay put, including the ones that already bill by sends.",
   path: "/compare",
   ogEyebrow: "Compare",
   ogTitle: "How day3 compares, honestly",
   keywords: [
     "email marketing comparison",
     "mailchimp alternative",
-    "convertkit alternative",
+    "kit alternative",
+    "substack alternative",
+    "mailerlite alternative",
+    "postmark alternative",
     "beehiiv alternative",
     "resend alternative",
     "email tool comparison",

@@ -335,12 +335,12 @@ export const comparePages: ComparePage[] = [
       "page:/deliverability",
       "for:startups",
       "feature:audiences",
-      "compare:convertkit-alternative",
+      "compare:kit-alternative",
       "page:/pricing",
     ],
   },
   {
-    slug: "convertkit-alternative",
+    slug: "kit-alternative",
     competitor: "Kit (ConvertKit)",
     updated: "2026-09-18",
     metaTitle: "A send-priced Kit / ConvertKit alternative",
@@ -505,7 +505,7 @@ export const comparePages: ComparePage[] = [
       "for:saas",
       "feature:campaigns",
       "page:/deliverability",
-      "compare:convertkit-alternative",
+      "compare:kit-alternative",
       "page:/pricing",
     ],
   },
@@ -671,6 +671,536 @@ export const comparePages: ComparePage[] = [
       "feature:signup-forms",
       "feature:api",
       "compare:emailoctopus-alternative",
+      "page:/pricing",
+    ],
+  },
+  /*
+    Substack is the one competitor here that is not really a tool, it is a
+    publisher with a business model attached. So the page does not argue price:
+    a free newsletter sends on Substack for nothing, and pretending otherwise
+    would be the kind of comparison nobody trusts. The argument is ownership and
+    job-to-be-done, and the stay-if is unusually long because Substack is
+    genuinely the right answer for a paid publication.
+  */
+  {
+    slug: "substack-alternative",
+    competitor: "Substack",
+    updated: "2026-09-18",
+    metaTitle: "A Substack alternative on your own domain",
+    metaDescription:
+      "Substack is a publishing network that takes a cut of paid subscriptions. day3 is plain email infrastructure: your domain, your list, a flat monthly plan, no revenue share.",
+    keywords: [
+      "substack alternative",
+      "substack alternative for developers",
+      "self hosted substack alternative",
+      "newsletter without revenue share",
+      "own your email list",
+    ],
+    title: "A Substack alternative where the list is yours.",
+    intro:
+      "Substack is a publishing platform with a network attached, and it earns by taking a share of what your paid subscribers pay you.",
+    difference:
+      "day3 is not a publisher. There is no public archive, no discovery feed, no recommendations and no payments layer. You get a sending domain, a list you own outright and a flat monthly plan, which is the right trade when the email is about your product rather than a publication you sell.",
+    comparison: [
+      { dimension: "Pricing model", day3: DAY3.pricing, competitor: "Free to send; a share of paid subscription revenue" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Unlimited too" },
+      { dimension: "Product scope", day3: DAY3.scope, competitor: "Publishing platform: archive, network, comments, payments" },
+      { dimension: "Sending domain", day3: "Your own, authenticated with DKIM, SPF and DMARC", competitor: "Substack's infrastructure" },
+      { dimension: "Best for", day3: "Software teams emailing their own users", competitor: "Writers building a paid publication" },
+      { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Nothing until you charge readers" },
+    ],
+    worked: {
+      scenario:
+        "10,000 users on the list, emailed once a week with product news. Nobody pays to receive it.",
+      subscribers: 10_000,
+      monthlySends: 40_000,
+      otherModel:
+        "Substack charges nothing to send a free newsletter and takes its cut from paid subscriptions instead, so at this shape it costs nothing and day3 costs the plan price",
+    },
+    migration: standardMigration(
+      "Export your subscribers from Substack's settings as a CSV and upload it. day3 dedupes on the way in, refuses anyone already on your suppression list, and lets you retry only the rows that failed. Paid subscribers export as email addresses like everyone else; the billing relationship stays behind.",
+    ),
+    migrationCaveat:
+      "Almost everything that makes Substack a publication stays on Substack: the public archive and its URLs, comments, the recommendation network, your paid subscriptions and the Stripe relationship behind them. day3 has no payments and no way to charge a reader, so a paid publication cannot move here without moving its billing somewhere else first.",
+    reasonsToSwitch: [
+      {
+        title: "No revenue share",
+        description:
+          "A flat monthly plan by sends. What your product earns is none of our business.",
+      },
+      {
+        title: "Your domain, your reputation",
+        description:
+          "Mail goes out authenticated from a domain you own, so the sending reputation you build belongs to you and follows you anywhere.",
+      },
+      {
+        title: "Built for product email",
+        description:
+          "Audiences, segments, signup forms and transactional sends from the same place, which a publishing tool has no reason to offer.",
+      },
+    ],
+    stayIf:
+      "Stay on Substack if you are building a publication rather than a product. It costs nothing until you charge, it handles payments, it gives you an archive people can link to, and its network genuinely sends readers your way. day3 does none of that on purpose. If your newsletter is the thing you sell, Substack is the better tool and this page is not trying to talk you out of it.",
+    faqs: [
+      {
+        q: "Is day3 cheaper than Substack?",
+        a: "Not for a free newsletter. Substack costs nothing to send, and day3 charges a monthly plan by volume. day3 comes out ahead once you are selling something other than the newsletter, because Substack's share of a paid publication grows with your revenue while a send-based plan does not.",
+      },
+      {
+        q: "Can I move my Substack list to day3?",
+        a: "The email addresses, yes, by CSV export and import. Paid subscriptions cannot move, because day3 has no payments layer. People who pay you on Substack keep paying you on Substack until you move that billing yourself.",
+      },
+      {
+        q: "Does day3 give me a public archive?",
+        a: "No. There are no public post URLs, no comments and no reader-facing site. day3 sends email and reports on it. If you need a web archive people can find and link, a publishing platform is the right shape of tool.",
+      },
+      {
+        q: "Who owns the subscriber list?",
+        a: "You do, on both. Substack lets you export and has always been clear about that. The difference is the sending domain and the reader relationship: on day3 the mail comes from your domain, so the reputation and the relationship are yours from the first send.",
+      },
+    ],
+    related: [
+      "page:/pricing/for",
+      "page:/how-it-works",
+      "page:/deliverability",
+      "compare:beehiiv-alternative",
+      "compare:kit-alternative",
+      "page:/pricing",
+    ],
+  },
+  {
+    slug: "mailerlite-alternative",
+    competitor: "MailerLite",
+    updated: "2026-09-18",
+    metaTitle: "A send-priced MailerLite alternative",
+    metaDescription:
+      "MailerLite prices by subscriber count and bundles websites, landing pages and paid newsletters. day3 bills by sends, keeps subscribers unlimited, and stays narrow.",
+    keywords: [
+      "mailerlite alternative",
+      "cheaper than mailerlite",
+      "mailerlite alternative for saas",
+      "mailerlite pricing by subscribers",
+      "mailerlite alternative for developers",
+    ],
+    title: "A MailerLite alternative that meters sends, not subscribers.",
+    intro:
+      "MailerLite is a well-built marketing suite for small businesses, and like most of that category it prices by how many contacts you store.",
+    difference:
+      "The bill is the difference. On a contact-metered plan a list you email once a quarter costs the same as one you email daily. day3 meters sends, so a large, quiet list is cheap and the price only moves when you actually write to people.",
+    comparison: [
+      { dimension: "Pricing model", day3: DAY3.pricing, competitor: "By number of subscribers stored" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered: more subscribers cost more" },
+      { dimension: "Product scope", day3: DAY3.scope, competitor: "Marketing suite: websites, landing pages, paid newsletters, e-commerce" },
+      { dimension: "Cost of a quiet month", day3: "Nothing changes. The meter only moves when you send", competitor: "The subscriber bill arrives either way" },
+      { dimension: "Best for", day3: "Software teams shipping product updates", competitor: "Small businesses running marketing end to end" },
+      { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Free tier, then priced by subscribers" },
+    ],
+    worked: {
+      scenario:
+        "25,000 signups collected over two years, emailed twice a month when something ships.",
+      subscribers: 25_000,
+      monthlySends: 50_000,
+      otherModel:
+        "A per-subscriber plan bills for all 25,000 every month, including the months you ship nothing",
+    },
+    migration: standardMigration(
+      "Export your MailerLite subscribers to CSV, including the custom fields you use as merge tags, and upload it. day3 dedupes, honours your suppression list and reports failed rows so you can retry just those. The API takes batches of 1,000 if you would rather script it.",
+    ),
+    migrationCaveat:
+      "Websites, landing pages, pop-up designs and paid-newsletter billing do not come across, because day3 has none of them. Drag-and-drop email designs get rebuilt in day3's composer, which is deliberately a writing tool rather than a layout canvas. Automations rebuild rather than import: day3 has triggers, waits and branches, as an early preview, without A/B splits.",
+    reasonsToSwitch: [
+      {
+        title: "The list stops costing money",
+        description:
+          "Import every address you have ever collected. Until you email them, they cost nothing.",
+      },
+      {
+        title: "One allowance, both jobs",
+        description:
+          "Product updates and password resets come out of the same plan and go from the same authenticated domain.",
+      },
+      {
+        title: "Less to set up",
+        description:
+          "No site builder or funnel to configure first. Verify a domain, import a list, write the update, send.",
+      },
+    ],
+    stayIf:
+      "Stay with MailerLite if its breadth is the point: you want landing pages, a website builder, pop-ups and paid newsletters from one login, or a drag-and-drop designer for image-heavy campaigns. It is a capable suite for a small marketing team, and day3 is a narrow tool for a software team. Stay too if you email a small list very often, because that is the shape where a flat per-subscriber fee reads well.",
+    faqs: [
+      {
+        q: "Is day3 cheaper than MailerLite?",
+        a: "It depends on how often you send. day3 never charges for a contact, so the bigger and quieter your list, the wider the gap. A small list emailed several times a week is the case where a per-subscriber plan holds up best.",
+      },
+      {
+        q: "Can I import my MailerLite subscribers?",
+        a: "Yes, by CSV or API, with custom fields and unsubscribe status intact. Bring your suppression list first and day3 refuses those addresses on the way in rather than quietly re-subscribing anyone.",
+      },
+      {
+        q: "Does day3 have a drag-and-drop email builder?",
+        a: "No. day3's composer is a writing tool that produces clean, inbox-ready formatting. If your campaigns are laid out like a web page, MailerLite's designer is the better fit.",
+      },
+      {
+        q: "What about landing pages and forms?",
+        a: "Signup forms yes, as hosted pages, embeds or pop-ups. Landing pages and the website builder, no. day3 collects subscribers and emails them; the rest of your site stays wherever it already lives.",
+      },
+    ],
+    related: [
+      "page:/pricing/for",
+      "page:/how-it-works",
+      "feature:signup-forms",
+      "compare:mailchimp-alternative",
+      "compare:emailoctopus-alternative",
+      "page:/pricing",
+    ],
+  },
+  {
+    slug: "loops-alternative",
+    competitor: "Loops",
+    updated: "2026-09-18",
+    metaTitle: "A send-priced Loops alternative",
+    metaDescription:
+      "Loops is a well-made, developer-minded email tool that prices by contact count. day3 shares the sensibility and meters sends instead, with unlimited subscribers.",
+    keywords: [
+      "loops alternative",
+      "loops so alternative",
+      "loops email alternative",
+      "cheaper than loops",
+      "email tool for saas priced by sends",
+    ],
+    title: "A Loops alternative billed by sends, not contacts.",
+    intro:
+      "Loops is aimed at the same people day3 is, software teams who want email that does not feel like a marketing suite, and it prices by how many contacts you store.",
+    difference:
+      "There is less daylight here than on the other comparison pages, and pretending otherwise would be silly. Both tools are narrow on purpose and pleasant to use. The durable difference is the meter: Loops counts the contacts in your workspace, day3 counts the emails that leave it.",
+    comparison: [
+      { dimension: "Pricing model", day3: DAY3.pricing, competitor: "By number of contacts stored" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Tiered: more contacts cost more" },
+      { dimension: "Product scope", day3: DAY3.scope, competitor: "Marketing and transactional email for SaaS, with lifecycle loops" },
+      { dimension: "Cost of a quiet month", day3: "Nothing changes. The meter only moves when you send", competitor: "The contact bill arrives either way" },
+      { dimension: "Best for", day3: "Teams with a big list they email occasionally", competitor: "Teams leaning on event-driven lifecycle campaigns" },
+      { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Free tier, then priced by contacts" },
+    ],
+    worked: {
+      scenario:
+        "50,000 signed-up users, most of them dormant, emailed once a month with a changelog.",
+      subscribers: 50_000,
+      monthlySends: 50_000,
+      otherModel:
+        "A per-contact plan counts all 50,000 every month, dormant or not, because storage is the meter",
+    },
+    migration: standardMigration(
+      "Export your Loops contacts to CSV with their properties, or pull them through the API, and import them into a day3 audience. Properties land as custom fields that register themselves as merge tags. day3 dedupes and skips anyone already suppressed.",
+    ),
+    migrationCaveat:
+      "Loops campaigns and the lifecycle loops built around your product events do not import. day3 has automations with triggers, waits and branches, and they are an early preview, so a heavily event-driven setup is a rebuild rather than a move. Check that the events you trigger on exist as day3 API events before you commit to the switch.",
+    reasonsToSwitch: [
+      {
+        title: "Dormant users are free",
+        description:
+          "Most SaaS lists are mostly inactive. day3 does not bill for an address until you email it.",
+      },
+      {
+        title: "One allowance for everything",
+        description:
+          "Campaigns and transactional sends share a plan and a domain, so there is one number to watch.",
+      },
+      {
+        title: "EU-only by default",
+        description:
+          "Data stays in the EU on infrastructure we name publicly, with a DPA on offer and every sub-processor listed.",
+      },
+    ],
+    stayIf:
+      "Stay with Loops if your email is genuinely event-driven and the lifecycle campaigns are the product: day3's automations are newer and narrower, and an early preview. Stay too if your list is small and active, because contact-based pricing is at its most reasonable exactly there. Loops is a good tool built by people who clearly care, and switching for the sake of switching would be a waste of a week.",
+    faqs: [
+      {
+        q: "How is day3 different from Loops?",
+        a: "Mostly the meter. Loops prices by contacts stored, day3 by emails sent, so the two diverge as a list grows quiet. On scope, Loops leans further into event-driven lifecycle campaigns while day3 leans into broadcasts, segments and transactional on one allowance.",
+      },
+      {
+        q: "Is day3 cheaper than Loops?",
+        a: "For a large list you email occasionally, usually, because dormant contacts cost nothing. For a small list you email constantly, the gap closes and can reverse. Run your own numbers: contacts stored against emails actually sent.",
+      },
+      {
+        q: "Can I move my Loops contacts across?",
+        a: "Yes, by CSV or API, with properties mapped to custom fields and unsubscribes carried over as unsubscribes. Import your suppression list first so the guard is in place before the contacts arrive.",
+      },
+      {
+        q: "Does day3 do lifecycle automation?",
+        a: "Yes, as an early preview: triggers, waits and branches, enough for welcome series, onboarding and win-back. It is not a match for a mature event-driven automation builder, and we would rather say so here than after you have migrated.",
+      },
+    ],
+    related: [
+      "page:/pricing/for",
+      "feature:api",
+      "feature:automations",
+      "compare:resend-alternative",
+      "for:saas",
+      "page:/pricing",
+    ],
+  },
+  /*
+    The honest one. Brevo already bills by emails sent, so the pricing-model
+    argument this site leans on everywhere else simply does not apply, and the
+    page says that in the first line rather than burying it. What is left is a
+    real difference of scope, which is the actual decision anyway.
+  */
+  {
+    slug: "brevo-alternative",
+    competitor: "Brevo",
+    updated: "2026-09-18",
+    metaTitle: "A narrower Brevo alternative, also priced by sends",
+    metaDescription:
+      "Brevo already bills by emails sent, so this is not a pricing argument. It is a suite with CRM, SMS and chat; day3 does product and transactional email and stops there.",
+    keywords: [
+      "brevo alternative",
+      "sendinblue alternative",
+      "brevo alternative for developers",
+      "simple brevo alternative",
+      "brevo vs day3",
+    ],
+    title: "A Brevo alternative for teams who only want the email part.",
+    intro:
+      "Brevo, formerly Sendinblue, already prices by emails sent rather than by contact count, so the argument day3 usually makes about the contact tax does not apply here.",
+    difference:
+      "This one is about scope, not the meter. Brevo is a suite: email, SMS, WhatsApp, chat, a sales CRM, landing pages and automation across all of it. day3 sends product updates and transactional email from one authenticated domain and has no ambition beyond that. Narrow is the feature, and it is also the reason to stay away if you need the rest.",
+    comparison: [
+      { dimension: "Pricing model", day3: DAY3.pricing, competitor: "Also by emails sent, with paid add-ons per channel" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Unlimited contacts too" },
+      { dimension: "Product scope", day3: DAY3.scope, competitor: "Full suite: CRM, SMS, WhatsApp, chat, landing pages" },
+      { dimension: "Surface area", day3: "One composer, one audience list, one API", competitor: "Many modules, most of which a software team will not use" },
+      { dimension: "Best for", day3: "Software teams emailing their own users", competitor: "Businesses running sales and multi-channel marketing together" },
+      { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Free tier with a daily cap, then priced by sends" },
+    ],
+    worked: {
+      scenario:
+        "10,000 users emailed twice a month, plus the password resets and receipts the app sends.",
+      subscribers: 10_000,
+      monthlySends: 25_000,
+      otherModel:
+        "Brevo meters the same way, by emails sent, so the two bills are genuinely comparable here and the decision comes down to which product you would rather use",
+    },
+    migration: standardMigration(
+      "Export your Brevo contacts to CSV with their attributes and import them into a day3 audience. Attributes become custom fields that work as merge tags. day3 dedupes, honours suppressions and reports the rows it refused so you can fix and retry just those.",
+    ),
+    migrationCaveat:
+      "The CRM, SMS and WhatsApp channels, chat, landing pages and any automation that spans them stay behind, because day3 is email only. Brevo's multi-channel workflows have no equivalent here. If a deal pipeline or an SMS step is load-bearing in your setup, this move breaks it.",
+    reasonsToSwitch: [
+      {
+        title: "Far less to hold",
+        description:
+          "One composer, one list, one API key. Nothing to switch off, nothing to learn past the first send.",
+      },
+      {
+        title: "Built for product email",
+        description:
+          "Changelogs, launch notes and receipts from the same domain and the same allowance, with per-email delivery status.",
+      },
+      {
+        title: "EU-only hosting, named openly",
+        description:
+          "Every sub-processor is listed by name, data stays in the EU, and a DPA is on offer without asking sales.",
+      },
+    ],
+    stayIf:
+      "Stay with Brevo if you use more than the email module. A sales CRM next to your campaigns, SMS or WhatsApp in the same workflow, or chat on your site are real capabilities that day3 will never have. Brevo's send-based pricing is also fair on its own terms, so there is no bill-shaped reason to move. Switch only if the suite is more tool than you want to own.",
+    faqs: [
+      {
+        q: "Is day3 cheaper than Brevo?",
+        a: "Not necessarily, and it would be dishonest to imply otherwise. Both meter emails sent. Compare the two plans at your volume directly, and pick on product rather than on model.",
+      },
+      {
+        q: "Why switch from Brevo to day3 at all?",
+        a: "Scope. If you use Brevo only to email your users about your product, most of what you are logging into is not for you. day3 is that one job with nothing else attached, plus transactional on the same allowance and domain.",
+      },
+      {
+        q: "Does day3 do SMS?",
+        a: "No. Email only, and that is not a roadmap item. If a campaign needs an SMS step, day3 is the wrong tool.",
+      },
+      {
+        q: "Can I bring my Brevo contacts and attributes?",
+        a: "Yes, by CSV or API. Attributes map to custom fields, unsubscribes import as unsubscribes with the date they left on, and your suppression list should go in first so nobody gets re-mailed by the migration.",
+      },
+    ],
+    related: [
+      "page:/pricing/for",
+      "page:/how-it-works",
+      "page:/security",
+      "feature:api",
+      "compare:mailchimp-alternative",
+      "page:/pricing",
+    ],
+  },
+  {
+    slug: "postmark-alternative",
+    competitor: "Postmark",
+    updated: "2026-09-18",
+    metaTitle: "A Postmark alternative with the list layer included",
+    metaDescription:
+      "Postmark is excellent transactional email, priced by sends. day3 sends transactional the same way and brings audiences, segments, forms and consent with it.",
+    keywords: [
+      "postmark alternative",
+      "postmark alternative with newsletters",
+      "transactional and marketing email one provider",
+      "postmark vs day3",
+      "email api with audiences",
+    ],
+    title: "A Postmark alternative that also owns your list.",
+    intro:
+      "Postmark has spent a decade being very good at one thing: getting transactional mail delivered fast, with support that actually answers.",
+    difference:
+      "Both tools meter sends, so this is not a pricing argument either. The difference is what sits above the API. Postmark is built around message streams for application mail. day3 puts audiences, segments, signup forms, subscription topics and consent records in the same product, so the changelog and the password reset share one domain, one allowance and one suppression list.",
+    comparison: [
+      { dimension: "Pricing model", day3: DAY3.pricing, competitor: "Also by emails sent" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Not a list tool; no subscriber tiers" },
+      { dimension: "Product scope", day3: DAY3.scope, competitor: "Transactional-first, with broadcast streams alongside" },
+      { dimension: "List layer", day3: "Audiences, live segments, forms, topics, consent records", competitor: "Recipients and streams rather than a managed list" },
+      { dimension: "Best for", day3: "Teams wanting both jobs in one place", competitor: "Teams who want application mail and nothing else" },
+      { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Free trial volume, then priced by sends" },
+    ],
+    worked: {
+      scenario:
+        "A SaaS sending 15,000 transactional emails a month, plus a monthly changelog to 10,000 users.",
+      subscribers: 10_000,
+      monthlySends: 25_000,
+      otherModel:
+        "Postmark meters sends as well, so the comparison is close; what changes is whether the list, the forms and the consent trail live in the same tool or somewhere else",
+    },
+    migration: standardMigration(
+      "There may not be much of a list to export, which is the point. Bring the contacts from wherever they currently live, a database dump or your app's users table, as a CSV with email and any fields you merge into templates. day3 dedupes and refuses suppressed addresses on the way in.",
+    ),
+    migrationCaveat:
+      "Message streams, templates and webhooks are rebuilt rather than moved, and Postmark's message retention and search are deeper than day3's. If you rely on long log retention for support forensics, check day3's retention against yours before you switch. Inbound email processing is not something day3 offers.",
+    reasonsToSwitch: [
+      {
+        title: "One domain, both jobs",
+        description:
+          "Receipts and changelogs from the same authenticated domain, on one allowance, with one suppression list guarding both.",
+      },
+      {
+        title: "A list you can actually work with",
+        description:
+          "Live segments, hosted signup forms and subscription topics, so marketing email does not need a second tool.",
+      },
+      {
+        title: "Consent kept as a record",
+        description:
+          "Opt-in source and timestamp stored per contact, one-click unsubscribe on every campaign, opt-outs honoured across both kinds of mail.",
+      },
+    ],
+    stayIf:
+      "Stay with Postmark if all you send is application mail. Its deliverability record, its speed and its support are genuinely first-rate, and day3 is not claiming to beat them at it. Stay too if inbound routing, deep message retention or per-stream reputation separation matter to you. Switch when the list layer you have been bolting on elsewhere is the part that hurts.",
+    faqs: [
+      {
+        q: "Can day3 replace Postmark for transactional email?",
+        a: "For most product teams, yes: one POST per email, idempotent retries and per-email delivery status, from a domain you authenticate. Heavy senders with strict retention, inbound routing or per-stream reputation requirements should check those specifics first.",
+      },
+      {
+        q: "Is day3 cheaper than Postmark?",
+        a: "Both meter sends, so compare plans at your volume. The saving, when there is one, usually comes from collapsing two subscriptions into one rather than from a lower per-email rate.",
+      },
+      {
+        q: "Should marketing and transactional email share a domain?",
+        a: "They can, and day3 is built for it, but a subdomain split is the safer pattern once volume grows so a bad campaign cannot drag your password resets down with it. The guide on this goes through the trade-off properly.",
+      },
+      {
+        q: "Does day3 do inbound email?",
+        a: "No. Outbound only. If you parse replies or route inbound mail into your app, you need something else for that half.",
+      },
+    ],
+    related: [
+      "page:/pricing/for",
+      "feature:api",
+      "page:/deliverability",
+      "blog:transactional-and-marketing-one-domain",
+      "compare:resend-alternative",
+      "page:/pricing",
+    ],
+  },
+  {
+    slug: "mailgun-alternative",
+    competitor: "Mailgun",
+    updated: "2026-09-18",
+    metaTitle: "A Mailgun alternative your whole team can use",
+    metaDescription:
+      "Mailgun is email infrastructure for engineers, priced by sends. day3 sends transactional the same way and adds a composer, audiences and forms the rest of the team can use.",
+    keywords: [
+      "mailgun alternative",
+      "mailgun alternative with newsletters",
+      "simpler mailgun alternative",
+      "mailgun vs day3",
+      "email api with a composer",
+    ],
+    title: "A Mailgun alternative that is not only for engineers.",
+    intro:
+      "Mailgun is sending infrastructure: a capable API, deep deliverability tooling, validation and inbound routing, priced by the emails you push through it.",
+    difference:
+      "Again not a pricing argument, both meter sends. The difference is who can use it. Mailgun assumes an engineer for every send, so the marketing half ends up somewhere else, on a second bill and a second suppression list. day3 puts a composer, audiences, segments and signup forms on top of the same API, so the person writing the changelog does not need to open a terminal.",
+    comparison: [
+      { dimension: "Pricing model", day3: DAY3.pricing, competitor: "Also by emails sent, with add-ons" },
+      { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Infrastructure, not a list tool" },
+      { dimension: "Product scope", day3: DAY3.scope, competitor: "Sending infrastructure: API, validation, inbound routing, analytics" },
+      { dimension: "Who can send", day3: "Anyone on the team, from a composer", competitor: "Whoever can call the API or drive the templates" },
+      { dimension: "Best for", day3: "Small teams wanting one tool for both jobs", competitor: "High-volume senders with engineers to run it" },
+      { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Free trial volume, then priced by sends" },
+    ],
+    worked: {
+      scenario:
+        "A product team sending 20,000 application emails a month and a fortnightly update to 15,000 users.",
+      subscribers: 15_000,
+      monthlySends: 50_000,
+      otherModel:
+        "Mailgun meters sends too, so the bills are comparable; the usual difference is the second subscription the marketing half needs alongside it",
+    },
+    migration: standardMigration(
+      "If your list lives in a database rather than in Mailgun, export it from there as a CSV with email and the fields your templates merge. If you have been storing recipients in Mailgun's own lists, export those. day3 dedupes on import and refuses anything already suppressed.",
+    ),
+    migrationCaveat:
+      "Email validation, inbound routing and message parsing are not things day3 does, and Mailgun's analytics and log retention go deeper. Templates and webhook handlers are rebuilt, not moved. At very high volume, dedicated-IP strategy and the controls around it are Mailgun's territory rather than day3's.",
+    reasonsToSwitch: [
+      {
+        title: "One tool instead of two",
+        description:
+          "The API and the list layer in the same product, so marketing and transactional share a domain, an allowance and a suppression list.",
+      },
+      {
+        title: "Non-engineers can send",
+        description:
+          "A composer, audiences and live segments mean the update does not queue behind a deploy.",
+      },
+      {
+        title: "DNS set up for you",
+        description:
+          "Connect Cloudflare and day3 publishes DKIM, SPF and DMARC itself, then rechecks until the domain verifies.",
+      },
+    ],
+    stayIf:
+      "Stay with Mailgun if you are sending at real volume with engineers who know it, or if you need inbound routing, email validation, long log retention or fine-grained IP control. That is infrastructure work and Mailgun is built for it. day3 is for teams who want to send good email without running a mail platform.",
+    faqs: [
+      {
+        q: "Can day3 replace Mailgun?",
+        a: "For ordinary product and application email, yes. For inbound routing, address validation, very long retention or dedicated-IP management at scale, no, and those are the cases where Mailgun earns its place.",
+      },
+      {
+        q: "Is day3 cheaper than Mailgun?",
+        a: "Both meter sends, so compare at your volume. Where teams save is usually by dropping the second tool they were paying for the newsletter half.",
+      },
+      {
+        q: "Does day3 have an API as good as Mailgun's?",
+        a: "It is narrower on purpose: one POST to send, idempotency keys, per-email status, plus endpoints for contacts, audiences, topics and suppressions. It does not try to cover validation or inbound.",
+      },
+      {
+        q: "Will my deliverability change?",
+        a: "Authenticate the same sending domain and bring your suppression list first and the move is close to invisible to mailbox providers, because reputation attaches to your domain rather than to the provider. Warm up gradually if you are moving very high volume.",
+      },
+    ],
+    related: [
+      "page:/pricing/for",
+      "feature:api",
+      "page:/deliverability",
+      "compare:postmark-alternative",
+      "compare:resend-alternative",
       "page:/pricing",
     ],
   },

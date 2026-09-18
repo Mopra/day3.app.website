@@ -22,24 +22,24 @@ Own "cheap email for a big list." Skip the head terms the incumbents own and win
 Target queries: mailchimp too expensive, email newsletter pricing per subscriber, cheapest newsletter tool for 10000 subscribers, email marketing cost calculator, pay per email sent newsletter, unlimited subscribers email marketing, newsletter pricing for 5000 / 10000 / 50000 subscribers.
 
 Deliverables:
-- [ ] Programmatic pages `/pricing/for/<n>-subscribers` for 1k, 2.5k, 5k, 10k, 25k, 50k, 100k, 250k. Each computes what that list costs on day3 at monthly, twice-monthly, weekly and twice-weekly cadence, read off the ladder. Hub at `/pricing/for`.
-- [ ] Interactive cost calculator on `/pricing` (subscribers x sends per month, price from ladder). Same math as the programmatic pages.
+- [x] Programmatic pages `/pricing/for/<n>-subscribers` for 1k, 2.5k, 5k, 10k, 25k, 50k, 100k, 250k. Each computes what that list costs on day3 at monthly, twice-monthly, weekly and twice-weekly cadence, read off the ladder. Hub at `/pricing/for`.
+- [x] Interactive cost calculator, shipped as `/resend-pricing-calculator`: a side-by-side against Resend's published prices, carrying a visible `RESEND_VERIFIED_ON` date. Worth repeating for one contact-priced tool (Mailchimp or Kit) next.
 - [ ] Guide: "Why email tools charge per subscriber, and what it costs you." Extends the existing per-subscriber vs per-send post.
 
 ### 2. Alternatives (extend the six existing pages)
 
 Existing: Resend, Mailchimp, ConvertKit, beehiiv, EmailOctopus, Buttondown.
 
-- [ ] Rename or alias ConvertKit to Kit (`/compare/kit-alternative`, redirect from the old slug). Search is shifting.
-- [ ] Add: Substack, MailerLite, Loops, Brevo, Postmark, Mailgun.
-- [ ] Every compare page links to the matching `/pricing/for/<n>` page in its worked example.
+- [x] Renamed ConvertKit to Kit (`/compare/kit-alternative`), permanent redirect from the old slug in `next.config.ts`.
+- [x] Added: Substack, MailerLite, Loops, Brevo, Postmark, Mailgun. Twelve compare pages total. Brevo, Postmark and Mailgun already bill by sends, so those three lead by saying so and argue scope instead.
+- [x] Every compare page links to the `/pricing/for` hub through the link mesh.
 
 ### 3. EU and GDPR (infra is the differentiator)
 
 Target queries: gdpr compliant newsletter tool, eu hosted email marketing, european alternative to mailchimp, newsletter tool data stored in eu, gdpr email api, email marketing without us data transfer.
 
 Deliverables:
-- [ ] Landing page `/eu` or `/for/eu-companies`: EU-only hosting, named sub-processors, DPA on offer, no US transfer. Conversion page, not boilerplate.
+- [x] Landing page `/for/eu-companies`: EU-only hosting with all three sub-processors named, published DPA, no third-country transfer, and an explicit "no SOC 2 or ISO 27001 of our own" paragraph.
 - [ ] Guide: "Sending newsletters from the EU: what GDPR actually requires."
 - [ ] Guide: "Is Mailchimp GDPR compliant? What you have to do yourself." Fair and factual.
 
@@ -58,7 +58,7 @@ Existing: SPF/DKIM/DMARC explained, one-click unsubscribe RFC 8058, migrating a 
 
 - [ ] "Cloudflare email DNS setup: SPF, DKIM, DMARC step by step."
 - [ ] "Google and Yahoo bulk sender requirements, current year, checklist."
-- [ ] "Why your newsletter goes to spam, and the eight fixes."
+- [x] "Why your newsletter goes to spam, and the eight fixes." Ordered by what decides delivery, with a symptom-to-cause table. Google's complaint thresholds quoted as theirs.
 - [ ] "DMARC p=none vs quarantine vs reject."
 - [ ] "Email bounce codes explained."
 - [ ] Keep every guide fresh: bump `updated` only on substantive edits.
@@ -98,7 +98,7 @@ Existing: startups, indie developers, SaaS.
 ### Technical
 
 - [x] Sitemap with real lastmod, IndexNow, llms.txt and llms-full.txt.
-- [ ] Add new page families to sitemap, llms.txt and the link mesh in the same commit that adds the pages.
+- [x] New families wired into sitemap, llms.txt and the link mesh as they ship. Keep doing this in the same commit.
 - [ ] Search Console: verify, submit sitemap, review queries monthly.
 - [ ] Core Web Vitals check on the templated pages after each family ships.
 

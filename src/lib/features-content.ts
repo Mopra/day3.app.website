@@ -592,7 +592,7 @@ export const featurePages: FeaturePage[] = [
       "feature:api",
       "page:/pricing",
       "for:indie-developers",
-      "compare:convertkit-alternative",
+      "compare:kit-alternative",
       "page:/how-it-works",
     ],
   },

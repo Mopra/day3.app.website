@@ -608,7 +608,7 @@ export const blogPosts: BlogPost[] = [
       "page:/how-it-works",
       "page:/pricing",
       "compare:mailchimp-alternative",
-      "compare:convertkit-alternative",
+      "compare:kit-alternative",
       "for:startups",
       "feature:audiences",
     ],
@@ -1408,6 +1408,283 @@ export const blogPosts: BlogPost[] = [
       "blog:one-click-unsubscribe-rfc-8058",
       "page:/legal/dpa",
       "page:/security",
+    ],
+  },
+  // ------------------------------------------------- 8. why mail lands in spam
+  /*
+    The highest-volume query in this whole cluster, and the one most likely to be
+    answered badly elsewhere: the usual article lists twenty "spam trigger words"
+    and never mentions DMARC alignment. So this one is ordered by what actually
+    decides delivery, cheapest check first, and it says plainly where a fix is a
+    judgement call rather than a rule.
+
+    On the numbers: the complaint-rate thresholds are Google's own published
+    sender guidelines, quoted as theirs rather than stated as universal law,
+    because Microsoft and others do not publish an equivalent figure.
+  */
+  {
+    slug: "why-email-goes-to-spam",
+    title: "Why your newsletter goes to spam, and the eight things that fix it",
+    published: "2026-09-18",
+    updated: "2026-09-18",
+    readMinutes: 11,
+    topic: "Deliverability",
+    metaTitle: "Why your email goes to spam (and how to fix it)",
+    metaDescription:
+      "Spam placement is almost never about the words in your subject line. It is authentication, complaints and engagement, in that order. The eight real causes, each with a fix.",
+    keywords: [
+      "why does my email go to spam",
+      "newsletter going to spam",
+      "email goes to spam gmail",
+      "fix email deliverability",
+      "emails landing in junk folder",
+      "avoid spam folder newsletter",
+    ],
+    summary:
+      "Nearly every guide on this blames your subject line. Mailbox providers care far more about whether your domain is authenticated, how many people mark you as spam, and whether anyone opens what you send.",
+    keyTakeaways: [
+      "Check authentication first. An unaligned DMARC result explains more spam placement than every other cause put together, and it is the cheapest thing to fix.",
+      "Google asks bulk senders to keep spam complaints under 0.3% and says to aim below 0.1%. Above that line, nothing else you do matters much.",
+      "Sending to people who never opted in, or who have not opened anything in a year, is what turns a healthy list into a filtered one.",
+      "Spam-word lists are close to useless. Filters have been engagement-based for years.",
+      "Fix in this order: authentication, complaints, list hygiene, volume ramp, then content.",
+    ],
+    sections: [
+      {
+        heading: "What the filter is actually deciding",
+        blocks: [
+          {
+            kind: "p",
+            text: "A mailbox provider is answering three questions when your email arrives. Can I prove who sent this? Do people who get mail from this sender want it? Is this sender behaving like the senders I already trust? Content is a tiebreaker, a long way down the list, which is why rewriting your subject line rarely moves anything.",
+          },
+          {
+            kind: "p",
+            text: "Those three questions map to authentication, engagement and reputation. Reputation attaches to your sending domain, not to the tool you send with, which cuts both ways: switching providers does not reset a bad reputation, and it does not cost you a good one either.",
+          },
+          {
+            kind: "note",
+            title: "Work in this order",
+            text: "The eight causes below are ordered by how often they are the real problem and how cheap they are to rule out. Do not skip to the content section. Roughly nine times in ten the answer is in the first three.",
+          },
+        ],
+      },
+      {
+        heading: "1. Your domain is not authenticated, or not aligned",
+        blocks: [
+          {
+            kind: "p",
+            text: "SPF, DKIM and DMARC are the proof-of-identity layer. Most people who think they have set these up have set up two of the three, or have DMARC published but failing alignment, which is worse than not having it because you are now advertising a policy you do not pass.",
+          },
+          {
+            kind: "p",
+            text: "Alignment is the part that catches everyone. It is not enough for SPF and DKIM to pass. The domain they pass for has to match the domain in your visible From address. A message can pass SPF for your provider's domain and still fail DMARC, because the two domains do not line up.",
+          },
+          {
+            kind: "steps",
+            items: [
+              "Send yourself a message and view the original. Look for the authentication results header.",
+              "Check that SPF, DKIM and DMARC all say pass. Two out of three is a fail.",
+              "Check the domain beside the DKIM pass matches the domain in your From address.",
+              "If DMARC is missing, publish it at p=none first and read the reports before tightening it.",
+            ],
+          },
+          {
+            kind: "p",
+            text: "The full walkthrough, including the records themselves and the order to roll them out without blocking your own mail, is in the authentication guide.",
+          },
+        ],
+      },
+      {
+        heading: "2. You are sending from a free or unrelated domain",
+        blocks: [
+          {
+            kind: "p",
+            text: "A From address at gmail.com, outlook.com or yahoo.com sent through a bulk provider will fail DMARC, because those domains publish policies that say only their own servers may send as them. This is not a configuration you can fix from your side. It is the policy working as designed.",
+          },
+          {
+            kind: "p",
+            text: "Send from a domain you control and can add DNS records to. If you want replies to reach your Gmail, set the reply-to address rather than the from address.",
+          },
+        ],
+      },
+      {
+        heading: "3. Your complaint rate is over the line",
+        blocks: [
+          {
+            kind: "p",
+            text: "When someone presses the spam button, that is a direct signal that outweighs almost everything else. Google's sender guidelines ask bulk senders to keep the reported spam rate below 0.3% and recommend staying under 0.1%. Those are Google's published numbers; other providers do not publish an equivalent, but they measure the same thing.",
+          },
+          {
+            kind: "table",
+            caption: "Complaint rate, roughly what it means",
+            head: ["Rate", "Reading", "What to do"],
+            rows: [
+              ["Under 0.1%", "Healthy", "Nothing. Keep an eye on it after each send."],
+              ["0.1% to 0.3%", "Warning", "Tighten who you mail. Stop sending to the unengaged."],
+              ["Over 0.3%", "Failing", "Stop broad sends. Mail only recent, engaged contacts until it recovers."],
+            ],
+          },
+          {
+            kind: "p",
+            text: "The usual cause of a high complaint rate is not bad content. It is that people do not remember signing up, or cannot find the unsubscribe link and use the spam button as one instead. Which leads directly to the next two.",
+          },
+        ],
+      },
+      {
+        heading: "4. There is no one-click unsubscribe",
+        blocks: [
+          {
+            kind: "p",
+            text: "Bulk senders are expected to support one-click unsubscribe, the list header defined in RFC 8058, and to process those requests within a couple of days. Without it, the only exit a reader can find quickly is the spam button, and every one of those costs you far more than an unsubscribe would have.",
+          },
+          {
+            kind: "p",
+            text: "Make the visible unsubscribe link obvious too. Hiding it in small grey text is a false economy that converts unsubscribes into complaints.",
+          },
+        ],
+      },
+      {
+        heading: "5. You are mailing people who never really opted in",
+        blocks: [
+          {
+            kind: "p",
+            text: "Purchased lists, scraped addresses, conference badge dumps and contacts imported from a CRM that collected them for something else are the fastest way to a filtered domain. Some of those addresses are spam traps: recycled or purpose-made addresses that exist only to catch senders who did not get permission.",
+          },
+          {
+            kind: "list",
+            items: [
+              "Only mail addresses that asked for this specific kind of email.",
+              "Keep the opt-in record: source and timestamp, per contact.",
+              "If a list has been sitting unused for a year, treat it as cold rather than mailing it in one go.",
+              "Never import a list you did not collect yourself.",
+            ],
+          },
+        ],
+      },
+      {
+        heading: "6. Your list has gone stale",
+        blocks: [
+          {
+            kind: "p",
+            text: "Engagement is a ranking signal. A list where most people never open anything tells the filter that your mail is unwanted, and that judgement then applies to the people who do want it. The fix is unglamorous: stop mailing the people who stopped reading.",
+          },
+          {
+            kind: "steps",
+            items: [
+              "Segment on last engagement. Anyone with no open or click in six to twelve months is dormant.",
+              "Send that group one honest re-permission email asking if they still want it.",
+              "Anyone who does not respond, stop mailing. Keep the record, drop the sends.",
+              "Mail the engaged remainder as normal and watch placement recover over a few sends.",
+            ],
+          },
+          {
+            kind: "note",
+            title: "This is a judgement call, not a rule",
+            text: "Six months is right for a weekly newsletter and far too aggressive for a quarterly product update. Pick the window from your own sending cadence rather than from an article.",
+          },
+        ],
+      },
+      {
+        heading: "7. You ramped volume too fast",
+        blocks: [
+          {
+            kind: "p",
+            text: "A domain that has never sent bulk mail suddenly sending to fifty thousand people looks exactly like a compromised account. Providers throttle or filter first and ask later. This is the one cause that is purely about pattern rather than about anything being wrong with your mail.",
+          },
+          {
+            kind: "p",
+            text: "Ramp over a week or two. Start with your most engaged contacts, because their opens are the positive signal that earns you room for the rest. Increase volume gradually rather than doubling each day, and keep an eye on placement as you go.",
+          },
+          {
+            kind: "p",
+            text: "The same applies when you move providers, even though your domain reputation follows you. The sending infrastructure is new to the receiver even when the domain is not.",
+          },
+        ],
+      },
+      {
+        heading: "8. Bounces you never suppressed",
+        blocks: [
+          {
+            kind: "p",
+            text: "A hard bounce means the address does not exist. Sending to it again, and again the month after, is a clear signal that you are not maintaining your list, and repeated attempts to non-existent addresses at one provider are read as exactly that.",
+          },
+          {
+            kind: "p",
+            text: "Any decent tool suppresses hard bounces and complaints automatically. The danger is the re-import: exporting your list, cleaning it in a spreadsheet, and uploading it again quietly resurrects every address you had already suppressed. Import the suppression list first, always.",
+          },
+        ],
+      },
+      {
+        heading: "Then, and only then, the content",
+        blocks: [
+          {
+            kind: "p",
+            text: "Content matters least, and the advice about it is mostly folklore. There is no list of forbidden words. What genuinely does hurt:",
+          },
+          {
+            kind: "list",
+            items: [
+              "A single image with no text, which the filter cannot read and which looks like an attempt to hide something.",
+              "Public link shorteners, which are heavily abused and carry other people's reputation.",
+              "Links to a domain unrelated to the one you are sending from.",
+              "A From name that does not match what the reader signed up to hear from.",
+              "Sloppy HTML, or a message with no plain-text alternative.",
+            ],
+          },
+          {
+            kind: "p",
+            text: "Write normally. If your mail is authenticated, wanted and sent to people who asked for it, the words are not what is holding you back.",
+          },
+        ],
+      },
+      {
+        heading: "A short diagnosis table",
+        blocks: [
+          {
+            kind: "table",
+            caption: "Symptom to likely cause",
+            head: ["What you are seeing", "Most likely cause", "Where to look"],
+            rows: [
+              ["Everything lands in spam, at every provider", "Authentication failing or unaligned", "Section 1"],
+              ["Only Gmail filters you", "Complaint rate or engagement at Gmail specifically", "Sections 3 and 6"],
+              ["It started after a list import", "Re-imported suppressed addresses, or a cold list", "Sections 5 and 8"],
+              ["It started after a big send", "Volume ramp", "Section 7"],
+              ["New domain, first campaign", "No sending history yet", "Section 7"],
+              ["Gradual decline over months", "List going stale", "Section 6"],
+            ],
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        q: "Why do my emails go to spam all of a sudden?",
+        a: "Something changed, and it is usually one of four things: a DNS change broke authentication, you imported a list, you sent a much larger volume than usual, or a campaign drew complaints. Check authentication headers on a test send first, because it is the quickest to confirm and the most common answer.",
+      },
+      {
+        q: "Do spam trigger words really matter?",
+        a: "Barely. Filters have been engagement-based for years, and word lists are a relic of the era before that. A message that is authenticated, wanted and opened will land whatever words it uses. A message that is none of those will not be saved by careful vocabulary.",
+      },
+      {
+        q: "How long does it take to recover from spam placement?",
+        a: "Typically a few weeks of consistent, well-received sending, assuming you fixed the cause. Reputation recovers in the direction of your recent behaviour, so a few small sends to engaged contacts do more than one large careful one. If authentication was the cause, recovery can be much quicker.",
+      },
+      {
+        q: "Does switching email providers fix spam placement?",
+        a: "Not on its own. Reputation attaches to your sending domain, so it travels with you. Switching helps only if the old provider's shared IP pool was the problem, which is rare and is not what most people are experiencing.",
+      },
+      {
+        q: "Should marketing and transactional email use the same domain?",
+        a: "They can, but a subdomain split is the safer pattern once volume grows, so a badly received campaign cannot drag your password resets down with it. There is a separate guide working through that trade-off.",
+      },
+    ],
+    related: [
+      "blog:spf-dkim-dmarc-explained",
+      "blog:one-click-unsubscribe-rfc-8058",
+      "blog:migrate-email-list-without-losing-deliverability",
+      "page:/deliverability",
+      "blog:transactional-and-marketing-one-domain",
+      "feature:audiences",
     ],
   },
 ];
