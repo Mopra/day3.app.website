@@ -26,6 +26,10 @@ export const siteConfig = {
   oneLiner: "Marketing + transactional email, billed by sends. $1/mo",
   signupUrl: "https://go.day3.app",
   loginUrl: "https://go.day3.app/login",
+  // The API documentation, its own Nextra site on its own subdomain. Every link
+  // to it on this site reads from here (or from `docsLinks` below) so the host
+  // is written down once.
+  docsUrl: "https://docs.day3.app",
   // day3's own subscribe form. We dogfood the product to capture product-update
   // signups. The popup is wired up by embed.js (loaded once in the root layout)
   // wherever a `<SubscribeButton>` carries the matching data attributes.
@@ -35,6 +39,43 @@ export const siteConfig = {
   // Display string for the footer. Kept in step with `company.city` below.
   location: "Herning, Denmark",
 };
+
+/**
+ * Deep links into docs.day3.app.
+ *
+ * The docs are a separate Next.js app on a separate host, so nothing here can be
+ * type-checked against the pages that exist. Keeping the paths in one object is
+ * the next best thing: a renamed docs route is one edit here rather than a hunt
+ * through components, content modules and the llms.txt builder.
+ *
+ * Paths mirror `app/_meta.js` in the docs repo.
+ */
+export const docsLinks = {
+  index: { label: "API documentation", href: `${siteConfig.docsUrl}` },
+  quickstart: { label: "Quickstart", href: `${siteConfig.docsUrl}/quickstart` },
+  authentication: {
+    label: "Authentication",
+    href: `${siteConfig.docsUrl}/authentication`,
+  },
+  emails: { label: "Send an email", href: `${siteConfig.docsUrl}/emails` },
+  contacts: { label: "Contacts", href: `${siteConfig.docsUrl}/contacts` },
+  audiences: { label: "Audiences", href: `${siteConfig.docsUrl}/audiences` },
+  campaigns: { label: "Campaigns", href: `${siteConfig.docsUrl}/campaigns` },
+  suppressions: {
+    label: "Suppressions",
+    href: `${siteConfig.docsUrl}/suppressions`,
+  },
+  webhooks: { label: "Webhooks", href: `${siteConfig.docsUrl}/webhooks` },
+  mcp: { label: "MCP server", href: `${siteConfig.docsUrl}/mcp` },
+  errors: { label: "Errors", href: `${siteConfig.docsUrl}/errors` },
+  conventions: { label: "Conventions", href: `${siteConfig.docsUrl}/conventions` },
+  migrate: {
+    label: "Migrate a list",
+    href: `${siteConfig.docsUrl}/guides/migrate-a-list`,
+  },
+} as const;
+
+export type DocsLinkKey = keyof typeof docsLinks;
 
 /*
   There was a `navLinks` array here. Nothing imported it: the real navigation is

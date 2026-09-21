@@ -4,9 +4,25 @@ import Image from "next/image";
 
 import { Container } from "@/components/marketing/container";
 import { Logo } from "@/components/marketing/logo";
-import { siteConfig, socialLinks } from "@/lib/site";
+import { docsLinks, siteConfig, socialLinks } from "@/lib/site";
 
-const footerNav = [
+type FooterLink = {
+  label: string;
+  href: string;
+  /** Leaves day3.app. Rendered as a plain anchor rather than a routed Link. */
+  external?: boolean;
+};
+
+/**
+ * The footer columns.
+ *
+ * "Developers" is a column of its own rather than a line inside Product because
+ * most of it points at docs.day3.app, and a docs site that appears only in the
+ * header is a docs site half the traffic never sees. The deep links matter more
+ * than the front door: someone who scrolled this far is looking for a specific
+ * thing, and landing them on the page that answers it beats another hop.
+ */
+const footerNav: { heading: string; links: FooterLink[] }[] = [
   {
     heading: "Product",
     links: [
@@ -16,6 +32,21 @@ const footerNav = [
       { label: "Compare", href: "/compare" },
       { label: "Pricing", href: "/pricing" },
       { label: "Deliverability", href: "/deliverability" },
+    ],
+  },
+  {
+    heading: "Developers",
+    links: [
+      { label: "API docs", href: docsLinks.index.href, external: true },
+      { label: "Quickstart", href: docsLinks.quickstart.href, external: true },
+      /*
+        The on-site product page, not /email-api: that one is a paid-ads landing
+        page, deliberately kept out of the sitemap and the footer.
+      */
+      { label: "API & MCP", href: "/features/api" },
+      { label: "MCP server", href: docsLinks.mcp.href, external: true },
+      { label: "Webhooks", href: docsLinks.webhooks.href, external: true },
+      { label: "Migrate a list", href: docsLinks.migrate.href, external: true },
     ],
   },
   {
@@ -52,8 +83,12 @@ function SiteFooter() {
   return (
     <footer className="border-t border-border bg-background">
       <Container className="py-14">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
-          <div className="max-w-xs">
+        {/*
+          Five nav columns now, so the gutter tightens on the widest breakpoint
+          to keep a label like "Sub-processors" on one line.
+        */}
+        <div className="grid gap-x-8 gap-y-10 md:grid-cols-3 lg:grid-cols-[1.5fr_repeat(5,1fr)]">
+          <div className="max-w-xs md:col-span-3 lg:col-span-1">
             <Logo />
             {/*
               The canonical one-liner, rendered from `siteConfig` rather than
@@ -86,7 +121,7 @@ function SiteFooter() {
           {footerNav.map((group) => (
             <nav key={group.heading} aria-label={group.heading}>
               {/*
-                A <p>, not an <h2>. These four labels used to add four headings to
+                A <p>, not an <h2>. These labels used to add a heading apiece to
                 the outline of every page on the site, which told a crawler the
                 footer was as structurally important as the content above it. The
                 nav's aria-label carries the same information for screen readers.
@@ -95,16 +130,23 @@ function SiteFooter() {
                 {group.heading}
               </p>
               <ul className="mt-4 space-y-2.5">
-                {group.links.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="rounded text-sm text-foreground/80 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
+                {group.links.map((link) => {
+                  const className =
+                    "rounded text-sm text-foreground/80 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+                  return (
+                    <li key={link.label}>
+                      {link.external ? (
+                        <a href={link.href} className={className}>
+                          {link.label}
+                        </a>
+                      ) : (
+                        <Link href={link.href} className={className}>
+                          {link.label}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
           ))}

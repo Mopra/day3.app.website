@@ -341,9 +341,9 @@ export const audiencePages: AudiencePage[] = [
     ],
     related: [
       "feature:api",
+      "docs:contacts",
       "feature:automations",
       "page:/deliverability",
-      "feature:metrics",
       "page:/security",
       "compare:resend-alternative",
     ],

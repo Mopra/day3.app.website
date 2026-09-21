@@ -1,9 +1,11 @@
 import * as React from "react";
 
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
 import { CodeCard } from "@/components/marketing/code-card";
 import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
+import { docsLinks } from "@/lib/site";
 
 /**
  * MCP: the part of day3 that nothing else in this category has.
@@ -102,6 +104,17 @@ function McpProof() {
               </p>
             </div>
           ))}
+        </Reveal>
+
+        {/* The tool list, the scopes and the block dialect are all in the docs. */}
+        <Reveal delay={220} className="mt-12 flex justify-center">
+          <Button
+            variant="outline"
+            size="lg"
+            render={<a href={docsLinks.mcp.href} />}
+          >
+            Set up the MCP server
+          </Button>
         </Reveal>
       </Container>
     </section>

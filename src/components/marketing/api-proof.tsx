@@ -1,12 +1,13 @@
 import * as React from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
 import { CodeCard } from "@/components/marketing/code-card";
 import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
+import { docsLinks } from "@/lib/site";
 
 /**
  * The section that proves the audience line in the hero.
@@ -154,15 +155,33 @@ function ApiProof() {
           </ol>
         </Reveal>
 
-        <Reveal delay={260} className="mt-10 flex justify-center">
+        {/*
+          Two exits, because the section serves two readers. One is still
+          deciding and wants the shape of it; the other has decided and wants the
+          endpoint. Sending the second one through a marketing page first is how
+          you lose them.
+        */}
+        <Reveal
+          delay={260}
+          className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+        >
           <Button
             variant="outline"
             size="lg"
             render={<Link href="/features/api" />}
-            className="group"
+            className="group w-full sm:w-auto"
           >
             See what the API covers
             <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="lg"
+            render={<a href={docsLinks.index.href} />}
+            className="w-full sm:w-auto"
+          >
+            <BookOpen className="size-4" />
+            Read the docs
           </Button>
         </Reveal>
       </Container>

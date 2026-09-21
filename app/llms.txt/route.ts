@@ -1,5 +1,5 @@
 import { siteUrl } from "@/lib/seo";
-import { company } from "@/lib/site";
+import { company, docsLinks, siteConfig } from "@/lib/site";
 import { featurePages } from "@/lib/features-content";
 import { comparePages } from "@/lib/compare-content";
 import { pricingForPages } from "@/lib/pricing-for-content";
@@ -33,6 +33,12 @@ function buildLlmsTxt(): string {
   lines.push(
     `The full text of every guide and product page is available in one document ` +
       `at ${siteUrl}/llms-full.txt, which saves crawling these pages individually.`,
+  );
+  lines.push("");
+  lines.push(
+    `The API reference is a separate site at ${siteConfig.docsUrl}. Anything about ` +
+      `endpoints, request and response shapes, error codes, webhook events or the ` +
+      `MCP server is documented there rather than here.`,
   );
   lines.push("");
   lines.push(
@@ -114,6 +120,33 @@ function buildLlmsTxt(): string {
   lines.push(`- [Resend vs day3 pricing calculator](${siteUrl}/resend-pricing-calculator): an interactive cost comparison against Resend's published prices, including the cases where Resend is cheaper`);
   lines.push(`- [Deliverability](${siteUrl}/deliverability): how day3 gets your email to the inbox`);
   lines.push(`- [Guides](${siteUrl}/blog): reference writing on authentication, unsubscribe compliance, consent, and email pricing models`);
+  lines.push("");
+
+  /*
+    The docs are their own host and their own deployment, so an answer engine
+    that only ever reads day3.app would never find them. Listing the routes here
+    is the cheapest way to make "how do I send a transactional email with day3"
+    resolve to the page that answers it rather than to a marketing page.
+  */
+  lines.push("## Developer documentation");
+  lines.push("");
+  lines.push(
+    `Full API reference: ${siteConfig.docsUrl}. Base URL for the API itself: ` +
+      "https://go.day3.app/api/v1 (the app's host; day3.app is the marketing site " +
+      "and serves no API). Auth is a bearer API key created in the app.",
+  );
+  lines.push("");
+  lines.push(`- [Quickstart](${docsLinks.quickstart.href}): from nothing to a delivered email in three steps`);
+  lines.push(`- [Authentication](${docsLinks.authentication.href}): bearer keys and scopes`);
+  lines.push(`- [Conventions](${docsLinks.conventions.href}): pagination, idempotency, ids and rate limits, shared by every endpoint`);
+  lines.push(`- [Errors](${docsLinks.errors.href}): the machine-readable error codes`);
+  lines.push(`- [Emails](${docsLinks.emails.href}): POST /v1/emails, the transactional send`);
+  lines.push(`- [Audiences](${docsLinks.audiences.href}) and [Contacts](${docsLinks.contacts.href}): the list, and batch writes of up to 1,000 rows`);
+  lines.push(`- [Campaigns](${docsLinks.campaigns.href}): draft, preview, test and send a newsletter from code`);
+  lines.push(`- [Suppressions](${docsLinks.suppressions.href}): import and read the do-not-send list`);
+  lines.push(`- [Webhooks](${docsLinks.webhooks.href}): delivery, bounce and complaint events`);
+  lines.push(`- [MCP server](${docsLinks.mcp.href}): the Model Context Protocol endpoint for AI editors`);
+  lines.push(`- [Migrate a list](${docsLinks.migrate.href}): the order of operations for moving off another provider`);
   lines.push("");
 
   /*

@@ -10,6 +10,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
+import { docsLinks } from "@/lib/site";
+
 export type FeaturePoint = {
   title: string;
   description: string;
@@ -59,6 +61,13 @@ export type FeaturePage = {
   faqs?: { q: string; a: string }[];
   /** Refs into the internal link mesh. See lib/internal-links.ts. */
   related?: string[];
+  /**
+   * A feature whose real depth lives in the API reference on docs.day3.app.
+   * When set, the detail page carries a link to it in the hero and in the
+   * closing CTA, because a developer reading a feature page is one click from
+   * deciding, and that click is the docs rather than the sign-up form.
+   */
+  docsCta?: { label: string; href: string };
 };
 
 /**
@@ -644,15 +653,19 @@ export const featurePages: FeaturePage[] = [
           "Create and revoke bearer keys on the API keys page; the key is shown once and only its hash is stored. Sending a campaign to a real audience needs a key explicitly minted with that permission, and it can't be added later, so an assistant holding an ordinary key can draft all day and reach nobody.",
       },
       {
-        title: "The docs live in the app",
+        title: "Documented twice over",
         description:
-          "Quickstart, endpoint map, and cURL / JavaScript / Python snippets sit under your key list, pre-filled with your own audience id. Every resource page has a `</>` panel with its ids copyable, and there's a copy-paste prompt that hands the whole reference to your AI coding assistant.",
+          "The full reference is public at docs.day3.app: every endpoint, every error code, the webhook events and the MCP tools. Inside the app the same material is pre-filled with your own audience id, sitting under your key list and behind a `</>` panel on every resource page, next to a copy-paste prompt that hands the whole reference to your AI coding assistant.",
       },
     ],
     faqs: [
       {
         q: "Does day3 have an API?",
         a: "Yes. A REST API at /api/v1 covering transactional email, audiences, contacts, custom fields, segments, topics, the suppression list, and campaigns. It uses bearer API keys, JSON with snake_case, cursor pagination, machine-readable error codes, and idempotency keys on writes.",
+      },
+      {
+        q: "Where are day3's API docs?",
+        a: "At docs.day3.app. It covers authentication, the shared conventions (pagination, idempotency, ids, rate limits), every endpoint, the machine-readable error codes, webhooks, and the MCP server, plus a quickstart and a guide to migrating a list off another provider. The same reference is also in the app, pre-filled with your own ids, under the API keys page and the `</>` panel on each resource page.",
       },
       {
         q: "Can I send transactional email through day3?",
@@ -688,13 +701,14 @@ export const featurePages: FeaturePage[] = [
         "Retry safety is handled at the protocol level rather than left to you. Send an Idempotency-Key with a transactional call and a network retry can never produce a second email, even when the retry races the original request. That is the difference between a password reset flow you can trust under load and one that occasionally double-sends.",
       ],
     },
+    docsCta: { label: "Read the API docs", href: docsLinks.index.href },
     related: [
+      "docs:quickstart",
+      "docs:mcp",
+      "docs:migrate",
       "compare:resend-alternative",
       "feature:automations",
-      "feature:audiences",
       "page:/deliverability",
-      "for:saas",
-      "page:/pricing",
     ],
   },
 ];

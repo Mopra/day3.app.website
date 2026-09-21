@@ -707,9 +707,13 @@ Full reference spec: `docs/api-v1-spec.md`.
   exists because of MCP (§6.16): a script does what its author wrote, but an
   agent holding the same key decides for itself, and "email everyone" is not a
   decision to hand over by default.
-- **The API keys page is also the documentation.** There is no separate docs site;
-  everything needed to use the API sits below the key list, filled in with the
-  account's real audience id:
+- **The public reference is docs.day3.app.** Every endpoint, the shared
+  conventions, the error codes, the webhook events and the MCP tools, on its own
+  Nextra site (repo: `day3.app.docs`). The marketing site links to it from the
+  main nav, the footer's Developers column, `/features/api` and `/llms.txt`.
+- **The API keys page documents it again, in context.** The in-app copy is the
+  same material with the account's real audience id filled in, sitting below the
+  key list:
   - a **quickstart** (base URL → `export DAY3_API_KEY=…`, prefilled with the key
     just minted → a verification request),
   - **copy-paste prompts for an AI coding assistant** — *integrate into my app*,
@@ -1144,8 +1148,8 @@ minute per account** with `Retry-After` on a `429` — sleep for what it says. `
 a contact **erases** it (GDPR); to stop mailing someone while keeping the record,
 `PATCH { "status": "unsubscribed" }`.
 
-Full reference: `docs/api-v1-spec.md`, and the copyable Markdown reference on the API
-keys page.
+Full reference: <https://docs.day3.app>, `docs/api-v1-spec.md`, and the copyable
+Markdown reference on the API keys page.
 
 ### 10.4 Route C — hand it to an AI assistant
 

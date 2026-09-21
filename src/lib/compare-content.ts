@@ -240,11 +240,12 @@ export const comparePages: ComparePage[] = [
       "page:/resend-pricing-calculator",
       "page:/pricing/for",
       "feature:api",
+      "docs:emails",
+      "docs:migrate",
       "page:/deliverability",
       "page:/how-it-works",
       "for:saas",
       "compare:mailchimp-alternative",
-      "page:/pricing",
     ],
   },
   {
@@ -1110,7 +1111,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
-      "page:/pricing/for",
+      "docs:emails",
       "feature:api",
       "page:/deliverability",
       "blog:transactional-and-marketing-one-domain",
@@ -1196,7 +1197,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
-      "page:/pricing/for",
+      "docs:emails",
       "feature:api",
       "page:/deliverability",
       "compare:postmark-alternative",

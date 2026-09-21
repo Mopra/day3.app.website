@@ -2,7 +2,7 @@ import * as React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, permanentRedirect } from "next/navigation";
-import { ArrowRight, ArrowLeft, Check } from "lucide-react";
+import { ArrowRight, ArrowLeft, BookOpen, Check } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/marketing/container";
@@ -86,6 +86,21 @@ export default async function FeatureDetailPage({ params }: PageProps) {
               <p className="mt-5 text-lg leading-relaxed text-muted-foreground">
                 {feature.summary}
               </p>
+              {/*
+                Straight to the reference, above the fold. A developer who opened
+                this page already believes the feature exists; what they want is
+                the endpoint.
+              */}
+              {feature.docsCta ? (
+                <Button
+                  variant="outline"
+                  className="mt-7"
+                  render={<a href={feature.docsCta.href} />}
+                >
+                  <BookOpen className="size-4" />
+                  {feature.docsCta.label}
+                </Button>
+              ) : null}
             </div>
           </Container>
         </section>
@@ -187,6 +202,16 @@ export default async function FeatureDetailPage({ params }: PageProps) {
               >
                 See pricing
               </Button>
+              {feature.docsCta ? (
+                <Button
+                  variant="ghost"
+                  size="lg"
+                  className="w-full sm:w-auto"
+                  render={<a href={feature.docsCta.href} />}
+                >
+                  {feature.docsCta.label}
+                </Button>
+              ) : null}
             </div>
           </Container>
         </section>

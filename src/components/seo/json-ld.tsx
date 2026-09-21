@@ -115,6 +115,16 @@ export function softwareApplicationSchema() {
     description:
       "Email marketing for startups and indie developers, billed by emails sent rather than subscriber count. Every plan includes unlimited subscribers.",
     publisher: { "@id": `${siteUrl}/#organization` },
+    /*
+      Points an answer engine at the API reference as this product's own
+      documentation. It sits on a different host, so nothing else in the graph
+      would tell a crawler the two belong to the same thing.
+    */
+    softwareHelp: {
+      "@type": "CreativeWork",
+      name: "day3 API documentation",
+      url: siteConfig.docsUrl,
+    },
     offers: {
       "@type": "AggregateOffer",
       priceCurrency: "USD",

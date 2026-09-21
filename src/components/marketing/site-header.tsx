@@ -26,6 +26,12 @@ type NavItem = {
   label: string;
   href: string;
   children?: NavChild[];
+  /**
+   * Lives on another host (docs.day3.app). Rendered as a plain anchor so the
+   * router never tries to prefetch a route this app doesn't own, and skipped by
+   * the active-path check, which only ever sees same-site paths.
+   */
+  external?: boolean;
 };
 
 /**
@@ -69,6 +75,14 @@ const primaryNav: NavItem[] = [
   },
   { label: "Guides", href: "/blog" },
   { label: "Pricing", href: "/pricing" },
+  /*
+    Docs sits last, right against the log-in / sign-up pair, because that is
+    where a developer looks for it and because it is the one item here that
+    leaves the marketing site. It is a top-level link rather than a child of
+    Features: the API reference is a destination in its own right, and burying
+    it two levels down is how a docs site goes unread.
+  */
+  { label: "Docs", href: siteConfig.docsUrl, external: true },
 ];
 
 const triggerClasses =
@@ -125,8 +139,14 @@ function SiteHeader() {
                     </>
                   ) : (
                     <NavigationMenu.Link
-                      active={isActive(pathname, item.href)}
-                      render={<Link href={item.href} />}
+                      active={!item.external && isActive(pathname, item.href)}
+                      render={
+                        item.external ? (
+                          <a href={item.href} />
+                        ) : (
+                          <Link href={item.href} />
+                        )
+                      }
                       className={cn(
                         "rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring data-[active]:text-foreground",
                       )}
@@ -196,6 +216,15 @@ function SiteHeader() {
                   pathname={pathname}
                   onNavigate={() => setOpen(false)}
                 />
+              ) : item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-md px-3 py-2.5 text-base font-medium text-foreground transition-colors hover:bg-secondary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  {item.label}
+                </a>
               ) : (
                 <Link
                   key={item.href}

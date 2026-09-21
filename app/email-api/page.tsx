@@ -30,7 +30,7 @@ import { PanelDnsSync } from "@/components/marketing/panel-dns-sync";
 import { PanelSending } from "@/components/marketing/panel-sending";
 import { PanelActivity } from "@/components/marketing/panel-activity";
 import { buildMetadata } from "@/lib/seo";
-import { cheapestTierFor, pricingTiers, siteConfig } from "@/lib/site";
+import { cheapestTierFor, docsLinks, pricingTiers, siteConfig } from "@/lib/site";
 import { audiencePages } from "@/lib/audience-content";
 
 /*
@@ -628,12 +628,19 @@ export default function EmailApiLandingPage() {
               <Reveal delay={180}>
                 <p className="mt-10 border-t border-border pt-8 text-sm leading-relaxed text-muted-foreground">
                   Want the endpoint map, the migration playbook, and what the MCP
-                  server exposes?{" "}
+                  server exposes? It&apos;s all in the{" "}
+                  <a
+                    href={docsLinks.index.href}
+                    className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
+                  >
+                    API docs
+                  </a>
+                  , and the shorter version is on the{" "}
                   <Link
                     href="/features/api"
                     className="font-medium text-foreground underline underline-offset-4 hover:text-caramel"
                   >
-                    It&apos;s all on the API page
+                    API page
                   </Link>
                   .
                 </p>

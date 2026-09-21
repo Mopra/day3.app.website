@@ -80,6 +80,10 @@ function buildLlmsFullTxt(): string {
   );
   lines.push("");
   lines.push(`Canonical site: ${siteUrl}`);
+  lines.push(
+    `API reference: ${siteConfig.docsUrl} (a separate site, not included below). ` +
+      "Every endpoint, error code, webhook event and MCP tool is documented there.",
+  );
   lines.push(`One-line description: ${siteConfig.oneLiner}`);
   lines.push(
     `Operated by ${company.legalName} (CVR ${company.cvr}), ${company.city}, ${company.country}. ` +
