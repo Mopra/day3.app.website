@@ -5,6 +5,7 @@
 - npm run ga4 (socialsandbox) only reports up to 3 days back; for anything newer, read the GA4 UI in the browser.
 
 ## Lately
+- 2026-10-13 Round (human left): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
 - 2026-10-13 Round (quest landed): day-later GA4 check passed (sign_up starred as key event, 2 key events in 7 days). 8 of 8 done, no aims, main past c004aff is memory only. Nothing else to do.
 - 2026-10-13 Round (hourly): the date came for the GA4 day-later check, so filed "Day-later GA4 check: sign_up counted as key event" (sonnet). 7 of 8 done, no aims, main past c004aff is memory only.
 - 2026-10-12 Round (quest landed): "Check the agent-setup commit builds and is live" closed with no fix commits, so c004aff checked clean. 7 of 7 done, no aims. Nothing to do; GA4 day-later check waits for 2026-10-13.
