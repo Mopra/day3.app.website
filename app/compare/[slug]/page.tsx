@@ -188,6 +188,18 @@ export default async function ComparePage({ params }: PageProps) {
                   </p>
                 </div>
               </div>
+              {page.calculator && (
+                <p className="mt-6 text-sm text-muted-foreground">
+                  <Link
+                    href={page.calculator.href}
+                    className="font-medium text-foreground underline underline-offset-2 hover:text-caramel"
+                  >
+                    {page.calculator.label}
+                  </Link>
+                  , dated and sourced, including the cases where{" "}
+                  {page.competitor} comes out cheaper.
+                </p>
+              )}
             </div>
           </Container>
         </section>

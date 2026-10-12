@@ -5,6 +5,7 @@ import { featurePages } from "@/lib/features-content";
 import { comparePages } from "@/lib/compare-content";
 import { PRICING_FOR_UPDATED, pricingForPages } from "@/lib/pricing-for-content";
 import { RESEND_VERIFIED_ON } from "@/lib/resend-comparison";
+import { BEEHIIV_VERIFIED_ON } from "@/lib/beehiiv-comparison";
 import { audiencePages } from "@/lib/audience-content";
 import { sortedBlogPosts } from "@/lib/blog-content";
 import { changelogEntries } from "@/lib/changelog-content";
@@ -47,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/pricing", lastModified: "2026-08-12", priority: 0.9, changeFrequency: "weekly" },
     { path: "/pricing/for", lastModified: PRICING_FOR_UPDATED, priority: 0.8, changeFrequency: "monthly" },
     { path: "/resend-pricing-calculator", lastModified: RESEND_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
+    { path: "/beehiiv-pricing-calculator", lastModified: BEEHIIV_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
     { path: "/how-it-works", lastModified: "2026-08-12", priority: 0.9, changeFrequency: "monthly" },
     { path: "/features", lastModified: "2026-09-18", priority: 0.8, changeFrequency: "monthly" },
     { path: "/migrate", lastModified: "2026-10-12", priority: 0.8, changeFrequency: "monthly" },

@@ -119,6 +119,7 @@ function buildLlmsTxt(): string {
   lines.push(`- [Migrate](${siteUrl}/migrate): moving a list to day3 in screenshots: sending domain, DKIM/SPF/DMARC records, CSV import, test send`);
   lines.push(`- [Compare](${siteUrl}/compare): how day3 compares to other email tools`);
   lines.push(`- [Resend vs day3 pricing calculator](${siteUrl}/resend-pricing-calculator): an interactive cost comparison against Resend's published prices, including the cases where Resend is cheaper`);
+  lines.push(`- [beehiiv vs day3 pricing calculator](${siteUrl}/beehiiv-pricing-calculator): what a list costs on beehiiv's published subscriber-tier prices against day3's per-send price, including the cases where beehiiv is cheaper and the features (referrals, ad network, web archive) day3 does not have`);
   lines.push(`- [Deliverability](${siteUrl}/deliverability): how day3 gets your email to the inbox`);
   lines.push(`- [Guides](${siteUrl}/blog): reference writing on authentication, unsubscribe compliance, consent, and email pricing models`);
   lines.push("");

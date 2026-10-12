@@ -97,6 +97,12 @@ const standalonePages: Record<string, InternalLink> = {
     description:
       "Move three sliders and see which is cheaper, including the cases where Resend wins.",
   },
+  "/beehiiv-pricing-calculator": {
+    label: "beehiiv vs day3 calculator",
+    href: "/beehiiv-pricing-calculator",
+    description:
+      "What your list costs on beehiiv's published plans against day3's per-send price, including where beehiiv wins.",
+  },
   "/compare": {
     label: "All comparisons",
     href: "/compare",

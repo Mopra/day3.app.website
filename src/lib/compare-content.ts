@@ -59,6 +59,11 @@ export type ComparePage = {
   comparison: CompareRow[];
   /** The same numbers through both meters. */
   worked: WorkedExample;
+  /**
+   * A calculator page that does print the competitor's prices, dated and
+   * sourced. Linked from the worked example, which itself stays price-free.
+   */
+  calculator?: { href: string; label: string };
   /** How a move actually goes. The question every reader on this page has. */
   migration: MigrationStep[];
   /** What does not come across. Stated first, not buried. */
@@ -185,6 +190,10 @@ export const comparePages: ComparePage[] = [
       monthlySends: 20_000,
       otherModel:
         "Running the two jobs on separate tools means two allowances, two domains to authenticate, and two bills, even when the total volume is the same",
+    },
+    calculator: {
+      href: "/resend-pricing-calculator",
+      label: "Run your own volumes through Resend's published prices",
     },
     migration: standardMigration(
       "Batch up to 1,000 contacts per call, addressed by plain email rather than an id you have to look up first. Upsert instead of colliding, so a re-run is safe. Custom fields register themselves as merge tags on arrival.",
@@ -430,7 +439,7 @@ export const comparePages: ComparePage[] = [
   {
     slug: "beehiiv-alternative",
     competitor: "beehiiv",
-    updated: "2026-08-12",
+    updated: "2026-10-12",
     metaTitle: "A focused beehiiv alternative for product emails",
     metaDescription:
       "beehiiv is a growth platform for media newsletters. day3 is a small tool for product updates, with unlimited subscribers, billed by sends.",
@@ -461,6 +470,10 @@ export const comparePages: ComparePage[] = [
       monthlySends: 80_000,
       otherModel:
         "Subscriber-tier pricing is set by the 40,000, so the bill is the same whether those two sends happen or neither does",
+    },
+    calculator: {
+      href: "/beehiiv-pricing-calculator",
+      label: "Run your own list through beehiiv's published prices",
     },
     migration: standardMigration(
       "Export your beehiiv subscribers to CSV and import with email, first_name and last_name. Suppressed and unsubscribed rows are handled rather than silently dropped, and failed rows can be retried on their own.",
@@ -501,6 +514,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/beehiiv-pricing-calculator",
       "page:/pricing/for",
       "page:/how-it-works",
       "for:saas",

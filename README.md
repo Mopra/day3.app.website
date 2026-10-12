@@ -23,6 +23,7 @@ Day3 is, what it costs, and who it is for. The product itself lives at
   rather than a CMS
 - Legal surface: terms, privacy, GDPR, DPA, subprocessors, acceptable use
 - A Resend pricing calculator at `/resend-pricing-calculator`
+- A beehiiv pricing calculator at `/beehiiv-pricing-calculator`
 - SEO infrastructure: dynamic sitemap, structured data, OG image generation,
   IndexNow pings, and `llms.txt` plus `llms-full.txt` for AI crawlers
 - Dogfooding: the newsletter signup popup is a real Day3 signup form, embedded
