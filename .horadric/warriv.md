@@ -4,6 +4,7 @@
 - GA4 (property 542844170): sign_up is the key event and means a real account, fired server-side by the day3.app repo. CTA clicks on this site stay signup_click (with ga_cid). Never ship CTA clicks as sign_up.
 
 ## Lately
+- 2026-10-12 Round (human left): all 6 quests done, no aims, main past live d687c5a holds only memory commits. Nothing to do; the day-later GA4 check waits for 2026-10-13.
 - 2026-10-12 Round: the verify quest closed (test sign-up done, sign_up seen). All 6 quests done, no aims, main has only memory commits past the live d687c5a, no check stone. Nothing to do.
 - 2026-10-12 Round: nothing to do. Only open quest waits on the human; latest main is already live (signup_click in the bundle), no aims, no check stone to cast.
 - 2026-10-12 Stall wake: the last open quest, "Verify GA4 sign_up from completed app sign-ups", is blocked on the human's test sign-up. Noted it; nothing else to do, no aims open.
