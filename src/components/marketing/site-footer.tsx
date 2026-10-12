@@ -45,6 +45,7 @@ const footerNav: { heading: string; links: FooterLink[] }[] = [
       */
       { label: "API & MCP", href: "/features/api" },
       { label: "MCP server", href: docsLinks.mcp.href, external: true },
+      { label: "Agent setup", href: "/#agents" },
       { label: "Webhooks", href: docsLinks.webhooks.href, external: true },
       { label: "Migrate a list", href: docsLinks.migrate.href, external: true },
     ],

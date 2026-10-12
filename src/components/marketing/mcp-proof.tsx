@@ -6,6 +6,7 @@ import { CodeCard } from "@/components/marketing/code-card";
 import { Reveal } from "@/components/marketing/reveal";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { docsLinks } from "@/lib/site";
+import { mcpInstallCommand } from "@/lib/agent-setup";
 
 /**
  * MCP: the part of day3 that nothing else in this category has.
@@ -18,12 +19,10 @@ import { docsLinks } from "@/lib/site";
  *
  * Hence three beats instead of a feature list: the install, the sentence you
  * type, and the thing that lands. The install line is the app's own, verbatim
- * from `buildMcpSetups()`; the dialect is real syntax from the reference the MCP
- * server hands the model.
+ * from `buildMcpSetups()` via `src/lib/agent-setup.ts`; the dialect is real
+ * syntax from the reference the MCP server hands the model.
  */
-const installSnippet = `claude mcp add --transport http day3 \\
-  https://go.day3.app/api/mcp \\
-  --header "Authorization: Bearer $DAY3_API_KEY"`;
+const installSnippet = mcpInstallCommand;
 
 const promptSnippet = `> Draft the launch email for segments,
   pull the highlights from CHANGELOG.md,
@@ -47,7 +46,7 @@ Evaluated at send time, never frozen.
 const mcpFacts = [
   {
     title: "One URL, no install",
-    body: "Same bearer key as the REST API, one place to revoke it.",
+    body: "Sign in once in the browser. Scripts can use the same API key as the REST API instead.",
   },
   {
     title: "It lands as blocks, not HTML",
@@ -55,7 +54,7 @@ const mcpFacts = [
   },
   {
     title: "It can't mail anyone by accident",
-    body: "Reaching a real audience needs a key you minted for it. An ordinary key drafts and tests only.",
+    body: "Reaching a real audience needs your say-so: you approve sending on its own, or mint a key for it. Otherwise it drafts and tests only.",
   },
   {
     title: "The free tier does the whole loop",

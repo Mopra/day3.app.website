@@ -27,6 +27,7 @@ import { ComposerShot } from "@/components/marketing/composer-shot";
 import { Provenance } from "@/components/marketing/provenance";
 import { ApiProof } from "@/components/marketing/api-proof";
 import { McpProof } from "@/components/marketing/mcp-proof";
+import { AgentSetup } from "@/components/marketing/agent-setup";
 import { SubscribeButton } from "@/components/marketing/subscribe-button";
 import { PanelBuildMode } from "@/components/marketing/panel-build-mode";
 import { PanelDnsSync } from "@/components/marketing/panel-dns-sync";
@@ -524,6 +525,7 @@ export default function HomePage() {
         {/* ----------------------------------------------------- API and MCP */}
         <ApiProof />
         <McpProof />
+        <AgentSetup />
 
         {/* ------------------------------------------------------- Pricing */}
         <section id="pricing" className="scroll-mt-20 border-t border-border bg-oat/30">

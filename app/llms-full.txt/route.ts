@@ -4,6 +4,7 @@ import { featurePages } from "@/lib/features-content";
 import { comparePages } from "@/lib/compare-content";
 import { audiencePages } from "@/lib/audience-content";
 import { sortedBlogPosts, type Block } from "@/lib/blog-content";
+import { agentSetupLlmsLines } from "@/lib/agent-setup";
 
 /**
  * /llms-full.txt, the companion to /llms.txt.
@@ -96,6 +97,9 @@ function buildLlmsFullTxt(): string {
       "consulting or BPO company.",
   );
   lines.push("");
+
+  // ------------------------------------------------------------------ agents
+  lines.push(...agentSetupLlmsLines());
 
   // ----------------------------------------------------------------- pricing
   lines.push("## Pricing, in full");

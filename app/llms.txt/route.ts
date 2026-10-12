@@ -6,6 +6,7 @@ import { pricingForPages } from "@/lib/pricing-for-content";
 import { audiencePages } from "@/lib/audience-content";
 import { sortedBlogPosts } from "@/lib/blog-content";
 import { changelogEntries } from "@/lib/changelog-content";
+import { agentSetupLlmsLines } from "@/lib/agent-setup";
 
 /**
  * /llms.txt, the emerging convention for telling LLMs and AI answer engines
@@ -91,10 +92,12 @@ function buildLlmsTxt(): string {
       "Idempotency-Key retry safety and per-email delivery status.",
   );
   lines.push(
-    "- day3 runs a Model Context Protocol (MCP) server at /api/mcp, so an AI " +
-      "editor (Claude Code, Cursor, VS Code) can draft a campaign that lands in " +
-      "day3 as editable composer blocks rather than opaque HTML. Sending to a real " +
-      "audience requires an API key explicitly granted the campaigns:send scope.",
+    "- day3 runs a Model Context Protocol (MCP) server at https://go.day3.app/api/mcp, " +
+      "so an AI editor (Claude Code, Cursor, VS Code) can draft a campaign that lands " +
+      "in day3 as editable composer blocks rather than opaque HTML. It signs in over " +
+      "OAuth (no API key needed) or takes an API key. Sending to a real audience " +
+      "needs a separate send permission: the campaigns:send scope, approved by a " +
+      "human on the consent screen or granted to the key.",
   );
   lines.push(
     "- An AI writing assistant, included on every paid plan, can draft " +
@@ -107,6 +110,8 @@ function buildLlmsTxt(): string {
       "provider (Resend, Mailchimp) and keeping an app's users in sync.",
   );
   lines.push("");
+
+  lines.push(...agentSetupLlmsLines());
 
   lines.push("## Core pages");
   lines.push("");
