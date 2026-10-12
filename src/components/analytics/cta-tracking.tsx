@@ -23,11 +23,13 @@ import { siteConfig } from "@/lib/site";
  *    which is why every report read "0 key events" no matter how the traffic
  *    moved.
  *
- * 2. UTM parameters describing where the click came from. The app is a separate
- *    origin (go.day3.app) with its own analytics, so the referring page is the
- *    only way it can attribute a signup back to the page that earned it. The
- *    `/email-api` landing page already tagged its own CTAs by hand; this does
- *    the same for the rest of the site, and leaves an existing tag alone.
+ * 2. UTM parameters describing where the click came from, plus the visitor's GA
+ *    client id (`ga_cid`) on signup links. The app is a separate origin
+ *    (go.day3.app) with no GA tag; it reports a completed signup to this GA4
+ *    property from its server under that id (day3.app repo,
+ *    src/services/signup-analytics.ts), so GA4 can credit the page that earned
+ *    it. The `/email-api` landing page tags its own UTMs by hand; those are left
+ *    alone, but still get the client id.
  */
 
 /** Host of the app, derived so it cannot drift from the configured URL. */
@@ -48,10 +50,25 @@ function placementOf(anchor: HTMLAnchorElement): string {
 }
 
 /**
- * Adds attribution to an app URL without disturbing one that already carries it.
+ * This visitor's GA4 client id, read from the `_ga` cookie ("GA1.1.<id>.<ts>").
+ * The app reports a completed signup server-side under this id, which is how
+ * GA4 joins the signup to the visit that led to it. Null before GA has set it.
+ */
+function gaClientId(): string | null {
+  const match = document.cookie.match(/(?:^|; )_ga=GA\d\.\d\.(\d+\.\d+)/);
+  return match ? match[1] : null;
+}
+
+/**
+ * Adds attribution to an app URL without disturbing tags it already carries.
  * Returns null when nothing needs changing, so the common path does no work.
  */
-function tag(rawHref: string, pathname: string, placement: string): string | null {
+function tag(
+  rawHref: string,
+  pathname: string,
+  placement: string,
+  clientId: string | null,
+): string | null {
   let url: URL;
   try {
     url = new URL(rawHref);
@@ -59,16 +76,23 @@ function tag(rawHref: string, pathname: string, placement: string): string | nul
     return null;
   }
   if (url.host !== APP_HOST) return null;
-  // Hand-tagged links (the /email-api ad landing page) stay exactly as written.
-  if (url.searchParams.has("utm_source")) return null;
+  let changed = false;
 
-  url.searchParams.set("utm_source", "day3-website");
-  url.searchParams.set("utm_medium", "cta");
-  url.searchParams.set("utm_campaign", placement);
-  // The page that earned the click, which is the number this whole exercise
-  // exists to produce.
-  url.searchParams.set("utm_content", pathname);
-  return url.toString();
+  // Hand-tagged links (the /email-api ad landing page) keep their UTMs as written.
+  if (!url.searchParams.has("utm_source")) {
+    url.searchParams.set("utm_source", "day3-website");
+    url.searchParams.set("utm_medium", "cta");
+    url.searchParams.set("utm_campaign", placement);
+    // The page that earned the click, which is the number this whole exercise
+    // exists to produce.
+    url.searchParams.set("utm_content", pathname);
+    changed = true;
+  }
+  if (clientId && !url.searchParams.has("ga_cid")) {
+    url.searchParams.set("ga_cid", clientId);
+    changed = true;
+  }
+  return changed ? url.toString() : null;
 }
 
 function CtaTracking() {
@@ -115,7 +139,13 @@ function CtaTracking() {
       // carries the tags. Skipped for a modified click, which is not this tab's
       // navigation to change.
       if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const tagged = tag(new URL(href, window.location.origin).toString(), path, placement);
+      const tagged = tag(
+        new URL(href, window.location.origin).toString(),
+        path,
+        placement,
+        // Only a signup needs the id: the app reads it on /sign-up.
+        isLogin ? null : gaClientId(),
+      );
       if (tagged) anchor.setAttribute("href", tagged);
     }
 
