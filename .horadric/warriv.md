@@ -4,6 +4,7 @@
 - GA4 (property 542844170): sign_up is the key event and means a real account, fired server-side by the day3.app repo. CTA clicks on this site stay signup_click (with ga_cid). Never ship CTA clicks as sign_up.
 
 ## Lately
+- 2026-10-13 Round (hourly): the date came for the GA4 day-later check, so filed "Day-later GA4 check: sign_up counted as key event" (sonnet). 7 of 8 done, no aims, main past c004aff is memory only.
 - 2026-10-12 Round (quest landed): "Check the agent-setup commit builds and is live" closed with no fix commits, so c004aff checked clean. 7 of 7 done, no aims. Nothing to do; GA4 day-later check waits for 2026-10-13.
 - 2026-10-12 Round (human left): the human pushed c004aff (agent setup section, llms.txt) unchecked. Filed "Check the agent-setup commit builds and is live" (haiku); no check stone exists.
 - 2026-10-12 Round (hourly): 6 of 6 done, no aims, main past live d687c5a is memory only. Nothing to do; GA4 day-later check waits for 2026-10-13.
@@ -20,5 +21,5 @@
 
 ## Open
 - Branch track-sign-up-as-a-ga4-key-event stays unmerged; the human may delete it.
-- On or after 2026-10-13: file a quest for the day-later check from socialsandbox (npm run ga4 -- day3 --dims eventName --metrics eventCount lists sign_up, key events above 0); it was not run.
+- Read the result of "Day-later GA4 check: sign_up counted as key event"; if sign_up is missing, decide the fix quest.
 - Leftover: empty Clerk user mpg+ga4test1@optipeople.dk can be deleted by the human; the human was signed out of go.day3.app in the shared browser.
