@@ -37,6 +37,12 @@ const standalonePages: Record<string, InternalLink> = {
     description:
       "What counts as a send, what happens at the monthly cap, and why list size never moves the bill.",
   },
+  "/migrate": {
+    label: "Moving to day3, screen by screen",
+    href: "/migrate",
+    description:
+      "Add your domain, copy its DKIM, SPF and DMARC records, import a CSV and send a test, in screenshots of the real app.",
+  },
   "/deliverability": {
     label: "Deliverability",
     href: "/deliverability",

@@ -49,6 +49,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/resend-pricing-calculator", lastModified: RESEND_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
     { path: "/how-it-works", lastModified: "2026-08-12", priority: 0.9, changeFrequency: "monthly" },
     { path: "/features", lastModified: "2026-09-18", priority: 0.8, changeFrequency: "monthly" },
+    { path: "/migrate", lastModified: "2026-10-12", priority: 0.8, changeFrequency: "monthly" },
     { path: "/compare", lastModified: "2026-08-12", priority: 0.8, changeFrequency: "monthly" },
     {
       path: "/blog",

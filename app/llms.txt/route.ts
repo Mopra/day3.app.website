@@ -116,6 +116,7 @@ function buildLlmsTxt(): string {
   lines.push(`- [Pricing by list size](${siteUrl}/pricing/for): what 1,000 to 250,000 subscribers cost to email at each cadence`);
   lines.push(`- [Features](${siteUrl}/features): everything day3 does`);
   lines.push(`- [Who it's for](${siteUrl}/for): startups, indie developers, SaaS teams`);
+  lines.push(`- [Migrate](${siteUrl}/migrate): moving a list to day3 in screenshots: sending domain, DKIM/SPF/DMARC records, CSV import, test send`);
   lines.push(`- [Compare](${siteUrl}/compare): how day3 compares to other email tools`);
   lines.push(`- [Resend vs day3 pricing calculator](${siteUrl}/resend-pricing-calculator): an interactive cost comparison against Resend's published prices, including the cases where Resend is cheaper`);
   lines.push(`- [Deliverability](${siteUrl}/deliverability): how day3 gets your email to the inbox`);

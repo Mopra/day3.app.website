@@ -162,10 +162,20 @@ export default function PricingPage() {
                 How the model works
               </Button>
             </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              Coming from another tool?{" "}
+              <Link
+                href="/migrate"
+                className="text-foreground underline underline-offset-4"
+              >
+                See the move, screen by screen
+              </Link>
+              .
+            </p>
           </Container>
         </section>
         <RelatedLinks
-          refs={["page:/pricing/for", "page:/resend-pricing-calculator", "page:/how-it-works", "blog:per-subscriber-vs-per-send-email-pricing", "compare:mailchimp-alternative", "feature:audiences", "for:startups", "page:/deliverability"]}
+          refs={["page:/pricing/for", "page:/resend-pricing-calculator", "page:/how-it-works", "blog:per-subscriber-vs-per-send-email-pricing", "compare:mailchimp-alternative", "feature:audiences", "for:startups", "page:/deliverability", "page:/migrate"]}
           heading={"Before you pick a plan"}
           className="border-t border-border"
         />

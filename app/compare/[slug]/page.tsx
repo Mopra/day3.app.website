@@ -12,7 +12,7 @@ import { Reveal } from "@/components/marketing/reveal";
 import { RelatedLinks } from "@/components/marketing/related-links";
 import { JsonLd, breadcrumbSchema, faqSchema } from "@/components/seo/json-ld";
 import { buildMetadata } from "@/lib/seo";
-import { cheapestTierFor, siteConfig } from "@/lib/site";
+import { cheapestTierFor, docsLinks, siteConfig } from "@/lib/site";
 import { comparePages, getComparePage } from "@/lib/compare-content";
 
 type PageProps = {
@@ -270,6 +270,25 @@ export default async function ComparePage({ params }: PageProps) {
                   {page.migrationCaveat}
                 </p>
               </div>
+
+              <p className="mt-6 leading-relaxed text-muted-foreground">
+                Want to see it first?{" "}
+                <Link
+                  href="/migrate"
+                  className="text-foreground underline underline-offset-4"
+                >
+                  The move in screenshots of the real app
+                </Link>
+                : domain, DNS records, CSV import and a test send. Scripting
+                it instead?{" "}
+                <a
+                  href={docsLinks.migrate.href}
+                  className="text-foreground underline underline-offset-4"
+                >
+                  The API migration guide
+                </a>
+                .
+              </p>
             </div>
           </Container>
         </section>
