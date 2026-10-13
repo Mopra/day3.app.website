@@ -5,13 +5,7 @@
 - npm run ga4 (socialsandbox) only reports up to 3 days back; for anything newer, read the GA4 UI in the browser.
 
 ## Lately
-- 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
-- 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
-- 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
-- 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
-- 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
-- 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
-- 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
+- 2026-10-13 Round (hourly), x8 since the look back: 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
 - 2026-10-13 Look back: the day was clean, nothing went wrong twice.
 - 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
 - 2026-10-13 Round (hourly): 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
