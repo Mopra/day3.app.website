@@ -21,7 +21,7 @@ import { docsLinks, siteConfig } from "@/lib/site";
 export const metadata: Metadata = buildMetadata({
   title: "Switch to day3: import, domain setup and a test send",
   description:
-    "What moving your list to day3 looks like, in screenshots of the real app: add your sending domain, copy the DKIM, SPF and DMARC records, import a CSV, send a test.",
+    "What moving your list to day3 looks like, in screenshots of the real app: add your sending domain, copy the DKIM, SPF and DMARC records, bring your list over in one click from beehiiv, Kit, Mailchimp or MailerLite (or a CSV), send a test.",
   path: "/migrate",
   ogEyebrow: "Migrate",
   ogTitle: "Moving to day3, screen by screen",
@@ -30,6 +30,9 @@ export const metadata: Metadata = buildMetadata({
     "switch email marketing provider",
     "import subscribers csv",
     "move newsletter from beehiiv",
+    "import from beehiiv",
+    "beehiiv api import",
+    "import from mailchimp",
     "email domain dkim spf dmarc setup",
   ],
 });
@@ -82,9 +85,9 @@ const steps: {
     },
   },
   {
-    title: "Load your suppressions, then import the CSV",
+    title: "Bring your list over in one click",
     description:
-      "Export your list from the old tool. Put its bounces and spam complaints on Suppressions first, so they stay blocked. Then open an audience and import the CSV: it needs an email column, first_name and last_name are optional, and any other column becomes a custom field. A status column carries unsubscribes over as unsubscribed. Up to 5,000 rows per file.",
+      "Coming from beehiiv, Kit, Mailchimp or MailerLite? Open an audience, choose Import from beehiiv & more, paste your API key and pick the publication or audience. The whole list comes over in the background: subscribers as subscribers, unsubscribed people as unsubscribed, and bounced or unconfirmed addresses skipped. No export, no file. From anywhere else, import a CSV: it needs an email column, any other column becomes a custom field, a status column carries unsubscribes over, and each provider's own export is read as it comes. Put the old bounce list on Suppressions first, so it stays blocked.",
     shot: {
       src: "/product/migrate/import-csv.webp",
       width: 1016,
@@ -112,11 +115,15 @@ const faqs = [
   },
   {
     q: "Will unsubscribed people be mailed again?",
-    a: "Not if they come across marked. Include a status column in the CSV and rows marked unsubscribed import as unsubscribed. Rows marked bounced or spam are skipped, which is why the suppression list goes in first.",
+    a: "No. The one-click import from beehiiv, Kit, Mailchimp or MailerLite brings unsubscribed people over as unsubscribed and skips bounced, complained and unconfirmed addresses. With a CSV, include the status column and rows marked unsubscribed import as unsubscribed. Someone who already unsubscribed in day3 stays unsubscribed even if the old tool still lists them as active.",
   },
   {
     q: "My list is bigger than 5,000 rows. What now?",
-    a: "Split the export into files of 5,000 rows and import them one after another into the same audience. Re-importing an address doesn't create a duplicate.",
+    a: "If it's on beehiiv, Kit, Mailchimp or MailerLite, use the API key import: it has no row limit and reads the whole list page by page. A CSV takes up to 5,000 rows per file, so split a bigger export and import the files one after another into the same audience. Re-importing an address doesn't create a duplicate.",
+  },
+  {
+    q: "Do you keep my old provider's API key?",
+    a: "No. It is used for that one import, stored encrypted only while the import runs, and deleted the moment it finishes or fails.",
   },
   {
     q: "Can I do all of this over the API?",
@@ -142,7 +149,7 @@ export default function MigratePage() {
         data={howToSchema({
           name: "How to move an email list to day3",
           description:
-            "Add a sending domain, set up DKIM, SPF and DMARC, import a CSV and send a test email in day3.",
+            "Add a sending domain, set up DKIM, SPF and DMARC, import your list with one click from beehiiv, Kit, Mailchimp or MailerLite (or a CSV) and send a test email in day3.",
           steps,
         })}
       />

@@ -66,7 +66,7 @@ const faqs = [
   },
   {
     q: "Can I move my beehiiv list to day3?",
-    a: "Yes. Export your subscribers from beehiiv as CSV and import them with email and name. Unsubscribed rows come across as unsubscribed, so nobody is re-subscribed by the move.",
+    a: "Yes, in one click: paste your beehiiv API key in day3, pick your publication, and the whole list comes over, names and custom fields included. Unsubscribed readers come across as unsubscribed, so nobody is re-subscribed by the move. If your beehiiv plan has no API access, export a CSV from beehiiv and upload it as it is.",
   },
 ];
 
@@ -387,6 +387,10 @@ export default function BeehiivPricingCalculatorPage() {
             <h2 className="font-display text-3xl text-foreground sm:text-4xl">
               Unlimited subscribers. Pay for the sends.
             </h2>
+            <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-muted-foreground">
+              Moving takes one click: paste your beehiiv API key and your whole
+              list comes over, unsubscribes included.
+            </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button
                 size="lg"
