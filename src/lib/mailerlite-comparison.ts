@@ -29,7 +29,7 @@ export const MAILERLITE_PRICING_URL = "https://www.mailerlite.com/pricing";
  * the app. While this is false the page describes the CSV route instead. Flip
  * it to true the day the importer ships.
  */
-export const MAILERLITE_API_IMPORT_LIVE = false;
+export const MAILERLITE_API_IMPORT_LIVE = true;
 
 /** MailerLite Free: up to 250 subscribers and 2,500 emails a month. */
 export const MAILERLITE_FREE_LIMIT = 250;

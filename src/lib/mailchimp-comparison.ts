@@ -37,7 +37,7 @@ export const MAILCHIMP_PRICING_URL = "https://mailchimp.com/pricing/marketing/";
  * app. While this is false the page describes the CSV route instead. Flip it to
  * true the day the importer ships.
  */
-export const MAILCHIMP_API_IMPORT_LIVE = false;
+export const MAILCHIMP_API_IMPORT_LIVE = true;
 
 /** Mailchimp Free: up to 250 contacts and 500 sends a month. */
 export const MAILCHIMP_FREE_LIMIT = 250;

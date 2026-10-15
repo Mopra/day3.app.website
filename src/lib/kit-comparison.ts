@@ -27,11 +27,11 @@ export const KIT_VERIFIED_ON = "2026-10-15";
 export const KIT_PRICING_URL = "https://kit.com/pricing";
 
 /**
- * The one-click importer ("paste your Kit API key") is being built in the app.
+ * The one-click importer ("paste your Kit API key") shipped in the app on 2026-10-15 (day3.app commit 62c8422).
  * While this is false the page describes the CSV route instead. Flip it to true
  * the day the importer ships, and the page starts making the one-click claim.
  */
-export const KIT_API_IMPORT_LIVE = false;
+export const KIT_API_IMPORT_LIVE = true;
 
 /** Kit's Free plan holds up to this many subscribers, with unlimited sends. */
 export const KIT_FREE_LIMIT = 10_000;
