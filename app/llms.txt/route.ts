@@ -125,6 +125,9 @@ function buildLlmsTxt(): string {
   lines.push(`- [Compare](${siteUrl}/compare): how day3 compares to other email tools`);
   lines.push(`- [Resend vs day3 pricing calculator](${siteUrl}/resend-pricing-calculator): an interactive cost comparison against Resend's published prices, including the cases where Resend is cheaper`);
   lines.push(`- [beehiiv vs day3 pricing calculator](${siteUrl}/beehiiv-pricing-calculator): what a list costs on beehiiv's published subscriber-tier prices against day3's per-send price, including the cases where beehiiv is cheaper and the features (referrals, ad network, web archive) day3 does not have`);
+  lines.push(`- [Kit (ConvertKit) vs day3 pricing calculator](${siteUrl}/kit-pricing-calculator): what a list costs on Kit's published Creator prices against day3's per-send price, including where Kit is cheaper (its Free plan up to 10,000 subscribers, and big lists mailed daily) and how to move a Kit list`);
+  lines.push(`- [Mailchimp vs day3 pricing calculator](${siteUrl}/mailchimp-pricing-calculator): what an audience costs on Mailchimp's published Essentials, Standard and Premium prices (with their send caps) against day3's per-send price, including where Mailchimp is cheaper and how to move a Mailchimp audience`);
+  lines.push(`- [MailerLite vs day3 pricing calculator](${siteUrl}/mailerlite-pricing-calculator): what a list costs on MailerLite's published Comfort and Power prices against day3's per-send price, including where MailerLite is cheaper and how to move a MailerLite list`);
   lines.push(`- [Deliverability](${siteUrl}/deliverability): how day3 gets your email to the inbox`);
   lines.push(`- [Guides](${siteUrl}/blog): reference writing on authentication, unsubscribe compliance, consent, and email pricing models`);
   lines.push("");

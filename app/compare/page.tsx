@@ -34,6 +34,14 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
+const calculators = [
+  { href: "/mailchimp-pricing-calculator", label: "Mailchimp vs day3" },
+  { href: "/kit-pricing-calculator", label: "Kit (ConvertKit) vs day3" },
+  { href: "/mailerlite-pricing-calculator", label: "MailerLite vs day3" },
+  { href: "/beehiiv-pricing-calculator", label: "beehiiv vs day3" },
+  { href: "/resend-pricing-calculator", label: "Resend vs day3" },
+];
+
 export default function CompareHubPage() {
   return (
     <>
@@ -83,6 +91,39 @@ export default function CompareHubPage() {
                   </Link>
                 </Reveal>
               ))}
+            </div>
+          </Container>
+        </section>
+
+        {/*
+          The comparisons stay price-free on purpose (see the accuracy note
+          below). The calculators are where competitor prices do appear, each
+          dated and sourced, so the hub points at them rather than repeating them.
+        */}
+        <section className="border-t border-border">
+          <Container className="py-16 sm:py-20">
+            <div className="mx-auto max-w-3xl">
+              <h2 className="font-display text-3xl text-foreground sm:text-4xl">
+                Pricing calculators
+              </h2>
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                Your list through a competitor&apos;s published prices and through
+                day3&apos;s, side by side. Each one is dated, links its source,
+                and shows the cases where the other tool is cheaper.
+              </p>
+              <ul className="mt-8 grid gap-3 sm:grid-cols-2">
+                {calculators.map((calc) => (
+                  <li key={calc.href}>
+                    <Link
+                      href={calc.href}
+                      className="group flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-5 py-4 transition-colors duration-200 hover:border-caramel/40 hover:bg-secondary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      <span className="font-medium text-foreground">{calc.label}</span>
+                      <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </Container>
         </section>

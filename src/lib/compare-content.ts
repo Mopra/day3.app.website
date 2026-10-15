@@ -293,6 +293,10 @@ export const comparePages: ComparePage[] = [
       otherModel:
         "A per-contact plan bills for all 10,000 contacts every month, whether you send twice, once, or not at all",
     },
+    calculator: {
+      href: "/mailchimp-pricing-calculator",
+      label: "Run your own audience through Mailchimp's published prices",
+    },
     migration: standardMigration(
       "Export your Mailchimp audience to CSV and upload it with email, first_name and last_name columns. day3 dedupes, skips anyone already suppressed, and lets you retry just the failed rows instead of restarting the batch. Or script it against the API in batches of 1,000 if you'd rather not touch a spreadsheet.",
     ),
@@ -340,6 +344,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/mailchimp-pricing-calculator",
       "page:/pricing/for",
       "page:/how-it-works",
       "page:/deliverability",
@@ -384,6 +389,10 @@ export const comparePages: ComparePage[] = [
       otherModel:
         "Per-subscriber pricing charges for all 25,000 every month, and crossing the next subscriber threshold raises the bill without you sending anything more",
     },
+    calculator: {
+      href: "/kit-pricing-calculator",
+      label: "Run your own list through Kit's published prices",
+    },
     migration: standardMigration(
       "Export your Kit subscribers to CSV and upload with email, first_name and last_name. day3 dedupes and skips anyone suppressed. If you'd rather script it, the API takes 1,000 contacts per call and upserts by email, so re-running is safe.",
     ),
@@ -427,6 +436,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/kit-pricing-calculator",
       "page:/pricing/for",
       "page:/how-it-works",
       "for:indie-developers",
@@ -818,6 +828,10 @@ export const comparePages: ComparePage[] = [
       otherModel:
         "A per-subscriber plan bills for all 25,000 every month, including the months you ship nothing",
     },
+    calculator: {
+      href: "/mailerlite-pricing-calculator",
+      label: "Run your own list through MailerLite's published prices",
+    },
     migration: standardMigration(
       "Export your MailerLite subscribers to CSV, including the custom fields you use as merge tags, and upload it. day3 dedupes, honours your suppression list and reports failed rows so you can retry just those. The API takes batches of 1,000 if you would rather script it.",
     ),
@@ -861,6 +875,7 @@ export const comparePages: ComparePage[] = [
       },
     ],
     related: [
+      "page:/mailerlite-pricing-calculator",
       "page:/pricing/for",
       "page:/how-it-works",
       "feature:signup-forms",

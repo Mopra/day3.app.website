@@ -103,6 +103,24 @@ const standalonePages: Record<string, InternalLink> = {
     description:
       "What your list costs on beehiiv's published plans against day3's per-send price, including where beehiiv wins.",
   },
+  "/kit-pricing-calculator": {
+    label: "Kit vs day3 calculator",
+    href: "/kit-pricing-calculator",
+    description:
+      "What your list costs on Kit's published Creator prices against day3's per-send price, including where Kit wins.",
+  },
+  "/mailchimp-pricing-calculator": {
+    label: "Mailchimp vs day3 calculator",
+    href: "/mailchimp-pricing-calculator",
+    description:
+      "What your audience costs on Mailchimp's published plans and send caps against day3's per-send price, including where Mailchimp wins.",
+  },
+  "/mailerlite-pricing-calculator": {
+    label: "MailerLite vs day3 calculator",
+    href: "/mailerlite-pricing-calculator",
+    description:
+      "What your list costs on MailerLite's published Comfort and Power prices against day3's per-send price, including where MailerLite wins.",
+  },
   "/compare": {
     label: "All comparisons",
     href: "/compare",

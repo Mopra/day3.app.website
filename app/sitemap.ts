@@ -6,6 +6,9 @@ import { comparePages } from "@/lib/compare-content";
 import { PRICING_FOR_UPDATED, pricingForPages } from "@/lib/pricing-for-content";
 import { RESEND_VERIFIED_ON } from "@/lib/resend-comparison";
 import { BEEHIIV_VERIFIED_ON } from "@/lib/beehiiv-comparison";
+import { KIT_VERIFIED_ON } from "@/lib/kit-comparison";
+import { MAILCHIMP_VERIFIED_ON } from "@/lib/mailchimp-comparison";
+import { MAILERLITE_VERIFIED_ON } from "@/lib/mailerlite-comparison";
 import { audiencePages } from "@/lib/audience-content";
 import { sortedBlogPosts } from "@/lib/blog-content";
 import { changelogEntries } from "@/lib/changelog-content";
@@ -49,6 +52,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/pricing/for", lastModified: PRICING_FOR_UPDATED, priority: 0.8, changeFrequency: "monthly" },
     { path: "/resend-pricing-calculator", lastModified: RESEND_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
     { path: "/beehiiv-pricing-calculator", lastModified: BEEHIIV_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
+    { path: "/kit-pricing-calculator", lastModified: KIT_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
+    { path: "/mailchimp-pricing-calculator", lastModified: MAILCHIMP_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
+    { path: "/mailerlite-pricing-calculator", lastModified: MAILERLITE_VERIFIED_ON, priority: 0.8, changeFrequency: "monthly" },
     { path: "/how-it-works", lastModified: "2026-08-12", priority: 0.9, changeFrequency: "monthly" },
     { path: "/features", lastModified: "2026-09-18", priority: 0.8, changeFrequency: "monthly" },
     { path: "/migrate", lastModified: "2026-10-12", priority: 0.8, changeFrequency: "monthly" },
