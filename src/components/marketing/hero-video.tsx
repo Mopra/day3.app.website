@@ -5,8 +5,6 @@ import { preload } from "react-dom";
 
 import { cn } from "@/lib/utils";
 
-const GRAIN_URL = "/video/paper-grain.webp";
-
 type HeroVideoProps = {
   /** Basename under /public/video, without extension, e.g. "hero-aqueduct-weir". */
   name: string;
@@ -35,16 +33,23 @@ type HeroVideoProps = {
  * so that `prefers-reduced-motion` viewers keep the poster frame as a still
  * image. Playback also pauses while scrolled out of view to save battery.
  *
- * Loading order is tuned for PageSpeed on mobile. The grain layer is what
- * Lighthouse picks as the largest paint, so it is preloaded at high priority
- * rather than waiting for the stylesheet to reveal it. The clip itself does not
- * start downloading until the page's load event, so its megabyte never competes
- * with the copy, fonts and grain for a slow connection.
+ * Loading order is tuned for PageSpeed on mobile. The poster is the hero's
+ * largest paint, so it is preloaded at high priority. The clip and the paper
+ * grain wait for the page's load event, so neither competes with the copy,
+ * fonts and poster for a slow connection. The grain fades in when it arrives.
  */
 function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
   const ref = React.useRef<HTMLVideoElement>(null);
+  const [loaded, setLoaded] = React.useState(false);
 
-  preload(GRAIN_URL, { as: "image", fetchPriority: "high" });
+  preload(`/video/${name}.webp`, { as: "image", fetchPriority: "high" });
+
+  React.useEffect(() => {
+    const onLoad = () => setLoaded(true);
+    if (document.readyState === "complete") onLoad();
+    else window.addEventListener("load", onLoad, { once: true });
+    return () => window.removeEventListener("load", onLoad);
+  }, []);
 
   React.useEffect(() => {
     const video = ref.current;
@@ -125,13 +130,29 @@ function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
         grain into the frames cost 7.2 MB against 668 KB, because per-pixel noise
         is near-incompressible and an inter-frame codec re-pays for it every
         frame. As an overlay it stays pixel-crisp instead of being smeared by the
-        encoder, one 13 KB file serves every page's loop, and the strength is a
+        encoder, one 64 KB file serves every page's loop, and the strength is a
         style tweak rather than a re-encode.
+
+        Painted with `border-image` (the `fill` keyword draws the image across
+        the box) rather than `background-image`. Chrome counts a background
+        image as a candidate for Largest Contentful Paint and does not count a
+        border image, and a texture at 20% opacity is not the page's content.
+        As a background it was the LCP and cost the mobile PageSpeed score
+        about a second. The inner box reproduces `background-size: cover`:
+        container units size it to the image's 1280:704 ratio, at least as
+        large as the hero on both axes, centred.
       */}
+      {/* Size containment makes this box a stacking context, so the blend and
+          opacity live here, not on the inner box, or it would multiply onto
+          nothing. */}
       <div
-        className="absolute inset-0 bg-[url('/video/paper-grain.webp')] bg-cover bg-center mix-blend-multiply"
-        style={{ opacity: grain / 100 }}
-      />
+        className="absolute inset-0 overflow-hidden mix-blend-multiply transition-opacity duration-700 [container-type:size]"
+        style={{ opacity: loaded ? grain / 100 : 0 }}
+      >
+        {loaded && (
+          <div className="absolute top-1/2 left-1/2 h-[max(100cqh,calc(100cqw*704/1280))] w-[max(100cqw,calc(100cqh*1280/704))] -translate-x-1/2 -translate-y-1/2 [border-image:url('/video/paper-grain.webp')_0_fill/0/0_stretch]" />
+        )}
+      </div>
 
       {/*
         Scrim: dissolves the video's hard top edge into `--background`, keeps a
