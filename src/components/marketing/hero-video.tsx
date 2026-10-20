@@ -34,22 +34,14 @@ type HeroVideoProps = {
  * image. Playback also pauses while scrolled out of view to save battery.
  *
  * Loading order is tuned for PageSpeed on mobile. The poster is the hero's
- * largest paint, so it is preloaded at high priority. The clip and the paper
- * grain wait for the page's load event, so neither competes with the copy,
- * fonts and poster for a slow connection. The grain fades in when it arrives.
+ * largest paint, so it is preloaded at high priority. The clip waits for the
+ * page's load event, so its megabyte never competes with the copy, fonts and
+ * poster for a slow connection.
  */
 function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
   const ref = React.useRef<HTMLVideoElement>(null);
-  const [loaded, setLoaded] = React.useState(false);
 
   preload(`/video/${name}.webp`, { as: "image", fetchPriority: "high" });
-
-  React.useEffect(() => {
-    const onLoad = () => setLoaded(true);
-    if (document.readyState === "complete") onLoad();
-    else window.addEventListener("load", onLoad, { once: true });
-    return () => window.removeEventListener("load", onLoad);
-  }, []);
 
   React.useEffect(() => {
     const video = ref.current;
@@ -146,12 +138,10 @@ function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
           opacity live here, not on the inner box, or it would multiply onto
           nothing. */}
       <div
-        className="absolute inset-0 overflow-hidden mix-blend-multiply transition-opacity duration-700 [container-type:size]"
-        style={{ opacity: loaded ? grain / 100 : 0 }}
+        className="absolute inset-0 overflow-hidden mix-blend-multiply [container-type:size]"
+        style={{ opacity: grain / 100 }}
       >
-        {loaded && (
-          <div className="absolute top-1/2 left-1/2 h-[max(100cqh,calc(100cqw*704/1280))] w-[max(100cqw,calc(100cqh*1280/704))] -translate-x-1/2 -translate-y-1/2 [border-image:url('/video/paper-grain.webp')_0_fill/0/0_stretch]" />
-        )}
+        <div className="absolute top-1/2 left-1/2 h-[max(100cqh,calc(100cqw*704/1280))] w-[max(100cqw,calc(100cqh*1280/704))] -translate-x-1/2 -translate-y-1/2 [border-image:url('/video/paper-grain.webp')_0_fill/0/0_stretch]" />
       </div>
 
       {/*
