@@ -32,8 +32,17 @@ export type WorkedExample = {
   scenario: string;
   subscribers: number;
   monthlySends: number;
-  /** What the other tool's meter reads, as a clause. Never a price. */
+  /** What the other tool's meter reads, as a clause. No price unless otherPrice is set. */
   otherModel: string;
+  /** Their published price at monthlySends, only when checked on their own pricing page. */
+  otherPrice?: {
+    /** Headline figure, e.g. "$36". */
+    amount: string;
+    /** Where it was read, e.g. "postmarkapp.com/pricing". */
+    source: string;
+    /** ISO date it was checked. */
+    checked: string;
+  };
 };
 
 export type ComparePage = {
@@ -1065,29 +1074,30 @@ export const comparePages: ComparePage[] = [
   {
     slug: "postmark-alternative",
     competitor: "Postmark",
-    updated: "2026-09-18",
-    metaTitle: "A Postmark alternative with the list layer included",
+    updated: "2026-10-20",
+    metaTitle: "Postmark alternative: 25,000 emails for $8/mo, not $36",
     metaDescription:
-      "Postmark is excellent transactional email, priced by sends. day3 sends transactional the same way and brings audiences, segments, forms and consent with it.",
+      "Postmark alternative: 25,000 emails a month is $8 on day3 and $36 to $42 on Postmark's published plans. Transactional and newsletters on one bill, with audiences, forms and consent.",
     keywords: [
       "postmark alternative",
       "postmark alternative with newsletters",
       "transactional and marketing email one provider",
       "postmark vs day3",
+      "postmark pricing",
       "email api with audiences",
     ],
     title: "A Postmark alternative that also owns your list.",
     intro:
       "Postmark has spent a decade being very good at one thing: getting transactional mail delivered fast, with support that actually answers.",
     difference:
-      "Both tools meter sends, so this is not a pricing argument either. The difference is what sits above the API. Postmark is built around message streams for application mail. day3 puts audiences, segments, signup forms, subscription topics and consent records in the same product, so the changelog and the password reset share one domain, one allowance and one suppression list.",
+      "Both tools meter sends, and at small volume day3 costs less: 25,000 emails is $8 a month against $36 on Postmark. The bigger difference is what sits above the API. Postmark is built around message streams for application mail. day3 puts audiences, segments, signup forms, subscription topics and consent records in the same product, so the changelog and the password reset share one domain, one allowance and one suppression list.",
     comparison: [
       { dimension: "Pricing model", day3: DAY3.pricing, competitor: "Also by emails sent" },
       { dimension: "Subscriber limits", day3: DAY3.subscribers, competitor: "Not a list tool; no subscriber tiers" },
       { dimension: "Product scope", day3: DAY3.scope, competitor: "Transactional-first, with broadcast streams alongside" },
       { dimension: "List layer", day3: "Audiences, live segments, forms, topics, consent records", competitor: "Recipients and streams rather than a managed list" },
       { dimension: "Best for", day3: "Teams wanting both jobs in one place", competitor: "Teams who want application mail and nothing else" },
-      { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "Free trial volume, then priced by sends" },
+      { dimension: "Starting price", day3: DAY3.startingPrice, competitor: "100 free emails a month, then $15/mo for 10,000 (Basic)" },
     ],
     worked: {
       scenario:
@@ -1095,7 +1105,12 @@ export const comparePages: ComparePage[] = [
       subscribers: 10_000,
       monthlySends: 25_000,
       otherModel:
-        "Postmark meters sends as well, so the comparison is close; what changes is whether the list, the forms and the consent trail live in the same tool or somewhere else",
+        "Postmark's 10,000-email plans run $15 (Basic), $16.50 (Pro) or $18 (Platform) a month, plus $1.80, $1.30 or $1.20 per extra 1,000. At 25,000 emails that is $42 on Basic and $36 on Pro or Platform, against $8 on day3. You also get Postmark's message streams, retention and support, and day3 adds the list, the forms and the consent trail",
+      otherPrice: {
+        amount: "$36",
+        source: "postmarkapp.com/pricing",
+        checked: "2026-10-20",
+      },
     },
     migration: standardMigration(
       "There may not be much of a list to export, which is the point. Bring the contacts from wherever they currently live, a database dump or your app's users table, as a CSV with email and any fields you merge into templates. day3 dedupes and refuses suppressed addresses on the way in.",
@@ -1127,8 +1142,12 @@ export const comparePages: ComparePage[] = [
         a: "For most product teams, yes: one POST per email, idempotent retries and per-email delivery status, from a domain you authenticate. Heavy senders with strict retention, inbound routing or per-stream reputation requirements should check those specifics first.",
       },
       {
+        q: "How much does Postmark cost for 25,000 emails?",
+        a: "On Postmark's published pricing (checked 2026-10-20), its plans include 10,000 emails and charge for the rest: Basic is $15/mo plus $1.80 per extra 1,000, so $42/mo at 25,000; Pro ($16.50 plus $1.30) and Platform ($18 plus $1.20) both come to $36/mo. On day3, 25,000 emails is the $8/mo plan.",
+      },
+      {
         q: "Is day3 cheaper than Postmark?",
-        a: "Both meter sends, so compare plans at your volume. The saving, when there is one, usually comes from collapsing two subscriptions into one rather than from a lower per-email rate.",
+        a: "At 25,000 emails a month, yes: $8 on day3 against $36 or more on Postmark. Both meter sends, so check your own volume on both pricing pages. What Postmark's price buys is a decade of transactional focus, deep message retention and inbound processing, which day3 does not match.",
       },
       {
         q: "Should marketing and transactional email share a domain?",

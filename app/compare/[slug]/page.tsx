@@ -178,14 +178,32 @@ export default async function ComparePage({ params }: PageProps) {
                     On {page.competitor}
                   </p>
                   <p className="mt-3 font-display text-4xl text-muted-foreground">
-                    Depends
+                    {page.worked.otherPrice ? (
+                      <>
+                        {page.worked.otherPrice.amount}
+                        <span className="text-base font-normal text-muted-foreground">
+                          /mo
+                        </span>
+                      </>
+                    ) : (
+                      "Depends"
+                    )}
                   </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {page.worked.otherModel}. We don&apos;t print their price
-                    here, because it changes and a stale figure would be worse
-                    than none. Check it on their own site and run these numbers
-                    through it.
-                  </p>
+                  {page.worked.otherPrice ? (
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {page.worked.otherModel}. Read from{" "}
+                      {page.worked.otherPrice.source} on{" "}
+                      {page.worked.otherPrice.checked}; prices change, so check
+                      it there before you decide.
+                    </p>
+                  ) : (
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                      {page.worked.otherModel}. We don&apos;t print their price
+                      here, because it changes and a stale figure would be worse
+                      than none. Check it on their own site and run these numbers
+                      through it.
+                    </p>
+                  )}
                 </div>
               </div>
               {page.calculator && (
