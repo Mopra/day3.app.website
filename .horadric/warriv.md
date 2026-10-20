@@ -5,6 +5,7 @@
 - npm run ga4 (socialsandbox) only reports up to 3 days back; for anything newer, read the GA4 UI in the browser.
 
 ## Lately
+- 2026-10-20 Round (human left): 3 of 3 done, no aims, main past checked 77004d5 is memory only. Nothing to do.
 - 2026-10-20 Round (quest landed): "Check the four perf commits after ed09592" closed with no fix commits, so 77004d5 checked clean. 3 of 3 done, no aims. Nothing else to do.
 - 2026-10-20 Round (hourly): the human pushed four perf commits (b8b1030 to 77004d5) unchecked, then went quiet. Filed "Check the four perf commits after ed09592 build and are live" (haiku); no check stone exists.
 - 2026-10-20 Round (quest landed): "Check the Oct 15 to 20 commits" closed, its fix ed09592 (hero copy before hydration) on main. 2 of 2 done, no aims. Nothing else to do.
