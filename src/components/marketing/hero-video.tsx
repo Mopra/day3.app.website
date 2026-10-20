@@ -1,8 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { preload } from "react-dom";
 
 import { cn } from "@/lib/utils";
+
+const GRAIN_URL = "/video/paper-grain.webp";
 
 type HeroVideoProps = {
   /** Basename under /public/video, without extension, e.g. "hero-aqueduct-weir". */
@@ -31,9 +34,17 @@ type HeroVideoProps = {
  * Motion is opt-in rather than declarative. `autoPlay` is deliberately absent
  * so that `prefers-reduced-motion` viewers keep the poster frame as a still
  * image. Playback also pauses while scrolled out of view to save battery.
+ *
+ * Loading order is tuned for PageSpeed on mobile. The grain layer is what
+ * Lighthouse picks as the largest paint, so it is preloaded at high priority
+ * rather than waiting for the stylesheet to reveal it. The clip itself does not
+ * start downloading until the page's load event, so its megabyte never competes
+ * with the copy, fonts and grain for a slow connection.
  */
 function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
   const ref = React.useRef<HTMLVideoElement>(null);
+
+  preload(GRAIN_URL, { as: "image", fetchPriority: "high" });
 
   React.useEffect(() => {
     const video = ref.current;
@@ -42,24 +53,34 @@ function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (reduced.matches) return; // poster frame only
 
-    // Only play while at least partly on screen.
-    if (typeof IntersectionObserver === "undefined") {
-      void video.play().catch(() => {});
-      return;
-    }
+    let observer: IntersectionObserver | undefined;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) void video.play().catch(() => {});
-          else video.pause();
-        }
-      },
-      { threshold: 0.05 },
-    );
+    const start = () => {
+      // Only play while at least partly on screen.
+      if (typeof IntersectionObserver === "undefined") {
+        void video.play().catch(() => {});
+        return;
+      }
 
-    observer.observe(video);
-    return () => observer.disconnect();
+      observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) void video.play().catch(() => {});
+            else video.pause();
+          }
+        },
+        { threshold: 0.05 },
+      );
+      observer.observe(video);
+    };
+
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+
+    return () => {
+      window.removeEventListener("load", start);
+      observer?.disconnect();
+    };
   }, []);
 
   return (
@@ -83,8 +104,8 @@ function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
         muted
         loop
         playsInline
-        preload="metadata"
-        poster={`/video/${name}.jpg`}
+        preload="none"
+        poster={`/video/${name}.webp`}
         className="absolute inset-x-0 bottom-0 h-auto w-full dark:opacity-50 dark:brightness-[0.55] dark:saturate-75"
         style={{
           // Dissolve the clip's own top edge. Anchored to the video box rather
@@ -104,7 +125,7 @@ function HeroVideo({ name, scene, grain = 55, className }: HeroVideoProps) {
         grain into the frames cost 7.2 MB against 668 KB, because per-pixel noise
         is near-incompressible and an inter-frame codec re-pays for it every
         frame. As an overlay it stays pixel-crisp instead of being smeared by the
-        encoder, one 64 KB file serves every page's loop, and the strength is a
+        encoder, one 13 KB file serves every page's loop, and the strength is a
         style tweak rather than a re-encode.
       */}
       <div

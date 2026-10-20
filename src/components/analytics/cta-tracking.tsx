@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { usePathname } from "next/navigation";
-import { sendGAEvent } from "@next/third-parties/google";
 
+import { sendGAEvent } from "@/components/analytics/google-analytics";
 import { siteConfig } from "@/lib/site";
 
 /**

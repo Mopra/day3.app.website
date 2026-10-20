@@ -2,6 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  experimental: {
+    // Inline the stylesheet into the HTML. It is small (about 12 KB), and a
+    // separate render-blocking request cost a round trip before first paint on
+    // mobile.
+    inlineCss: true,
+  },
   async redirects() {
     return [
       // Deliverability lives at the top-level /deliverability page. The old

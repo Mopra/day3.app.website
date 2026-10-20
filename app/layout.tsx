@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Instrument_Serif } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import "./globals.css";
 
 import { CtaTracking } from "@/components/analytics/cta-tracking";
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { siteConfig } from "@/lib/site";
 
 const geist = Geist({
@@ -16,7 +16,9 @@ const geist = Geist({
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
-  style: ["normal", "italic"],
+  // Normal only. Nothing sets the serif in italic, and each style is another
+  // preloaded font file racing the hero on a slow connection.
+  style: "normal",
   variable: "--font-instrument-serif",
   display: "swap",
 });
@@ -88,8 +90,9 @@ export default function RootLayout({
         {/* Fires signup_click / login_click and tags every outbound app link. */}
         <CtaTracking />
       </body>
-      {/* Powers the day3 subscribe popup wherever a SubscribeButton appears. */}
-      <Script src={siteConfig.embedScriptUrl} strategy="afterInteractive" />
+      {/* Powers the day3 subscribe popup wherever a SubscribeButton appears.
+          Nobody clicks one before the page has loaded, so it waits until then. */}
+      <Script src={siteConfig.embedScriptUrl} strategy="lazyOnload" />
       <GoogleAnalytics gaId="G-JJJ6E2LDX8" />
     </html>
   );
