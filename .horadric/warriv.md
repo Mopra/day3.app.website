@@ -5,6 +5,7 @@
 - npm run ga4 (socialsandbox) only reports up to 3 days back; for anything newer, read the GA4 UI in the browser.
 
 ## Lately
+- 2026-10-20 Round (quest landed): "Check the Oct 15 to 20 commits" closed, its fix ed09592 (hero copy before hydration) on main. 2 of 2 done, no aims. Nothing else to do.
 - 2026-10-20 Round (quest landed): postmark compare quest done. Five code commits since c004aff (calculators, beehiiv copy, postmark compare, mobile perf) were unchecked and no check stone exists, so filed "Check the Oct 15 to 20 commits build and are live" (haiku).
 - 2026-10-13 Round (hourly), x8 since the look back: 8 of 8 done, no aims, main past checked c004aff is memory only. Nothing to do.
 - 2026-10-13 Look back: the day was clean, nothing went wrong twice.
