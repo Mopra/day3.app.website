@@ -297,20 +297,25 @@ export default function HomePage() {
           */}
           <Container className="flex min-h-[calc(100svh-4rem)] flex-col justify-start pt-[9svh] pb-16">
             <div className="mx-auto max-w-3xl text-center">
-              <Reveal>
+              {/*
+                No <Reveal> up here. It hides its children until JavaScript
+                hydrates, which left the hero blank for about two seconds on a
+                slow phone and was most of the PageSpeed mobile score.
+              */}
+              <div>
                 <h1 className="font-display text-4xl leading-[1.08] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
                   {hero.title[0]}
                   <br className="hidden sm:block" /> {hero.title[1]}
                 </h1>
-              </Reveal>
+              </div>
 
-              <Reveal delay={90}>
+              <div>
                 <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
                   {hero.body}
                 </p>
-              </Reveal>
+              </div>
 
-              <Reveal delay={180}>
+              <div>
                 <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
                   <Button
                     size="lg"
@@ -329,9 +334,9 @@ export default function HomePage() {
                     See pricing
                   </Button>
                 </div>
-              </Reveal>
+              </div>
 
-              <Reveal delay={220}>
+              <div>
                 {/*
                   What it costs to find out. The price row below carries the
                   rest, so this stays to one clause.
@@ -339,9 +344,9 @@ export default function HomePage() {
                 <p className="mt-4 text-sm text-muted-foreground">
                   No credit card. Sends to your own team are free.
                 </p>
-              </Reveal>
+              </div>
 
-              <Reveal delay={260}>
+              <div>
                 {/*
                   Price sits above the fold because it's the disrupter, but as a
                   quiet row of facts rather than a badge. The numbers carry the
@@ -364,7 +369,7 @@ export default function HomePage() {
                     </li>
                   ))}
                 </ul>
-              </Reveal>
+              </div>
 
             </div>
           </Container>

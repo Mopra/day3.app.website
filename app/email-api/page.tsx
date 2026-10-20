@@ -282,21 +282,26 @@ export default function EmailApiLandingPage() {
           */}
           <Container className="flex min-h-[calc(100svh-4rem)] flex-col justify-start pt-[9svh] pb-16">
             <div className="mx-auto max-w-3xl text-center">
-              <Reveal>
+              {/*
+                No <Reveal> up here. It hides its children until JavaScript
+                hydrates, which left the hero blank for about two seconds on a
+                slow phone and was most of the PageSpeed mobile score.
+              */}
+              <div>
                 <h1 className="font-display text-4xl leading-[1.08] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
                   {heroTitle[0]}
                   <br className="hidden sm:block" /> {heroTitle[1]}
                 </h1>
-              </Reveal>
+              </div>
 
-              <Reveal delay={90}>
+              <div>
                 <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
                   One POST for password resets, receipts and magic links. Same
                   verified domain, same allowance as your product updates.
                 </p>
-              </Reveal>
+              </div>
 
-              <Reveal delay={180}>
+              <div>
                 <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
                   <Button
                     size="lg"
@@ -320,15 +325,15 @@ export default function EmailApiLandingPage() {
                     See the API
                   </Button>
                 </div>
-              </Reveal>
+              </div>
 
-              <Reveal delay={220}>
+              <div>
                 <p className="mt-4 text-sm text-muted-foreground">
                   No credit card. Sends to your own team are free.
                 </p>
-              </Reveal>
+              </div>
 
-              <Reveal delay={260}>
+              <div>
                 {/*
                   The ad promised a number, so the number is substantiated above
                   the fold, as a quiet row of facts rather than a badge. Hairline
@@ -348,7 +353,7 @@ export default function EmailApiLandingPage() {
                     </li>
                   ))}
                 </ul>
-              </Reveal>
+              </div>
             </div>
           </Container>
         </section>
