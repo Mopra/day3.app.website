@@ -24,12 +24,14 @@ import { siteConfig } from "@/lib/site";
  *    moved.
  *
  * 2. UTM parameters describing where the click came from, plus the visitor's GA
- *    client id (`ga_cid`) on signup links. The app is a separate origin
- *    (go.day3.app) with no GA tag; it reports a completed signup to this GA4
+ *    client id (`ga_cid`) and session id (`ga_sid`) on signup links. The app is
+ *    a separate origin (go.day3.app) with no GA tag; it reports a completed signup to this GA4
  *    property from its server under that id (day3.app repo,
  *    src/services/signup-analytics.ts), so GA4 can credit the page that earned
- *    it. The `/email-api` landing page tags its own UTMs by hand; those are left
- *    alone, but still get the client id.
+ *    it. The session id is what joins that server event to this visit: without
+ *    it GA4 files the signup under "Unassigned" with no landing page, which is
+ *    where every sign_up landed in October 2026. The `/email-api` landing page
+ *    tags its own UTMs by hand; those are left alone, but still get both ids.
  */
 
 /** Host of the app, derived so it cannot drift from the configured URL. */
@@ -60,6 +62,16 @@ function gaClientId(): string | null {
 }
 
 /**
+ * This visitor's current GA4 session id, read from the `_ga_<property>` cookie:
+ * "GS1.1.<session>.<n>..." or the newer "GS2.1.s<session>$o<n>...". The app sends
+ * it with the server-side sign_up so GA4 credits the session's channel.
+ */
+function gaSessionId(): string | null {
+  const match = document.cookie.match(/(?:^|; )_ga_[A-Z0-9]+=GS\d\.\d\.s?(\d+)/);
+  return match ? match[1] : null;
+}
+
+/**
  * Adds attribution to an app URL without disturbing tags it already carries.
  * Returns null when nothing needs changing, so the common path does no work.
  */
@@ -68,6 +80,7 @@ function tag(
   pathname: string,
   placement: string,
   clientId: string | null,
+  sessionId: string | null,
 ): string | null {
   let url: URL;
   try {
@@ -90,6 +103,10 @@ function tag(
   }
   if (clientId && !url.searchParams.has("ga_cid")) {
     url.searchParams.set("ga_cid", clientId);
+    changed = true;
+  }
+  if (sessionId && !url.searchParams.has("ga_sid")) {
+    url.searchParams.set("ga_sid", sessionId);
     changed = true;
   }
   return changed ? url.toString() : null;
@@ -143,8 +160,9 @@ function CtaTracking() {
         new URL(href, window.location.origin).toString(),
         path,
         placement,
-        // Only a signup needs the id: the app reads it on /sign-up.
+        // Only a signup needs the ids: the app reads them on /sign-up.
         isLogin ? null : gaClientId(),
+        isLogin ? null : gaSessionId(),
       );
       if (tagged) anchor.setAttribute("href", tagged);
     }
